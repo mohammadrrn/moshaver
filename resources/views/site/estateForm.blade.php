@@ -9,7 +9,7 @@
             <form class="row send-product" method="post" action="{{route('request.estate')}}">
                 @csrf
                 <div class="col-12 titr">
-                    <span class="classtest">ثبت ملک</span>
+                    <span class="class-test">ثبت ملک</span>
                     <br>
                     @if(session('success'))
                         {{session('success')}}
