@@ -139,7 +139,7 @@
             <div class="row">
                 <div class="col-12">
                 {{$data['estateRequest']->links()}}
-                <!--                    <nav aria-label="Page navigation example">
+                                   <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item">
                                 <a class="page-link" href="#" tabindex="-1">«قبل</a>
@@ -152,7 +152,7 @@
                                 <a class="page-link" href="#">بعد»</a>
                             </li>
                         </ul>
-                    </nav>-->
+                    </nav>
                 </div>
             </div>
         </div>
