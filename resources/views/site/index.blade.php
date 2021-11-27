@@ -1,6 +1,6 @@
 @extends('index')
 
-@section('title','moshaver 007')
+@section('title','moshaver')
 
 @section('content')
 
