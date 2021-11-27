@@ -10,6 +10,8 @@
                 @csrf
                 <div class="col-12 titr">
                     <div>ثبت ملک</div>
+                <div class="col-12 titr test">
+                    <span>ثبت ملک</span>
                     <br>
                     @if(session('success'))
                         {{session('success')}}
