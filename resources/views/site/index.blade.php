@@ -1,6 +1,6 @@
 @extends('index')
 
-@section('title','مشاور 007')
+@section('title','moshaver 007')
 
 @section('content')
 
@@ -139,7 +139,11 @@
             <div class="row">
                 <div class="col-12">
                 {{$data['estateRequest']->links()}}
+<<<<<<< HEAD
                 <!--                    <nav aria-label="Page navigation example">
+=======
+                <!-- <nav aria-label="Page navigation example">
+>>>>>>> develop
                         <ul class="pagination justify-content-center">
                             <li class="page-item">
                                 <a class="page-link" href="#" tabindex="-1">«قبل</a>
@@ -152,7 +156,11 @@
                                 <a class="page-link" href="#">بعد»</a>
                             </li>
                         </ul>
+<<<<<<< HEAD
                     </nav>-->
+=======
+                    </nav> -->
+>>>>>>> develop
                 </div>
             </div>
         </div>
