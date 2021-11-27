@@ -776,7 +776,7 @@ main .main-box-center .box-sell-top-title {
     right: 0;
     background: rgba(29, 29, 29, 0.61);
     color: #fff;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0  5px 5px;
     padding: 4px 6px 6px 0;
     font-size: 14px;
 }
@@ -914,7 +914,11 @@ main .main-box-center .box-sell .time span:first-child:after {
 }
 
 .page-link:not(:disabled):not(.disabled) {
+    border-radius: 50%;
+    margin: 0 5px;
+    border: 1px solid #f0f0f0;
     color: #2e2e2e;
+    border: 1px solid #e9e9e9;
 }
 
 .pagination .active {
@@ -1016,7 +1020,6 @@ footer .me {
     header .header-right ul {
         display: none;
     }
-
     .header-right-icon-moshaver:hover {
         cursor: pointer;
     }
@@ -1040,7 +1043,6 @@ footer .me {
         -ms-flex-pack: center;
         justify-content: center;
     }
-
     .main-box-top-left-item {
         padding: 35px;
         margin: 5px 10px;
@@ -1415,15 +1417,15 @@ footer .me {
 }
 
 .box-body-login .social-1 {
-    background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-google-48.png);
+    background-image: url(../icon/icons8-google-48.png);
 }
 
 .box-body-login .social-2 {
-    background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-github-24-2.png);
+    background-image: url(../icon/icons8-github-24-2.png);
 }
 
 .box-body-login .social-3 {
-    background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-facebook-48.png);
+    background-image: url(../icon/icons8-facebook-48.png);
 }
 
 .box-body-login button.ghost-responsiv {
@@ -1437,19 +1439,16 @@ footer .me {
     .box-body-login .overlay-container {
         display: none;
     }
-
     .box-body-login .sign-in-container {
         width: 100%;
         -webkit-transform: translateX(0);
         transform: translateX(0);
     }
-
     .box-body-login .sign-up-container {
         width: 100%;
         -webkit-transform: translateX(100%);
         transform: translateX(100%);
     }
-
     .box-body-login button.ghost-responsiv {
         display: block;
     }
@@ -1459,24 +1458,19 @@ footer .me {
     .box-body-login .overlay-container {
         display: block;
     }
-
     .box-body-login .sign-in-container {
         width: 50%;
     }
-
     .box-body-login .sign-up-container {
         width: 50%;
     }
-
     .box-body-login button.ghost-responsiv {
         display: none;
     }
-
     .box-body-login .container.right-panel-active .sign-in-container {
         -webkit-transform: translateX(100%) !important;
         transform: translateX(100%) !important;
     }
-
     .box-body-login .container.right-panel-active .sign-up-container {
         -webkit-transform: translateX(100%) !important;
         transform: translateX(100%) !important;
@@ -1676,7 +1670,6 @@ footer .me {
 
 .detile-specifications-top-5-button:last-child {
     background: #f64f59;
-    text-align: center;
 }
 
 .detile-specifications-top-5-button {
@@ -1686,8 +1679,8 @@ footer .me {
     padding: 8px 10px;
     border-radius: 5px;
     outline: none;
+    max-width: auto;
     margin: 5px;
-    text-align: center;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
@@ -1695,7 +1688,6 @@ footer .me {
 .detile-specifications-top-5-button:hover {
     cursor: pointer;
     background: #919191;
-    color: white !important;
 }
 
 .detile-specifications-top-5-button:focus {
@@ -1922,6 +1914,10 @@ main {
     position: relative;
 }
 
+.send-product .group label {
+    pointer-events: none;
+}
+
 .send-product input {
     width: 100%;
     font-size: 18px;
@@ -1950,11 +1946,12 @@ main {
     -webkit-transition: 0.4s ease all;
 }
 
-.send-product input:focus ~ label, .send-product input:valid ~ label {
+.send-product input:focus ~ label {
     top: -10px;
     right: 20px;
     font-size: 13px;
     color: #5264AE;
+    background: #fff;
     padding: 2px 5px;
     border-radius: 5px;
 }
@@ -2585,7 +2582,6 @@ fieldset .comment-user-star:hover {
 }
 
 #box-by {
-    /*display: none;*/
+    display: none;
 }
-
 /*# sourceMappingURL=style.css.map */

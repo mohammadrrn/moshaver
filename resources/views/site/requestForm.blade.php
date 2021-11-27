@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="full_name" value="{{old('full_name')}}" required>
+                        <input type="text" name="full_name" value="{{old('full_name')}}" >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>نام و نام خانوادگی</label>
@@ -29,7 +29,7 @@
                 <div class="col-12 view-order">
                     <div class="group">
                         <input type="text" name="mobile_number" value="{{old('mobile_number')}}"
-                               required>
+                               >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>شماره همراه</label>
@@ -76,7 +76,7 @@
                     <div class="group">
 
                         <input type="text" name="range_of_address" value="{{old('range_of_address')}}"
-                               required>
+                               >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>حدود آدرس</label>
@@ -87,7 +87,7 @@
                     <div class="group">
 
                         <input type="text" name="rang_of_area" value="{{old('rang_of_area')}}"
-                               required>
+                               >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>حدود متراژ درخواستی </label>
@@ -95,7 +95,7 @@
                 </div>
                 <div id="box-by" class="col-12 view-order">
                     <div class="group">
-                        <input id="buy_price" type="text" name="buy_price" value="{{old('buy_price')}}" required
+                        <input id="buy_price" type="text" name="buy_price" value="{{old('buy_price')}}"
                         >
                         <span class="highlight"></span>
                         <span class="bar"></span>
@@ -105,7 +105,7 @@
                 <div id="box-mortgage" class="col-12 view-order">
                     <div class="group">
                         <input type="text" id="mortgage_price" name="mortgage_price" value="{{old('mortgage_price')}}"
-                               required>
+                               >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>مبلغ رهن</label>
@@ -115,7 +115,7 @@
                 <div id="box-rent" class="col-12 view-order">
                     <div class="group">
 
-                        <input type="text" name="rent_price" id="rent_price" value="0" required
+                        <input type="text" name="rent_price" id="rent_price" value="0"
                         >
                         <span class="highlight"></span>
                         <span class="bar"></span>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="description" value="{{old('description')}}" required>
+                        <input type="text" name="description" value="{{old('description')}}" >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>توضیحات</label>
