@@ -6,7 +6,8 @@
     <main class="container-fluid">
         <div class="cover-back-send-product"> </div>
         <div class="container main-box-top">
-            <form class="row send-product" method="post" action="{{route('request.estate')}}">
+            <form class="row send-product" method="post" action="{{route('request.estate')}}"
+                  enctype="multipart/form-data">
                 @csrf
                 <div class="col-12 titr test">
                     <span>ثبت ملک</span>
@@ -19,6 +20,12 @@
                             <li>{{$error}}</li>
                         @endforeach
                     </ul>
+                </div>
+                <div class="col-12 col-md-12 view-order">
+                    <span>
+                        انتخاب عکس
+                    </span>
+                    <input type="file" name="image">
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <span>
@@ -44,7 +51,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="area" value="{{old('area')}}" >
+                        <input type="text" name="area" value="{{old('area')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>متراژ</label>
@@ -63,7 +70,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="address" value="{{old('address')}}" >
+                        <input type="text" name="address" value="{{old('address')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>آدرس</label>
@@ -71,7 +78,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="street_name" value="{{old('street_name')}}" >
+                        <input type="text" name="street_name" value="{{old('street_name')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>نام کوچه و خیابان</label>
@@ -79,7 +86,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="plaque" value="{{old('plaque')}}" >
+                        <input type="text" name="plaque" value="{{old('plaque')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>پلاک</label>
@@ -87,7 +94,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="owner_name" value="{{old('owner_name')}}" >
+                        <input type="text" name="owner_name" value="{{old('owner_name')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>نام مالک</label>
@@ -95,7 +102,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="owner_mobile_number" value="{{old('owner_mobile_number')}}" >
+                        <input type="text" name="owner_mobile_number" value="{{old('owner_mobile_number')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>شماره همراه</label>
@@ -103,7 +110,7 @@
                 </div>
                 <div id="box-by" class="col-12 view-order">
                     <div class="group">
-                        <input type="text" id="buy_price" name="buy_price" value="{{old('buy_price')}}" >
+                        <input type="text" id="buy_price" name="buy_price" value="{{old('buy_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>مبلغ خرید</label>
@@ -112,7 +119,7 @@
                 <div id="box-mortgage" class="col-12 view-order">
                     <div class="group">
                         <input type="text" id="mortgage_price" name="mortgage_price" value="{{old('mortgage_price')}}"
-                               >
+                        >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>مبلغ رهن</label>
@@ -120,7 +127,7 @@
                 </div>
                 <div id="box-rent" class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="rent_price" id="rent_price" value="{{old('rent_price')}}" >
+                        <input type="text" name="rent_price" id="rent_price" value="{{old('rent_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>مبلغ اجاره</label>
@@ -128,7 +135,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="floor" value="{{old('floor')}}" >
+                        <input type="text" name="floor" value="{{old('floor')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>طبقه</label>
@@ -136,7 +143,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="number_of_floor" value="{{old('number_of_floor')}}" >
+                        <input type="text" name="number_of_floor" value="{{old('number_of_floor')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>تعداد طبقه</label>
@@ -144,7 +151,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="apartment_unit" value="{{old('apartment_unit')}}" >
+                        <input type="text" name="apartment_unit" value="{{old('apartment_unit')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>تعداد واحد</label>
@@ -152,7 +159,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="number_of_room" value="{{old('number_of_room')}}" >
+                        <input type="text" name="number_of_room" value="{{old('number_of_room')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>تعداد اتاق</label>
@@ -160,7 +167,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="year_of_construction" value="{{old('year_of_construction')}}" >
+                        <input type="text" name="year_of_construction" value="{{old('year_of_construction')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>سال ساخت</label>
@@ -179,7 +186,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="description" value="{{old('description')}}" >
+                        <input type="text" name="description" value="{{old('description')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>توضیحات</label>

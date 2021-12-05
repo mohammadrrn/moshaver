@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssistantController extends Controller
 {
@@ -15,6 +16,7 @@ class AssistantController extends Controller
     {
         //$MAC = exec('getmac');
         //return strtok($MAC, ' '); // get client mac address
+        return 'mac_address';
     }
 
     public static function estateRequestOptions()
@@ -57,5 +59,20 @@ class AssistantController extends Controller
         $num = range(0, 9);
         $convertedPersianNums = str_replace($persian, $num, $number);
         return str_replace($arabic, $num, $convertedPersianNums);
+    }
+
+    public static function getTableColumns($table)
+    {
+        return DB::getSchemaBuilder()->getColumnListing($table);
+    }
+
+    public static function writerRole($userId)
+    {
+
+    }
+
+    public static function getUserRole()
+    {
+        return auth()->user()->roles[0]->name;
     }
 }

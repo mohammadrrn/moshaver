@@ -15,20 +15,23 @@ class CreateEstateRequestsTable extends Migration
     {
         Schema::create('estate_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('owner_name')->comment('نام و نام خانوادگی مالک');
+            $table->string('owner_name')->comment('نام و نام خانوادگی مالک')->nullable();
             $table->string('owner_mobile_number', 11)->comment('شماره همراه مالک');
+            $table->unsignedBigInteger('user_id')->comment('آیدی کاربر')->nullable();
+            $table->string('image')->comment('عکس با کیفیت آگهی')->nullable();
+            $table->string('thumbnail')->comment('تامبنیل عکس آگهی')->nullable();
             $table->unsignedBigInteger('area_id')->comment('آیدی منطقه')->nullable();
-            $table->unsignedBigInteger('transfer_id')->comment('آیدی نوع واگذاری');
-            $table->unsignedBigInteger('estate_id')->comment('آیدی نوع ملک');
-            $table->string('address')->comment('آدرس');
-            $table->string('area')->comment('متراژ');
-            $table->string('street_name')->comment('نام کوچه و خیابان');
-            $table->unsignedSmallInteger('plaque')->comment('پلاک');
-            $table->unsignedInteger('floor')->comment('طبقه')->nullable();
-            $table->unsignedInteger('number_of_floor')->comment('تعداد طبقه');
-            $table->unsignedInteger('number_of_room')->comment('تعداد اتاق')->nullable()->default(0);
-            $table->unsignedInteger('apartment_unit')->comment('تعداد واحد')->nullable();
-            $table->unsignedInteger('year_of_construction')->comment('سال ساخت')->nullable();
+            $table->unsignedBigInteger('transfer_id')->comment('آیدی نوع واگذاری')->nullable();
+            $table->unsignedBigInteger('estate_id')->comment('آیدی نوع ملک')->nullable();
+            $table->string('address')->comment('آدرس')->nullable();
+            $table->string('area')->comment('متراژ')->default(0);
+            $table->string('street_name')->comment('نام کوچه و خیابان')->nullable();
+            $table->unsignedSmallInteger('plaque')->comment('پلاک')->nullable()->default(0);
+            $table->unsignedSmallInteger('floor')->comment('طبقه')->nullable()->default(0);
+            $table->unsignedSmallInteger('number_of_floor')->comment('تعداد طبقه')->nullable()->default(0);
+            $table->unsignedSmallInteger('number_of_room')->comment('تعداد اتاق')->nullable()->default(0);
+            $table->unsignedSmallInteger('apartment_unit')->comment('تعداد واحد')->nullable()->default(0);
+            $table->unsignedSmallInteger('year_of_construction')->comment('سال ساخت')->nullable()->default(0);
             $table->unsignedBigInteger('direction_id')->comment('آیدی جهت ملک')->nullable();
             $table->unsignedBigInteger('mortgage_price')->comment('مبلغ رهن')->nullable()->default(0);
             $table->unsignedBigInteger('rent_price')->comment('مبلغ اجاره')->nullable()->default(0);
@@ -66,6 +69,7 @@ class CreateEstateRequestsTable extends Migration
 
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('transfer_id')->references('id')->on('transfers');
             $table->foreign('estate_id')->references('id')->on('estates');

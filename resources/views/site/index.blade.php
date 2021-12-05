@@ -35,17 +35,20 @@
 
                 <div class="col-12 col-md-6 main-box-top-left">
 
-                    <a href="filter.html" class="main-box-top-left-item main-box-top-left-item-mortgage">
+                    <a href="{{route('search','rentAndMortgage')}}"
+                       class="main-box-top-left-item main-box-top-left-item-mortgage">
                         <img class="mortgage" src="{{asset('icon/mortgage.svg')}}">
                         <img class="mortgage-1" src="{{asset('icon/mortgage-1.svg')}}">
                         <span>رهن اجاره</span>
                     </a>
-                    <a href="filter.html" class="main-box-top-left-item main-box-top-left-item-ordera">
+                    <a href="{{route('search','buy')}}"
+                       class="main-box-top-left-item main-box-top-left-item-ordera">
                         <img class="ordera" src="{{asset('icon/create_order.svg')}}">
                         <img class="ordera-1" src="{{asset('icon/create_order-1.svg')}}">
                         <span>خرید و فروش</span>
                     </a>
-                    <a href="Trusted-offices.html" class="main-box-top-left-item main-box-top-left-item-chair">
+                    <a href="{{route('trustedOfficesList')}}"
+                       class="main-box-top-left-item main-box-top-left-item-chair">
                         <img class="chair" src="{{asset('icon/wing_chair.svg')}}">
                         <img class="chair-1" src="{{asset('icon/wing_chair-1.svg')}}">
                         <span>دفاتر مورد اعتماد</span>
@@ -62,7 +65,8 @@
                         <img class="mark-1" src="{{asset('icon/mark_as_favorite-1.svg')}}">
                         <span>ثبت ملک</span>
                     </a>
-                    <a href="filter.html" class="main-box-top-left-item main-box-top-left-item-new-file">
+                    <a href="{{route('search','marked')}}"
+                       class="main-box-top-left-item main-box-top-left-item-new-file">
                         <img class="new-file" src="{{asset('icon/file_settings.svg')}}">
                         <img class="new-file-1" src="{{asset('icon/file_settings-1.svg')}}">
                         <span>نشان شده ها</span>
@@ -80,13 +84,19 @@
                         <div class="box-sell">
                             <div class="box-sell-top">
                                 <a href="{{route('detail',$request->id)}}">
-                                    <img class="box-sell-top-img" src="{{asset('img/img-slider.png')}}">
+                                    <img class="box-sell-top-img" src="{{asset($request->thumbnail)}}">
                                 </a>
                                 <span class="box-sell-top-title">
                                 {{$request->address}}
                             </span>
                                 <div class="box-sell-top-mark">
-                                    <img src="{{asset('icon/mark-icon.png')}}">
+                                    @isset($request->book[0])
+                                        <img class="marked" id="mark_{{$request->id}}" aria-valuetext="{{$request->id}}"
+                                             src="{{asset('icon/marked.png')}}">
+                                    @else
+                                        <img class="marked" id="mark_{{$request->id}}" aria-valuetext="{{$request->id}}"
+                                             src="{{asset('icon/mark-icon.png')}}">
+                                    @endisset
                                 </div>
                             </div>
                             <div class="box-sell-bottom-bottom">
@@ -109,26 +119,29 @@
                                 </div>
 
                             </div>
-                            <!--                    <div class="box-sell-bottom">
-                                                    <div class="box-sell-bottom-top">
-                                                        <div class="box-sell-bottom-top-item">
-                                                            <img src="icon/icons8_surface_1.svg">
-                                                            <span>20 متر</span>
-                                                        </div>
-                                                        <div class="box-sell-bottom-top-item">
-                                                            <img src="icon/icons8_sleeping_in_bed_1.svg">
-                                                            <span>3 خواب</span>
-                                                        </div>
-                                                        <div class="box-sell-bottom-top-item">
-                                                            <img src="icon/icons8_home_4.svg">
-                                                            <span>مسکونی</span>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
+                            <div class="box-sell-bottom">
+                                <div class="box-sell-bottom-top">
+                                    <div class="box-sell-bottom-top-item">
+                                        <img src="{{asset('icon/icons8_surface_1.svg')}}">
+                                        <span>{{$request->area}} متر</span>
+                                    </div>
+                                    <div class="box-sell-bottom-top-item">
+                                        <img src="{{asset('icon/icons8_sleeping_in_bed_1.svg')}}">
+                                        <span>{{$request->number_of_room}} خواب</span>
+                                    </div>
+                                    <div class="box-sell-bottom-top-item">
+                                        <img src="{{asset('icon/icons8_home_4.svg')}}">
+                                        <span>{{$request->estateType[0]->text}}</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="box-sell-bottom-bottom-left time">
                                 <span>{{$request->owner_name}}</span>
                                 <span>{{$request->created_at->diffForHumans()}}</span>
                             </div>
+                            @if($request->status == 2)
+                                <span class="bg-danger text-white rounded p-1">واگذار شد</span>
+                            @endif
                         </div>
                     </div>
                 @endforeach

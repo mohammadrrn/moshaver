@@ -27,6 +27,7 @@ class EstateForm extends FormRequest
         return [
             'owner_name' => ['nullable', 'string', 'max:255', 'min:3'],
             'owner_mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
+            'image' => ['nullable'],
             'estate_id' => ['required', 'numeric'],
             'address' => ['required', 'string'],
             'area_id' => ['nullable', 'numeric'],

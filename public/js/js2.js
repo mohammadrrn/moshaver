@@ -150,7 +150,27 @@ $('.ddlViewBy').on('change', function () {
 });
 
 
+$('img.marked').click(function (e) {
+    const marked_id = $(this).attr('aria-valuetext');
+    const id = $(this).attr('id');
+    let _token = $('meta[name="csrf-token"]').attr('content');
 
-
+    $.ajax({
+        url: "/bookmarked",
+        type: "POST",
+        data: {
+            marked_id: marked_id,
+            _token: _token
+        },
+        success: function (response) {
+            if (response) {
+                $("#" + id).attr('src', response.img)
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
 
 

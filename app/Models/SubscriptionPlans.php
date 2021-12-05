@@ -9,6 +9,12 @@ class SubscriptionPlans extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'icon',
+        'properties',
+    ];
+
     public function items()
     {
         return $this->hasMany(SubscriptionPlansItem::class, 'plan_id', 'id');

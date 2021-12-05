@@ -9,10 +9,14 @@ class EstateRequest extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'owner_name',
         'owner_mobile_number',
+        'image',
+        'thumbnail',
         'area_id',
+        'user_id',
         'transfer_id',
         'estate_id',
         'address',
@@ -63,8 +67,34 @@ class EstateRequest extends Model
         return $this->hasMany(Direction::class, 'id', 'direction_id');
     }
 
+    public function transfer()
+    {
+        return $this->hasMany(Transfer::class, 'id', 'transfer_id');
+    }
+
+    public function areas()
+    {
+        return $this->hasMany(Area::class, 'id', 'area_id');
+    }
+
     public function estateType()
     {
         return $this->hasMany(Estate::class, 'id', 'estate_id');
     }
+
+    public function bookmark() // TODO :: delete this relationship
+    {
+        return $this->belongsToMany(EstateRequest::class, 'bookmarks', 'id', 'user_id');
+        //return $this->belongsToMany(EstateRequest::class, 'users', 'id', 'estate_request_id');
+    }
+
+    public function book()
+    {
+        return $this->belongsToMany(EstateRequest::class, 'bookmarks', 'estate_request_id')->wherePivot('user_id', auth()->id());
+    }
+
+    /*public function files()
+    {
+        return $this->belongsToMany(EstateRequest::class, 'zoonkan_file', 'zoonkan_id', 'estate_request_id');
+    }*/
 }

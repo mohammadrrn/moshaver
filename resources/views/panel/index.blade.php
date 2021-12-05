@@ -14,13 +14,9 @@
                          alt="">
                     <span>آگهی های من</span>
                     <div class="bottom-box-1-box-bottom">
-                        <span class="bottom-box-1-box-bottom-right">120</span>
+                        <span class="bottom-box-1-box-bottom-right">{{$data['myEstateRequest']}}</span>
                         <div class="bottom-box-1-box-bottom-left">
-                            <select class="filter-form-control form-control">
-                                <option>امروز</option>
-                                <option>هفته</option>
-                                <option>ماه</option>
-                            </select>
+                            <span>آگهی</span>
                         </div>
                     </div>
                 </div>
@@ -31,24 +27,44 @@
                     <img class="bottom-box-1-box-img-top" src="../icon/PanelAdmin/icons8-pay-date-50.png" alt="">
                     <span>تاانقضای اشتراک</span>
                     <div class="bottom-box-1-box-bottom">
-                        <span class="bottom-box-1-box-bottom-right">30</span>
-                        <div class="bottom-box-1-box-bottom-left">
-                            <span>روز باقی مانده</span>
-                        </div>
+                        @if($data['subscribeExpiry'] == null)
+                            <span class="bottom-box-1-box-bottom-right">
+                                شما اشتراکی ندارید
+                            </span>
+                            <div class="bottom-box-1-box-bottom-left">
+                                <a href="{{route('panel.subscription.plans')}}" class="text-white">خرید اشتراک</a>
+                            </div>
+                        @else
+                            <span class="bottom-box-1-box-bottom-right">
+                                {{$data['subscribeExpiry']}}
+                            </span>
+                            <div class="bottom-box-1-box-bottom-left">
+                                <span>روز</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="bottom-box-1-box">
                     <div class="bottom-box-1-box-img-top-background"></div>
-                    <img class="bottom-box-1-box-img-top" src="../icon/PanelAdmin/icons8-staff-60.png" alt="">
-                    <span>سطح کاربری</span>
-                    <div class="bottom-box-1-box-bottom">
-                        <span class="bottom-box-1-box-bottom-right">نقره ای</span>
-                        <a href="subscription.html" class="bottom-box-1-box-bottom-left">
-                            <span>ارتقا</span>
-                        </a>
-                    </div>
+                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/icons8-staff-60.png')}}" alt="">
+                    <span>اشتراک پنل شما</span>
+                    @if($data['subscribePlan'])
+                        <div class="bottom-box-1-box-bottom">
+                            <span class="bottom-box-1-box-bottom-right">{{$data['subscribePlan']->plan->title}}</span>
+                            <div class="bottom-box-1-box-bottom-left">
+                                <span>{{$data['subscribePlan']->item->time}} ماهه </span>
+                            </div>
+                        </div>
+                    @else
+                        <div class="bottom-box-1-box-bottom">
+                            <span class="bottom-box-1-box-bottom-right">-----</span>
+                            <div class="bottom-box-1-box-bottom-left">
+                                <span>-----</span>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -93,7 +109,7 @@
             </div> -->
 
             <div class="col-12 col-md-6 col-lg-3">
-                <a href="list-product.html" class="services-box">
+                <a href="{{route('panel.estateRequest.myEstateRequest')}}" class="services-box">
                     <img class="services-box-img-1" src="../icon/PanelAdmin/icons8-happy-file-64.png" alt="">
                     <img class="services-box-img-2" src="../icon/PanelAdmin/icons8-happy-file-64-w.png" alt="">
                     <span>
@@ -102,7 +118,7 @@
                 </a>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
-                <a href="list-request.html" class="services-box">
+                <a href="{{route('panel.request.myRequest')}}" class="services-box">
                     <img class="services-box-img-1" src="../icon/PanelAdmin/icons8-important-file-64.png" alt="">
                     <img class="services-box-img-2" src="../icon/PanelAdmin/icons8-important-file-64-w.png" alt="">
                     <span>
@@ -111,7 +127,7 @@
                 </a>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
-                <a href="zoonckan.html" class="services-box">
+                <a href="{{route('panel.zoonkan.createZoonkanForm')}}" class="services-box">
                     <img class="services-box-img-1" src="../icon/PanelAdmin/binder.svg" alt="">
                     <img class="services-box-img-2" src="../icon/PanelAdmin/binder-w.svg" alt="">
                     <span>

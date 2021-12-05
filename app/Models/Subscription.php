@@ -15,4 +15,14 @@ class Subscription extends Model
         'item_id',
         'expiry_date',
     ];
+
+    public function plan()
+    {
+        return $this->hasOne(SubscriptionPlans::class, 'id', 'plan_id');
+    }
+
+    public function item()
+    {
+        return $this->hasOne(SubscriptionPlansItem::class, 'id', 'item_id');
+    }
 }

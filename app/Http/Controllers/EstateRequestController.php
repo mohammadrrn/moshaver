@@ -9,21 +9,30 @@ use App\Models\Estate;
 use App\Models\EstateRequest;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class EstateRequestController extends Controller
 {
 
+    public function myEstateRequest()
+    {
+        $data = [
+            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('user_id', auth()->id())->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+        ];
+        return view('panel.estateRequest.myEstateRequest', compact('data'));
+    }
+
     public function unconfirmedEstateRequestList()
     {
         $data = [
-            'estateRequestList' => EstateRequest::where('status', 0)->orderBy('id', 'desc')->get() // paginate(10)
+            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('status', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
-        return view('estateRequest.unconfirmedEstateRequestList', compact('data'));
+        return view('panel.estateRequest.unconfirmedEstateRequestList', compact('data'));
     }
 
-    public function confirmEstateRequest($id)
+    public function confirmEstateRequest(Request $request)
     {
-        $request = EstateRequest::findOrFail($id);
+        $request = EstateRequest::findOrFail($request->input('estate_request_id'));
         $request->status = 1;
         $request->save();
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
@@ -32,14 +41,14 @@ class EstateRequestController extends Controller
     public function confirmedEstateRequestList()
     {
         $data = [
-            'estateRequestList' => EstateRequest::where('status', 1)->orderBy('id', 'desc')->get() // paginate(10)
+            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('status','!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
-        return view('estateRequest.confirmedEstateRequestList', compact('data'));
+        return view('panel.estateRequest.confirmedEstateRequestList', compact('data'));
     }
 
-    public function unconfirmEstateRequest($id)
+    public function unconfirmEstateRequest(Request $request)
     {
-        $request = EstateRequest::findOrFail($id);
+        $request = EstateRequest::findOrFail($request->input('estate_request_id'));
         $request->status = 0;
         $request->save();
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
@@ -59,7 +68,7 @@ class EstateRequestController extends Controller
             'direction' => $direction,
             'estateRequest' => EstateRequest::findOrFail($id)
         ];
-        return view('estateRequest.updateEstateRequestForm', compact('data'));
+        return view('panel.estateRequest.updateEstateRequestForm', compact('data'));
     }
 
     public function updateEstateRequest(Request $request, $id)
@@ -94,14 +103,14 @@ class EstateRequestController extends Controller
         $data = [
             'estateRequest' => EstateRequest::findOrFail($id)
         ];
-        return view('estateRequest.deleteEstateRequestForm', compact('data'));
+        return view('panel.estateRequest.deleteEstateRequestForm', compact('data'));
     }
 
     public function deleteEstateRequest($id)
     {
         $estateRequest = EstateRequest::findOrFail($id);
         $estateRequest->delete();
-        return redirect(route('home'))->with(['success' => 'عملیات با موفقیت انجام شد']);
+        return redirect(route('panel.index'))->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 
     public function estateForm()
@@ -124,9 +133,16 @@ class EstateRequestController extends Controller
     {
         $checkEstateRequest = EstateRequest::where('owner_mobile_number', $estate['owner_mobile_number'])->where('address', $estate['address'])->where('area', $estate['area'])->where('floor', $estate['floor'])->first();
         if (!$checkEstateRequest) {
+            $imageName = 'estateRequestImg/' . time() . '-image.jpg';
+            $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
+            Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
+            Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
             EstateRequest::create([
+                'user_id' => (auth()->id() != null ? auth()->id() : null),
                 'owner_name' => $estate['owner_name'],
                 'owner_mobile_number' => AssistantController::filterNumber($estate['owner_mobile_number']),
+                'image' => $imageName,
+                'thumbnail' => $thumbnailName,
                 'area_id' => $estate['area_id'],
                 'transfer_id' => $estate['transfer_id'],
                 'estate_id' => $estate['estate_id'],
@@ -136,6 +152,7 @@ class EstateRequestController extends Controller
                 'plaque' => AssistantController::filterNumber($estate['plaque']),
                 'floor' => AssistantController::filterNumber($estate['floor']),
                 'number_of_floor' => AssistantController::filterNumber($estate['number_of_floor']),
+                'number_of_room' => AssistantController::filterNumber($estate['number_of_room']),
                 'apartment_unit' => AssistantController::filterNumber($estate['apartment_unit']),
                 'year_of_construction' => AssistantController::filterNumber($estate['year_of_construction']),
                 'direction_id' => $estate['direction_id'],

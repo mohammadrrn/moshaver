@@ -70,12 +70,14 @@ class RegisterController extends Controller
         $checkVerifyCode = Verification::where('mobile_number', $data['mobile_number'])->where('code', $data['code'])->first();
         if ($checkVerifyCode) {
             //$checkVerifyCode->delete();
-            return User::create([
+            $user = User::create([
                 'full_name' => $data['full_name'],
                 'mobile_number' => $data['mobile_number'],
                 'mac_address' => AssistantController::getMacAddress(),
                 'password' => Hash::make($data['password']),
             ]);
+            $user->attachRole('user');
+            return $user;
         } else {
             echo 'code not found';
             exit();

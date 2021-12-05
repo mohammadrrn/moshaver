@@ -4,7 +4,7 @@
 
 @section('content')
     <main class="container-fluid">
-        <a href="#" class=" back-detile">
+        <a href="{{route('index')}}" class=" back-detile">
             <img src="{{asset('icon/icons8_forward_32px_1.png')}}">
             <span>بازگشت</span>
         </a>
@@ -21,9 +21,8 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="{{asset('img/detile-slider.png')}}"
+                                    <img class="d-block w-100" src="{{asset($data['detail']->image)}}"
                                          alt="First slide">
-                                    <img class="carousel-item-title" src="{{asset('icon/detile-back-img-item.png')}}">
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" src="{{asset('img/img-slider.png')}}" alt="Second slide">
@@ -137,9 +136,29 @@
                         @role('admin')
                         <div class="detile-specifications-top-5">
                             <a class="detile-specifications-top-5-button"
-                               href="{{route('estateRequest.updateEstateRequestForm',$data['detail']->id)}}">ویرایش</a>
-                            <button class="detile-specifications-top-5-button">افزودن به زونکن</button>
-                            <button class="detile-specifications-top-5-button">گزارش واگذاری این ملک</button>
+                               href="{{route('panel.estateRequest.updateEstateRequestForm',$data['detail']->id)}}">ویرایش</a>
+                            @foreach($errors->all() as $error)
+                                {{$error}}
+                            @endforeach
+                            {{session('success')}}
+                            <form method="post" action="{{route('panel.zoonkan.addToZoonkan')}}">
+                                @csrf
+                                <input type="hidden" name="file_id" value="{{$data['detail']->id}}">
+                                <select name="zoonkan_id">
+                                    <option selected disabled>انتخاب زونکن</option>
+                                    @foreach($data['zoonkan'] as $zoonkan)
+                                        <option value="{{$zoonkan->id}}">{{$zoonkan->zoonkan_name}}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="detile-specifications-top-5-button">افزودن به زونکن
+                                </button>
+                            </form>
+                            @if($data['detail']->status != 2)
+                                <a href="{{route('panel.cession.report',$data['detail']->id)}}"
+                                   class="detile-specifications-top-5-button">گزارش واگذاری این ملک</a>
+                            @else
+                                <div class="bg-danger text-white rounded">این ملک واگذار شده است</div>
+                            @endif
                         </div>
                         @endability
                         <!-- <div class="detile-specifications-top-5">
@@ -160,49 +179,23 @@
                 <div class="col-12 detile-more-advertising">
                     <span class="detile-more-advertising-subject">آگهی های مشابه</span>
                     <div class="row detile-more-advertising-box">
-                        <div class="col-12 col-lg-4">
-                            <div class="detile-more-advertising-box-item">
-                                <img src="{{asset('img/img-slider.png')}}" alt="">
-                                <img class="detile-more-advertising-box-item-back"
-                                     src="{{asset('icon/detile-back-img-item.png')}}">
-                                <span class="detile-more-advertising-box-item-title">فروش ویلایی سید رضی</span>
-                                <div class="detile-more-advertising-box-item-bottom">
-                                    <span>4 روز پیش</span>
-                                    <span>4خواب</span>
-                                    <span>410 متر</span>
-                                    <span>مسکونی</span>
-                                </div>
+                        @foreach($data['similar'] as $similar)
+                            <div class="col-12 col-lg-4">
+                                <a href="{{route('detail',$similar->id)}}">
+                                    <div class="detile-more-advertising-box-item">
+                                        <img src="{{asset($similar->image)}}" alt="">
+                                        <span
+                                            class="detile-more-advertising-box-item-title">{{$similar->address}}</span>
+                                        <div class="detile-more-advertising-box-item-bottom">
+                                            <span>{{$similar->created_at->diffForHumans()}}</span>
+                                            <span>{{$similar->number_of_room}} اتاق </span>
+                                            <span>{{$similar->area}} متر </span>
+                                            <span>{{$similar->estateType[0]->text}}</span>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="detile-more-advertising-box-item">
-                                <img src="{{asset('img/img-slider.png')}}" alt="">
-                                <img class="detile-more-advertising-box-item-back"
-                                     src="{{asset('icon/detile-back-img-item.png')}}">
-                                <span class="detile-more-advertising-box-item-title">فروش ویلایی سید رضی</span>
-                                <div class="detile-more-advertising-box-item-bottom">
-                                    <span>4 روز پیش</span>
-                                    <span>4خواب</span>
-                                    <span>410 متر</span>
-                                    <span>مسکونی</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="detile-more-advertising-box-item">
-                                <img src="{{asset('img/img-slider.png')}}" alt="">
-                                <img class="detile-more-advertising-box-item-back"
-                                     src="{{asset('icon/detile-back-img-item.png')}}">
-                                <span class="detile-more-advertising-box-item-title">فروش ویلایی سید رضی</span>
-                                <div class="detile-more-advertising-box-item-bottom">
-                                    <span>4 روز پیش</span>
-                                    <span>4خواب</span>
-                                    <span>410 متر</span>
-                                    <span>مسکونی</span>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
 
                 </div>

@@ -776,7 +776,7 @@ main .main-box-center .box-sell-top-title {
     right: 0;
     background: rgba(29, 29, 29, 0.61);
     color: #fff;
-    border-radius: 0 0  5px 5px;
+    border-radius: 0 0 5px 5px;
     padding: 4px 6px 6px 0;
     font-size: 14px;
 }
@@ -1020,6 +1020,7 @@ footer .me {
     header .header-right ul {
         display: none;
     }
+
     .header-right-icon-moshaver:hover {
         cursor: pointer;
     }
@@ -1043,6 +1044,7 @@ footer .me {
         -ms-flex-pack: center;
         justify-content: center;
     }
+
     .main-box-top-left-item {
         padding: 35px;
         margin: 5px 10px;
@@ -1439,16 +1441,19 @@ footer .me {
     .box-body-login .overlay-container {
         display: none;
     }
+
     .box-body-login .sign-in-container {
         width: 100%;
         -webkit-transform: translateX(0);
         transform: translateX(0);
     }
+
     .box-body-login .sign-up-container {
         width: 100%;
         -webkit-transform: translateX(100%);
         transform: translateX(100%);
     }
+
     .box-body-login button.ghost-responsiv {
         display: block;
     }
@@ -1458,19 +1463,24 @@ footer .me {
     .box-body-login .overlay-container {
         display: block;
     }
+
     .box-body-login .sign-in-container {
         width: 50%;
     }
+
     .box-body-login .sign-up-container {
         width: 50%;
     }
+
     .box-body-login button.ghost-responsiv {
         display: none;
     }
+
     .box-body-login .container.right-panel-active .sign-in-container {
         -webkit-transform: translateX(100%) !important;
         transform: translateX(100%) !important;
     }
+
     .box-body-login .container.right-panel-active .sign-up-container {
         -webkit-transform: translateX(100%) !important;
         transform: translateX(100%) !important;
@@ -1674,6 +1684,7 @@ footer .me {
 
 .detile-specifications-top-5-button {
     background: #12c2e9;
+    text-align: center;
     color: #fff;
     font-size: 13px;
     padding: 8px 10px;
@@ -2060,6 +2071,12 @@ main {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+
+.trusted-offices-img {
+    height: 210px;
+    border-radius: 5px;
+    margin-right: 3px;
 }
 
 .trusted-offices .trusted-offices-box {
@@ -2584,4 +2601,5 @@ fieldset .comment-user-star:hover {
 #box-by {
     display: none;
 }
+
 /*# sourceMappingURL=style.css.map */

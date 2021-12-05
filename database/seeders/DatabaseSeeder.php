@@ -8,6 +8,8 @@ use App\Models\Direction;
 use App\Models\Estate;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\SubscriptionPlans;
+use App\Models\SubscriptionPlansItem;
 use App\Models\Transfer;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -34,7 +36,7 @@ class DatabaseSeeder extends Seeder
         $admin_role->attachPermissions([$permission_admin]);
 
         $author_role = Role::create([
-            'name' => 'author',
+            'name' => 'writer',
             'display_name' => 'نویسنده',
             'description' => 'نویسنده سایت',
         ]);
@@ -45,16 +47,22 @@ class DatabaseSeeder extends Seeder
         ]);
         $author_role->attachPermissions([$permission_author]);
 
+        $user_role = Role::create([
+            'name' => 'user',
+            'display_name' => 'کاربر عادی',
+            'description' => 'کاربر عادی سایت',
+        ]);
+
         $admin = User::create([
             'full_name' => 'سعید قلی پور',
             'mobile_number' => '09900787232',
-            'mac_address' => AssistantController::getMacAddress(),
+            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
             'password' => bcrypt('saeed23s'),
         ]);
         $author = User::create([
             'full_name' => 'محمدرضا',
             'mobile_number' => '09921190611',
-            'mac_address' => AssistantController::getMacAddress(),
+            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
             'password' => bcrypt('saeed23s'),
         ]);
         $admin->attachRole($admin_role);
@@ -82,6 +90,44 @@ class DatabaseSeeder extends Seeder
         ]);
         Direction::create([
             'text' => 'جنوبی'
+        ]);
+
+        SubscriptionPlans::create([
+            'title' => 'اشتراک طلایی',
+            'icon' => 'icon/PanelAdmin/diamond-gold.svg',
+            'properties' => json_encode([
+                'property 1',
+                'property 2',
+            ]),
+        ]);
+        SubscriptionPlansItem::create([
+            'plan_id' => 1,
+            'plan_price' => 20000,
+            'time' => 2,
+        ]);
+        SubscriptionPlansItem::create([
+            'plan_id' => 1,
+            'plan_price' => 10000,
+            'time' => 1,
+        ]);
+
+        SubscriptionPlans::create([
+            'title' => 'اشتراک نقره ای',
+            'icon' => 'icon/PanelAdmin/diamond-silver.svg',
+            'properties' => json_encode([
+                'property 1',
+                'property 2',
+            ]),
+        ]);
+        SubscriptionPlansItem::create([
+            'plan_id' => 2,
+            'plan_price' => 10000,
+            'time' => 2,
+        ]);
+        SubscriptionPlansItem::create([
+            'plan_id' => 2,
+            'plan_price' => 5000,
+            'time' => 1,
         ]);
     }
 }

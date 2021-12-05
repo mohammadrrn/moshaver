@@ -15,6 +15,7 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->comment('آیدی کاربر')->nullable();
             $table->string('full_name')->comment('نام و نام خانوادگی');
             $table->string('mobile_number', 11)->comment('شماره همراه');
             $table->unsignedBigInteger('area_id')->comment('آیدی منطقه');
@@ -29,6 +30,7 @@ class CreateRequestsTable extends Migration
             $table->boolean('status')->comment('وضعیت درخواست')->default(0);
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('transfer_id')->references('id')->on('transfers');
             $table->foreign('estate_id')->references('id')->on('estates');

@@ -9,7 +9,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('search')}}">
                         جستجو
                     </a>
                 </li>
@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('search','marked')}}">
                         نشان شده
                     </a>
                 </li>
@@ -58,27 +58,27 @@
         <div class="menu-responsive">
             <ul>
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('index')}}">
                         صفحه اصلی
                     </a>
                 </li>
                 <li>
-                    <a href="filter.html">
+                    <a href="{{route('search')}}">
                         جستجو
                     </a>
                 </li>
                 <li>
-                    <a href="send-request-user.html">
+                    <a href="{{route('request.requestForm')}}">
                         ارسال درخواست
                     </a>
                 </li>
                 <li>
-                    <a href="send-product.html">
+                    <a href="{{route('request.estateForm')}}">
                         ثبت ملک
                     </a>
                 </li>
                 <li>
-                    <a href="filter.html">
+                    <a href="{{route('search','marked')}}">
                         نشان شده
                     </a>
                 </li>

@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="full_name" value="{{old('full_name')}}" >
+                        <input type="text" name="full_name" value="{{old('full_name')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>نام و نام خانوادگی</label>
@@ -29,7 +29,7 @@
                 <div class="col-12 view-order">
                     <div class="group">
                         <input type="text" name="mobile_number" value="{{old('mobile_number')}}"
-                               >
+                        >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>شماره همراه</label>
@@ -76,7 +76,7 @@
                     <div class="group">
 
                         <input type="text" name="range_of_address" value="{{old('range_of_address')}}"
-                               >
+                        >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>حدود آدرس</label>
@@ -87,7 +87,7 @@
                     <div class="group">
 
                         <input type="text" name="rang_of_area" value="{{old('rang_of_area')}}"
-                               >
+                        >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>حدود متراژ درخواستی </label>
@@ -105,7 +105,7 @@
                 <div id="box-mortgage" class="col-12 view-order">
                     <div class="group">
                         <input type="text" id="mortgage_price" name="mortgage_price" value="{{old('mortgage_price')}}"
-                               >
+                        >
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>مبلغ رهن</label>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">
-                        <input type="text" name="description" value="{{old('description')}}" >
+                        <input type="text" name="description" value="{{old('description')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>توضیحات</label>
@@ -142,12 +142,7 @@
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d803.9581469254231!2d59.648435570803976!3d36.292111779697215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f6c919f28d0eef9%3A0xd77646c62e69afdc!2z2qnbjNmBINmIINqp2YHYtCDYotix2qnYpw!5e0!3m2!1sfa!2sus!4v1625319036294!5m2!1sfa!2sus">
                                     </iframe>
                                 </div>-->
-
-
-                <div class="box-theree">
-                    <img class="box-theree-1" src="{{asset('icon/icons8_camera_26px.png')}}" alt="">
-                </div>
-                <button type="submit" class="btn insert-btn">ثبت فایل</button>
+                <button type="submit" class="btn insert-btn">ثبت درخواست</button>
             </form>
         </div>
     </main>

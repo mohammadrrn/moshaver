@@ -20,12 +20,17 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'real_estate_name',
         'full_name',
         'mobile_number',
         'mac_address',
         'national_code',
         'email',
-        'password'
+        'password',
+        'status',
+        'address',
+        'score',
+        'trusted_office'
     ];
 
     /**
@@ -46,4 +51,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function plan()
+    {
+        return $this->belongsToMany(SubscriptionPlans::class, 'subscriptions', 'user_id', 'plan_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsToMany(SubscriptionPlansItem::class, 'subscriptions', 'user_id', 'item_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

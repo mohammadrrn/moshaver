@@ -20,7 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('national_code')->comment('کد ملی')->nullable();
             $table->string('email')->comment('ایمیل')->nullable();
             $table->string('password')->comment('کلمه عبور');
+            $table->string('address')->comment('آدرس')->nullable();
             $table->boolean('status')->comment('وضعیت کاربر')->default(0);
+            $table->string('reason_for_blocking')->comment('علت مسدودی')->nullable();
+            $table->boolean('profileStatus')->comment('وضعیت پروفایل کاربر')->default(0);
             $table->string('mac_address')->comment('مک آدرس');
             $table->rememberToken();
             $table->timestamps();
