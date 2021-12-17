@@ -114,7 +114,8 @@
                                         <span class="id-home">کد ملک : {{$request->estate[0]->id}}</span>
                                         <div class="box-sell-top">
                                             <a href="{{route('detail',$request->estate[0]->id)}}">
-                                                <img class="box-sell-top-img" src="{{asset('img/img-slider.png')}}">
+                                                <img class="box-sell-top-img"
+                                                     src="{{asset($request->estate[0]->thumbnail)}}">
                                             </a>
                                             <span class="box-sell-top-title">
                                         {{$request->estate[0]->address}}

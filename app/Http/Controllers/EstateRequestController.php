@@ -32,16 +32,19 @@ class EstateRequestController extends Controller
 
     public function confirmEstateRequest(Request $request)
     {
-        $request = EstateRequest::findOrFail($request->input('estate_request_id'));
-        $request->status = 1;
-        $request->save();
+
+        $confirm = EstateRequest::findOrFail($request->input('estate_request_id'));
+        $confirm->status = 1;
+        $confirm->save();
+        ActionController::actionRegister($confirm, 'confirmed');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 
     public function confirmedEstateRequestList()
     {
+        //echo auth()->user()->roles[0]->name;
         $data = [
-            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('status','!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+            'estateRequestList' => EstateRequest::with('user')->with('direction')->with('estateType')->with('areas')->with('transfer')->where('status', '!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
         return view('panel.estateRequest.confirmedEstateRequestList', compact('data'));
     }
@@ -51,6 +54,7 @@ class EstateRequestController extends Controller
         $request = EstateRequest::findOrFail($request->input('estate_request_id'));
         $request->status = 0;
         $request->save();
+        ActionController::actionRegister($request, 'unconfirmed');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 
@@ -95,6 +99,7 @@ class EstateRequestController extends Controller
             $estateRequest->update($request->all());
             $estateRequest->save();
         }
+        ActionController::actionRegister($estateRequest, 'update');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 
@@ -110,6 +115,7 @@ class EstateRequestController extends Controller
     {
         $estateRequest = EstateRequest::findOrFail($id);
         $estateRequest->delete();
+        ActionController::actionRegister($estateRequest, 'delete');
         return redirect(route('panel.index'))->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 
@@ -137,7 +143,7 @@ class EstateRequestController extends Controller
             $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
             Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
             Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
-            EstateRequest::create([
+            $estateRequest = EstateRequest::create([
                 'user_id' => (auth()->id() != null ? auth()->id() : null),
                 'owner_name' => $estate['owner_name'],
                 'owner_mobile_number' => AssistantController::filterNumber($estate['owner_mobile_number']),
@@ -187,7 +193,9 @@ class EstateRequestController extends Controller
                 'barbecue' => $estate['barbecue'],
                 'unit_zero' => $estate['unit_zero'],
                 'roof_garden' => $estate['roof_garden'],
+                'status' => (auth()->user()->roles[0]->name == 'writer') ? 1 : 0
             ]);
+            ActionController::actionRegister($estateRequest, 'insert');
             return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
         }
         return redirect()->back()->with(['success' => 'این درخواست قبلا ثبت شده است']);

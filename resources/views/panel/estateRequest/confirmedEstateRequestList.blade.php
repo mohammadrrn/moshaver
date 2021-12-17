@@ -54,6 +54,7 @@
                     <tr>
                         <th>کد درخواست</th>
                         <th>نام و نام خانوادگی مالک</th>
+                        <th>نقش</th>
                         <th>شماره تماس مالک</th>
                         <th>منطقه</th>
                         <th>نوع واگذاری</th>
@@ -79,6 +80,13 @@
                         <tr>
                             <td>{{$request->id}}</td>
                             <td>{{$request->owner_name}}</td>
+                            <td>
+                                @if($request->user_id)
+                                    {{$request->user[0]->roles[0]->display_name}}
+                                @else
+                                    بازدیدکننده
+                                @endif
+                            </td>
                             <td>{{$request->owner_mobile_number}}</td>
                             <td>{{$request->areas[0]->text}}</td>
                             <td>{{$request->transfer[0]->text}}</td>

@@ -17,7 +17,6 @@
 @include('layouts.siteMenu')
 
 @yield('content')
-
 @include('layouts.footer')
 
 <script src="{{asset('js/jq.js')}}"></script>

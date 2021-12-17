@@ -46,40 +46,24 @@
                     <button type="submit" class="btn btn-lg btn-block moshaver-insert">ثبت نویسنده</button>
                 </form>
             </div>
-            <!--            <div class="col-md-12 col-lg-6 add-moshaver">
-                            <div class="form">
-                                <div class="form-top">
-                                    <span>جستجو کاربر</span>
+            <div class="col-md-12 col-lg-6 add-moshaver">
+                <div class="form">
+                    <div class="form-top">
+                        <span>جستجوی عملکرد</span>
 
-                                </div>
-                                <div class="group">
-                                    <input type="text"/>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>نام و نام خانوادگی</label>
-                                </div>
-                                <div class="group">
-                                    <input type="text"/>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>کد کاربر</label>
-                                </div>
-                                <div class="group">
-                                    <input type="text"/>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>شماره همراه</label>
-                                </div>
-
-                                <div class="group">
-                                    <input type="text"/>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>ایمیل</label>
-                                </div>
-                                <button type="button" class="btn btn-lg btn-block moshaver-insert">جستجو نویسنده</button>
-                            </div>
-                        </div>-->
+                    </div>
+                    <form action="{{route('panel.writer.searchAction')}}" method="post">
+                        @csrf
+                        <div class="group">
+                            <input type="text" name="code"/>
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>کد ملک</label>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block moshaver-insert">جستجوی عملکرد</button>
+                    </form>
+                </div>
+            </div>
 
             <div class="col-md-12  list-moshaver">
                 <div class="row">
@@ -90,10 +74,21 @@
                                 <div class="add-moshaver-box-specifications justify-content-center">
                                     <span>کد : {{$writer->id}}</span>
                                 </div>
+                                <span>تعداد آگهی های ثبت شده : {{count($writer->estateRequest)}}</span>
                                 <span>{{$writer->full_name}}</span>
-                                <form method="post" action="{{route('panel.writer.inactive',$writer->id)}}">
+                                <form method="post"
+                                      action="{{($writer->status == 2 || $writer->status == 0) ? route('panel.writer.active',$writer->id) : route('panel.writer.inactive',$writer->id)}}">
                                     @csrf
-                                    <button class="btn-block-user">مسدود سازی</button>
+                                    @if($writer->status == 1 || $writer->status == 0)
+                                        <button class="btn btn-sm btn-danger">مسدود سازی</button>
+                                    @else
+                                        <button class="btn btn-sm btn-success">آزاد سازی</button>
+                                    @endif
+                                    <a href="{{route('panel.writer.writerActions',$writer->id)}}"
+                                       class="btn btn-sm btn-primary">مشاهده
+                                        عملکرد</a>
+                                    <a href="{{route('panel.writer.updateForm',$writer->id)}}"
+                                       class="btn btn-sm btn-warning">ویرایش</a>
                                 </form>
                             </div>
                         </div>

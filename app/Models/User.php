@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function estateRequest()
+    {
+        return $this->hasMany(EstateRequest::class, 'user_id', 'id');
+    }
 }

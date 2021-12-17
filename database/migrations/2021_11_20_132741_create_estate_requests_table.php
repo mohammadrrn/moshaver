@@ -14,7 +14,7 @@ class CreateEstateRequestsTable extends Migration
     public function up()
     {
         Schema::create('estate_requests', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from(4000);
             $table->string('owner_name')->comment('نام و نام خانوادگی مالک')->nullable();
             $table->string('owner_mobile_number', 11)->comment('شماره همراه مالک');
             $table->unsignedBigInteger('user_id')->comment('آیدی کاربر')->nullable();

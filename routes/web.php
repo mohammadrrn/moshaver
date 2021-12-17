@@ -23,6 +23,9 @@ Route::get('/test', function () {
 
 });
 
+/*Route::get('/send', [App\Http\Controllers\SiteController::class, 'send'])->name('send');
+Route::get('/received', [App\Http\Controllers\SiteController::class, 'received'])->name('received');*/
+
 
 /* --------------- Public Routes ---------------  */
 
@@ -77,7 +80,7 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
     Route::patch('/changePassword', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('changePassword');
 
     Route::get('/estateRequest/myEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'myEstateRequest'])->name('estateRequest.myEstateRequest')->middleware('completeProfile');
-    Route::name('estateRequest.')->prefix('estateRequest')->middleware(['role:admin'])->group(function () {
+    Route::name('estateRequest.')->prefix('estateRequest')->middleware(['role:admin|writer'])->group(function () {
 
         Route::get('/confirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'confirmedEstateRequestList'])->name('confirmedEstateRequestList');
         Route::post('/unConfirmEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'unConfirmEstateRequest'])->name('unConfirmEstateRequest');
@@ -114,6 +117,12 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::get('/addWriterForm', [App\Http\Controllers\WriterController::class, 'addWriterForm'])->name('addWriterForm');
         Route::post('/addWriter', [App\Http\Controllers\WriterController::class, 'addWriter'])->name('addWriter');
         Route::post('/inactive/{id}', [App\Http\Controllers\WriterController::class, 'inactive'])->name('inactive');
+        Route::post('/active/{id}', [App\Http\Controllers\WriterController::class, 'active'])->name('active');
+
+        Route::get('/writerActions/{id}', [App\Http\Controllers\WriterController::class, 'writerActions'])->name('writerActions');
+        Route::post('/searchAction', [App\Http\Controllers\WriterController::class, 'searchAction'])->name('searchAction');
+        Route::get('/updateForm/{id}', [App\Http\Controllers\WriterController::class, 'updateForm'])->name('updateForm');
+        Route::post('/update', [App\Http\Controllers\WriterController::class, 'update'])->name('update');
     });
 
     Route::name('trustedOffices.')->prefix('trustedOffices')->middleware(['role:admin'])->group(function () {
@@ -142,13 +151,14 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::post('/createZoonkan', [App\Http\Controllers\ZoonkanController::class, 'createZoonkan'])->name('createZoonkan');
         Route::post('/addToZoonkan', [App\Http\Controllers\ZoonkanController::class, 'addToZoonkan'])->name('addToZoonkan');
         Route::get('/zoonkanFiles/{zoonkanId}', [App\Http\Controllers\ZoonkanController::class, 'zoonkanFiles'])->name('zoonkanFiles');
+        Route::post('/removeFormZoonkan', [App\Http\Controllers\ZoonkanController::class, 'removeFormZoonkan'])->name('removeFormZoonkan');
     });
 
     Route::prefix('invoice')->name('invoice.')->middleware('completeProfile')->group(function () {
         Route::get('/invoicesList', [App\Http\Controllers\InvoiceController::class, 'invoicesList'])->name('invoicesList');
     });
 
-    Route::prefix('cession')->name('cession.')->group(function () {
+    Route::prefix('cession')->name('cession.')->middleware('role:admin|writer')->group(function () {
         Route::get('/report/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'report'])->name('report');
         Route::get('/reportsList', [App\Http\Controllers\CessionController::class, 'reportsList'])->name('reportsList');
         Route::post('/confirmCession/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'confirmCession'])->name('confirmCession');

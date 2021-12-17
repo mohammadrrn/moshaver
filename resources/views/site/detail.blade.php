@@ -83,7 +83,15 @@
                             @endif
                             <div class="detile-specifications-top-2-left">
                                 <img src="{{asset('icon/error.svg')}}">
-                                <img src="{{asset('icon/bookmark.svg')}}">
+                                @isset($data['detail']->bookmark)
+                                    <img class="marked" id="mark_{{$data['detail']->id}}"
+                                         aria-valuetext="{{$data['detail']->id}}"
+                                         src="{{asset('icon/marked.png')}}">
+                                @else
+                                    <img class="marked" id="mark_{{$data['detail']->id}}"
+                                         aria-valuetext="{{$data['detail']->id}}"
+                                         src="{{asset('icon/mark-icon.png')}}">
+                                @endisset
                                 <img src="{{asset('icon/share.svg')}}">
                             </div>
                         </div>
@@ -94,7 +102,15 @@
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/phone.svg')}}">
-                                <span>{{$data['detail']->owner_mobile_number}}</span>
+                                </span>
+                                @if($data['detail']->status == 2)
+                                    ------
+                                @elseif(!auth()->user())
+                                    ابتدا لاگین کنید
+                                @else
+                                    {{$data['detail']->owner_mobile_number}}
+                                @endif
+                                <span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/planner.svg')}}">
@@ -102,7 +118,15 @@
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/address.svg')}}">
-                                <span>{{$data['detail']->address.' - '. $data['detail']->street_name}}</span>
+                                <span>
+                                    @if($data['detail']->status == 2)
+                                        ------
+                                    @elseif(!auth()->user())
+                                        ابتدا لاگین کنید
+                                    @else
+                                        {{$data['detail']->address.' - '. $data['detail']->street_name}}
+                                    @endif
+                                </span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/sleeping_in_bed.svg')}}">
@@ -118,7 +142,15 @@
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/male_user.svg')}}">
-                                <span>{{$data['detail']->owner_name}}</span>
+                                <span>
+                                    @if($data['detail']->status == 2)
+                                        ------
+                                    @elseif(!auth()->user())
+                                        ابتدا لاگین کنید
+                                    @else
+                                        {{$data['detail']->owner_name}}
+                                    @endif
+                                </span>
                             </div>
                         </div>
 
@@ -144,6 +176,8 @@
                             <form method="post" action="{{route('panel.zoonkan.addToZoonkan')}}">
                                 @csrf
                                 <input type="hidden" name="file_id" value="{{$data['detail']->id}}">
+                                <input type="number" min="0" placeholder="چند روز تا تخلیه باقی مانده ؟"
+                                       name="evacuation_day" class="evacuation">
                                 <select name="zoonkan_id">
                                     <option selected disabled>انتخاب زونکن</option>
                                     @foreach($data['zoonkan'] as $zoonkan)

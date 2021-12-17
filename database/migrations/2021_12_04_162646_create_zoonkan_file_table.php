@@ -18,6 +18,7 @@ class CreateZoonkanFileTable extends Migration
             $table->unsignedBigInteger('zoonkan_id')->comment('آیدی زونکن');
             $table->unsignedBigInteger('estate_request_id')->comment('آیدی درخواست');
             $table->unsignedBigInteger('user_id')->comment('آیدی کاربر');
+            $table->timestamp('evacuation_day')->comment('تعداد روز های باقی مانده تا تخلیه');
             $table->timestamps();
 
             $table->foreign('zoonkan_id')->references('id')->on('zoonkans');

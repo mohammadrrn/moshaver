@@ -13,23 +13,25 @@ use App\Models\SubscriptionPlans;
 use App\Models\SubscriptionPlansItem;
 use App\Models\Transfer;
 use App\Models\TrustedOffice;
-use App\Models\User;
 use App\Models\Zoonkan;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Zarinpal\Zarinpal;
 
 class SiteController extends Controller
 {
+
+    use Notifiable;
 
     private $searchPagination = 10;
     private $trustedOfficePagination = 10;
 
     public function detail($id)
     {
-        $userZoonkan = Zoonkan::where('user_id', auth()->id())->get();
-        $estateRequest = EstateRequest::with('estateType')->with('direction')->where('status', '!=', 0)->findOrFail($id);
+        $userZoonkan = Zoonkan::where('user_id', auth()->id())->get(); // TODO : if buy gold plan then fetch zoonkan for best performance
+        $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('status', '!=', 0)->findOrFail($id);
         $similar = EstateRequest::with('estateType')->with('direction')->where('area_id', $estateRequest->area_id)->where('status', '!=', 0)->where('id', '!=', $estateRequest->id)->take(3)->get();
         $data = [
             'detail' => $estateRequest,
@@ -61,13 +63,13 @@ class SiteController extends Controller
         switch ($type) {
             case 'rentAndMortgage':
                 $where = [
-                    ['rent_price', '>', 0],
-                    ['mortgage_price', '>', 0]
+                    ['rent_price', '!=', 0],
+                    ['mortgage_price', '!=', 0]
                 ];
                 break;
             case 'buy':
                 $where = [
-                    ['buy_price', '>', 0],
+                    ['buy_price', '!=', 0],
                 ];
                 break;
         }

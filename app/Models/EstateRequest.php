@@ -60,6 +60,7 @@ class EstateRequest extends Model
         'barbecue',
         'unit_zero',
         'roof_garden',
+        'status'
     ];
 
     public function direction()
@@ -82,15 +83,20 @@ class EstateRequest extends Model
         return $this->hasMany(Estate::class, 'id', 'estate_id');
     }
 
-    public function bookmark() // TODO :: delete this relationship
+    public function bookmark()
     {
-        return $this->belongsToMany(EstateRequest::class, 'bookmarks', 'id', 'user_id');
+        return $this->hasOne(Bookmarks::class, 'estate_request_id', 'id')->where('user_id', auth()->id());
         //return $this->belongsToMany(EstateRequest::class, 'users', 'id', 'estate_request_id');
     }
 
     public function book()
     {
         return $this->belongsToMany(EstateRequest::class, 'bookmarks', 'estate_request_id')->wherePivot('user_id', auth()->id());
+    }
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
     }
 
     /*public function files()

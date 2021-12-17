@@ -75,4 +75,27 @@ class AssistantController extends Controller
     {
         return auth()->user()->roles[0]->name;
     }
+
+    public static function adminPermissions(): array
+    {
+        return [
+            'add-writer',
+            'inactivity-writer',
+            'active-writer',
+            'edit-writer',
+            'confirm-estate-request',
+            'update-estate-request',
+            'delete-estate-request'
+        ];
+    }
+
+    public static function writerPermissions(): array
+    {
+        return [
+            'confirm-estate-request',
+            'update-estate-request',
+            'delete-estate-request'
+        ];
+    }
+
 }

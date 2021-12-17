@@ -17,7 +17,7 @@ class CompleteProfile
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->profileStatus != 1 && AssistantController::getUserRole() != 'admin')
+        if (auth()->user()->profileStatus == 0 && AssistantController::getUserRole() != 'admin')
             return redirect(route('panel.profile'))->withErrors('ابتدا پروفایل کاربری خود را تکمیل کنید');
         return $next($request);
     }

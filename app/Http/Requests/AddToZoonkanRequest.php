@@ -26,6 +26,7 @@ class AddToZoonkanRequest extends FormRequest
         return [
             'zoonkan_id' => ['required', 'numeric'],
             'file_id' => ['required', 'numeric'],
+            'evacuation_day' => ['required', 'numeric']
         ];
     }
 }

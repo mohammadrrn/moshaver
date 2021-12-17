@@ -23,54 +23,108 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /* --------------------------- Default User --------------------------- */
+        $admin_user = User::create([
+            'full_name' => 'سعید قلی پور',
+            'mobile_number' => '09900787232',
+            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
+            'password' => bcrypt('saeed23s'),
+        ]);
+
+        $writer_user = User::create([
+            'full_name' => 'محمدرضا',
+            'mobile_number' => '09921190611',
+            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
+            'password' => bcrypt('saeed23s'),
+        ]);
+
+        $normal_user = User::create([
+            'full_name' => 'مهدی قلی پور',
+            'mobile_number' => '09357144171',
+            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
+            'password' => bcrypt('saeed23s'),
+        ]);
+        /* --------------------------- Default User --------------------------- */
+
+
+        /* --------------------------- Roles --------------------------- */
         $admin_role = Role::create([
             'name' => 'admin',
             'display_name' => 'مدیر',
             'description' => 'مدیر کل سیستم',
         ]);
-        $permission_admin = Permission::create([
-            'name' => 'add-author',
-            'display_name' => 'افزودن نویسنده',
-            'description' => 'امکان افزودن نویسنده',
-        ]);
-        $admin_role->attachPermissions([$permission_admin]);
 
-        $author_role = Role::create([
+        $writer_role = Role::create([
             'name' => 'writer',
             'display_name' => 'نویسنده',
             'description' => 'نویسنده سایت',
         ]);
-        $permission_author = Permission::create([
-            'name' => 'confirm-file',
-            'display_name' => 'تایید فایل',
-            'description' => 'تایید ملک های ثبت شده توسط کاربر',
-        ]);
-        $author_role->attachPermissions([$permission_author]);
 
         $user_role = Role::create([
             'name' => 'user',
             'display_name' => 'کاربر عادی',
             'description' => 'کاربر عادی سایت',
         ]);
+        /* --------------------------- Roles --------------------------- */
 
-        $admin = User::create([
-            'full_name' => 'سعید قلی پور',
-            'mobile_number' => '09900787232',
-            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
-            'password' => bcrypt('saeed23s'),
-        ]);
-        $author = User::create([
-            'full_name' => 'محمدرضا',
-            'mobile_number' => '09921190611',
-            'mac_address' => 'mac_address', // AssistantController::getMacAddress()
-            'password' => bcrypt('saeed23s'),
-        ]);
-        $admin->attachRole($admin_role);
-        $author->attachRole($author_role);
+        /* --------------------------- Permissions --------------------------- */
 
-        $admin->attachPermission($permission_admin);
-        $admin->attachPermission($permission_author);
-        $author->attachPermission($permission_author);
+        /* Writer Permission */
+        Permission::create([
+            'name' => 'confirm-estate-request',
+            'display_name' => 'تایید ثبت ملک',
+            'description' => 'تایید آگهی های ثبت ملک',
+        ]);
+        Permission::create([
+            'name' => 'update-estate-request',
+            'display_name' => 'ویرایش ثبت ملک',
+            'description' => 'ویرایش آگهی های ثبت ملک',
+        ]);
+        Permission::create([
+            'name' => 'delete-estate-request',
+            'display_name' => 'حذف ثبت ملک',
+            'description' => 'حذف آگهی های ثبت ملک',
+        ]);
+        /* Writer Permission */
+
+        /* Admin Permission */
+        Permission::create([
+            'name' => 'add-writer',
+            'display_name' => 'افزودن نویسنده',
+            'description' => 'افزودن نویسنده به سایت',
+        ]);
+
+        Permission::create([
+            'name' => 'inactivity-writer',
+            'display_name' => 'مسدود سازی نویسنده',
+            'description' => 'مسدود سازی نویسنده',
+        ]);
+
+        Permission::create([
+            'name' => 'active-writer',
+            'display_name' => 'آزادسازی نویسنده',
+            'description' => 'آزادسازی نویسنده',
+        ]);
+
+        Permission::create([
+            'name' => 'edit-writer',
+            'display_name' => 'ویرایش نویسنده',
+            'description' => 'ویرایش اطلاعات نویسنده',
+        ]);
+        /* Admin Permission */
+
+        /* --------------------------- Permissions --------------------------- */
+
+
+        /* --------------------------- Attach Permissions --------------------------- */
+        $writer_role->attachPermissions(AssistantController::writerPermissions());
+        $admin_role->attachPermissions(AssistantController::adminPermissions());
+        /* --------------------------- Attach Permissions --------------------------- */
+
+        $admin_user->attachRole('admin');
+        $writer_user->attachRole('writer');
+        $normal_user->attachRole('user');
+
 
         Area::create([
             'text' => 'منطقه 1 : هاشمیه - الهیه - سجاد'

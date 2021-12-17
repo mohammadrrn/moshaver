@@ -192,6 +192,7 @@ return [
         'zoonkan_color' => 'رنگ زونکن',
         'zoonkan_id' => 'زونکن',
         'file_id' => 'فایل',
+        'evacuation_day' => 'روز باقی مانده تا تخلیه',
     ],
 
 ];

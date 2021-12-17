@@ -14,7 +14,8 @@ class MyZoonkan extends Model
     protected $fillable = [
         'zoonkan_id',
         'estate_request_id',
-        'user_id'
+        'user_id',
+        'evacuation_day'
     ];
 
     public function files()

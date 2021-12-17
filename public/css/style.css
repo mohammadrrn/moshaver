@@ -45,6 +45,14 @@ body {
     z-index: 9999;
 }
 
+.evacuation {
+    width: 50%;
+    border: 1px solid #dbdbdb;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 0 5px
+}
+
 .support .support-icon {
     width: 40px;
     background: #03a9f4;
