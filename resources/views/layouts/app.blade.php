@@ -9,6 +9,8 @@
     <title>
         @hasSection('title')
             @yield('title')
+        @else
+            پنل مدیریت
         @endif
     </title>
 </head>
@@ -78,13 +80,33 @@
             @include('layouts.panelMenu')
         </div>
         @if(session('success'))
-            <div class="bg-success">{{session('success')}}</div>
+            <div class="alert alert-success alert-dismissible alert-message" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    &times;
+                </span>
+                </button>
+                <span>
+                <strong>پیام : </strong>
+                {{session('success')}}
+            </span>
+            </div>
         @endif
-        <div class="bg-danger">
-            @foreach($errors->all() as $error)
-                {{$error}}
-            @endforeach
-        </div>
+        @if($errors->all())
+            <div class="alert alert-danger alert-dismissible alert-message" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    &times;
+                </span>
+                </button>
+                <span>
+                <strong>خطا : </strong>
+                @foreach($errors->all() as $error)
+                        {{$error}}
+                    @endforeach
+            </span>
+            </div>
+        @endif
         @yield('content')
     </div>
 </main>

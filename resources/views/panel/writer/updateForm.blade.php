@@ -33,10 +33,16 @@
                     </div>
 
                     <div class="group">
-                        <input type="text" name="email" value="{{$data['writer']->email}}"/>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>ایمیل</label>
+                        <select name="area_id">
+                            <option disabled selected>انتخاب منطقه</option>
+                            @foreach($data['areas'] as $area)
+                                @if($data['writer']->area_id == $area->id)
+                                    <option selected value="{{$area->id}}">{{$area->text}}</option>
+                                @else
+                                    <option value="{{$area->id}}">{{$area->text}}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                     <div class="group">
                         <input type="text" name="password"/>

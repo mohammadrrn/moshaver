@@ -30,6 +30,7 @@ class User extends Authenticatable
         'status',
         'address',
         'score',
+        'area_id',
         'trusted_office'
     ];
 

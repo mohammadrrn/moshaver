@@ -92,6 +92,7 @@
                     <button type="submit">ورود</button>
                     <button class="ghost-responsiv" id="signUp-responsiv">ثبت نام</button>
                 </div>
+                <a href="{{route('forgetPassword')}}">فراموشی رمز عبور</a>
             </form>
         </div>
         <div class="overlay-container">

@@ -58,15 +58,24 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 view-order">
-                    <span>
+                    @isset(auth()->user()->area_id)
+                        @foreach($data['area'] as $area)
+                            @if(auth()->user()->area_id == $area->id)
+                                {{$area->text}}
+                            @endif
+                        @endforeach
+                        <input type="hidden" value="{{auth()->user()->area_id}}" name="area_id">
+                    @else
+                        <span>
                         منطقه
                     </span>
-                    <select name="area_id" class="view-order-select" aria-label="Default select example">
-                        <option selected disabled>انتخاب منطقه</option>
-                        @foreach($data['area'] as $area)
-                            <option value="{{$area->id}}">{{$area->text}}</option>
-                        @endforeach
-                    </select>
+                        <select name="area_id" class="view-order-select" aria-label="Default select example">
+                            <option selected disabled>انتخاب منطقه</option>
+                            @foreach($data['area'] as $area)
+                                <option value="{{$area->id}}">{{$area->text}}</option>
+                            @endforeach
+                        </select>
+                    @endisset
                 </div>
                 <div class="col-12 view-order">
                     <div class="group">

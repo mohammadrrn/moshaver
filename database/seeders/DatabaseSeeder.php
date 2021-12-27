@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Http\Controllers\AssistantController;
 use App\Models\Area;
+use App\Models\ContactCategory;
 use App\Models\Direction;
 use App\Models\Estate;
 use App\Models\Permission;
@@ -65,6 +66,7 @@ class DatabaseSeeder extends Seeder
             'display_name' => 'کاربر عادی',
             'description' => 'کاربر عادی سایت',
         ]);
+
         /* --------------------------- Roles --------------------------- */
 
         /* --------------------------- Permissions --------------------------- */
@@ -112,6 +114,14 @@ class DatabaseSeeder extends Seeder
             'description' => 'ویرایش اطلاعات نویسنده',
         ]);
         /* Admin Permission */
+
+        /* Gold Sub Permission */
+        Permission::create([
+            'name' => 'show-detail-info',
+            'display_name' => 'نمایش اطلاعات در جزئیات',
+            'description' => 'نمایش اطلاعات در جزئیات آگهی هنگامی که واگذار شده است ',
+        ]);
+        /* Gold Sub Permission */
 
         /* --------------------------- Permissions --------------------------- */
 
@@ -183,5 +193,21 @@ class DatabaseSeeder extends Seeder
             'plan_price' => 5000,
             'time' => 1,
         ]);
+
+
+        $contactCategory = [
+            'owner' => 'مالکین',
+            'buyer' => 'خریداران',
+            'mostajer' => 'مستاجران',
+            'creator' => 'سازنده',
+            'hamkaran' => 'همکاران',
+            'other' => 'متفرقه',
+        ];
+
+        foreach ($contactCategory as $contact) {
+            ContactCategory::create([
+                'name' => $contact
+            ]);
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddWriter;
 use App\Models\Action;
+use App\Models\Area;
+use App\Models\AreaWriter;
 use App\Models\EstateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,8 +15,10 @@ class WriterController extends Controller
     public function addWriterForm()
     {
         $writerList = User::whereRoleIs($this->writerRole)->with('estateRequest')->get();
+        $areas = Area::get();
         $data = [
-            'writerList' => $writerList
+            'writerList' => $writerList,
+            'areas' => $areas
         ];
         return view('panel.writer.addWriterForm', compact('data'));
     }
@@ -27,10 +31,11 @@ class WriterController extends Controller
             'mobile_number' => $addWriter['mobile_number'],
             'status' => 1,
             'profileStatus' => 1,
-            'email' => $addWriter['email'],
             'password' => bcrypt($addWriter['password']),
+            'area_id' => $addWriter['area_id'],
             'mac_address' => AssistantController::getMacAddress()
         ]);
+
         $writer->attachRole('writer');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
@@ -73,6 +78,7 @@ class WriterController extends Controller
     {
         $data = [
             'writer' => User::find($id),
+            'areas' => Area::get(),
             'writerId' => $id
         ];
         return view('panel.writer.updateForm', compact('data'));
@@ -86,7 +92,8 @@ class WriterController extends Controller
             'national_code' => $request->input('national_code'),
             'email' => $request->input('email'),
             'mobile_number' => $request->input('mobile_number'),
-            'password' => ($request->input('mobile_number') != '') ? bcrypt($request->input('password')) : $writer->password,
+            'area_id' => $request->input('area_id'),
+            'password' => ($request->input('password') != '') ? bcrypt($request->input('password')) : $writer->password,
         ]); // TODO : Validation Update
         return redirect(route('panel.writer.addWriterForm'))->with(['success' => 'عملیات با موفقیت انجام شد']);
     }

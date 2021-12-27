@@ -173,4 +173,13 @@ $('img.marked').click(function (e) {
     });
 });
 
+$('.alert-message').animate({
+    right: "30px",
+    opacity: '1',
+}, 500, function () {
+    $('.alert-message').delay(3000).animate({
+        right: "0",
+        opacity: '0',
+    }, 500)
+})
 

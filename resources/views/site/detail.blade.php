@@ -106,7 +106,7 @@
                                 @if($data['detail']->status == 2)
                                     ------
                                 @elseif(!auth()->user())
-                                    ابتدا لاگین کنید
+                                    اشتراک ندارید
                                 @else
                                     {{$data['detail']->owner_mobile_number}}
                                 @endif
@@ -122,7 +122,7 @@
                                     @if($data['detail']->status == 2)
                                         ------
                                     @elseif(!auth()->user())
-                                        ابتدا لاگین کنید
+                                        اشتراک ندارید
                                     @else
                                         {{$data['detail']->address.' - '. $data['detail']->street_name}}
                                     @endif
@@ -146,7 +146,7 @@
                                     @if($data['detail']->status == 2)
                                         ------
                                     @elseif(!auth()->user())
-                                        ابتدا لاگین کنید
+                                        اشتراک ندارید
                                     @else
                                         {{$data['detail']->owner_name}}
                                     @endif

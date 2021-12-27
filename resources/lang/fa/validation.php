@@ -193,6 +193,10 @@ return [
         'zoonkan_id' => 'زونکن',
         'file_id' => 'فایل',
         'evacuation_day' => 'روز باقی مانده تا تخلیه',
+        'area_text' => 'عنوان منطقه',
+        'city_text' => 'عنوان شهر',
+        'reminder_title' => 'عنوان یادآوری',
+        'reminder_date' => 'تاریخ یادآوری',
     ],
 
 ];

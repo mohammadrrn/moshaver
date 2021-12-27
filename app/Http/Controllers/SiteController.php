@@ -8,14 +8,17 @@ use App\Models\Estate;
 use App\Models\EstateRequest;
 use App\Models\Invoice;
 use App\Models\Bookmarks;
+use App\Models\ResetPassword;
 use App\Models\Subscription;
 use App\Models\SubscriptionPlans;
 use App\Models\SubscriptionPlansItem;
 use App\Models\Transfer;
 use App\Models\TrustedOffice;
+use App\Models\User;
 use App\Models\Zoonkan;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Zarinpal\Zarinpal;
@@ -239,4 +242,60 @@ class SiteController extends Controller
         return 0;
     }
 
+    public function forgetPassword()
+    {
+        return view('auth.forgetPassword');
+    }
+
+    public function sendResetPasswordCode(Request $request)
+    {
+        $valid = $request->validate([
+            'mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
+        ]);
+        $checkExistCode = ResetPassword::where('mobile_number', $valid['mobile_number'])->get();
+        if (count($checkExistCode) > 2) {
+            return redirect(route('forgetPassword'))->withErrors(ResponseController::tooManyRequestsForPasswordReset());
+        }
+
+        ResetPassword::create([
+            'mobile_number' => $valid['mobile_number'],
+            'code' => AssistantController::randomCode()
+        ]);
+
+        $data = [
+            'mobile_number' => $valid['mobile_number']
+        ];
+        return view('auth.sendResetPasswordCode', compact('data'));
+    }
+
+    public function resetPasswordForm(Request $request)
+    {
+        $check = ResetPassword::where('mobile_number', $request->input('mobile_number'))->where('code', $request->input('code'))->first();
+        if ($check) {
+            $data = [
+                'mobile_number' => $request->input('mobile_number'),
+                'security_code' => bcrypt($request->input('mobile_number') . '-resetPassword')
+            ];
+            return view('auth.resetPasswordForm', compact('data'));
+        } else {
+            return 'کد وارد شده صحیح نمی باشد لطفا مجددا امتحان کنید';
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        if (password_verify($request->input('mobile_number') . '-resetPassword', $request->input('security_code'))) {
+            if ($request->input('password') == $request->input('repeat_password')) { // TODO :: Validation Password
+
+                $reset = ResetPassword::where('mobile_number', $request->input('mobile_number'));
+                $reset->delete();
+                $user = User::where('mobile_number', $request->input('mobile_number'))->first();
+                $user->password = bcrypt($request->input('password'));
+                $user->save();
+                return redirect(route('login'))->withErrors(['کلمه عبور با موفقیت تغییر یافت']);
+            }
+        } else {
+            echo 'Are You Developer or Programmer ?';
+        }
+    }
 }

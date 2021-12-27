@@ -12,6 +12,11 @@ class AssistantController extends Controller
         return rand(1000, 9999); // generate rand code
     }
 
+    public static function randomCode()
+    {
+        return rand(1000, 9999); // generate rand code
+    }
+
     public static function getMacAddress()
     {
         //$MAC = exec('getmac');
@@ -97,5 +102,6 @@ class AssistantController extends Controller
             'delete-estate-request'
         ];
     }
+
 
 }

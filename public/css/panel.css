@@ -2005,3 +2005,10 @@ fieldset .comment-user-star:hover {
 }
 
 /*# sourceMappingURL=style.css.map */
+.alert-message {
+    position: fixed;
+    top: 10px;
+    z-index: 999999;
+    width: 400px;
+    opacity: 0;
+}

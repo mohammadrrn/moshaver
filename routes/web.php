@@ -20,7 +20,7 @@ use Zarinpal\Zarinpal;
 */
 
 Route::get('/test', function () {
-
+    dd(auth()->user()->permissions()->get());
 });
 
 /*Route::get('/send', [App\Http\Controllers\SiteController::class, 'send'])->name('send');
@@ -28,7 +28,6 @@ Route::get('/received', [App\Http\Controllers\SiteController::class, 'received']
 
 
 /* --------------- Public Routes ---------------  */
-
 Route::get('/', function () {
     $estateRequest = EstateRequest::with('estateType')->with('book')->where('status', '!=', 0)->orderBy('updated_at')->paginate(12); //
     $data = [
@@ -37,17 +36,16 @@ Route::get('/', function () {
     return view('site.index', compact('data'));
 })->name('index');
 
-
 Route::get('/detail/{id}', [App\Http\Controllers\SiteController::class, 'detail'])->name('detail');
 
 Route::get('/trustedOfficesList', [App\Http\Controllers\SiteController::class, 'trustedOfficesList'])->name('trustedOfficesList');
 
 Route::get('/search/{type?}', [App\Http\Controllers\SiteController::class, 'search'])->name('search');
 Route::post('/search/result', [App\Http\Controllers\SiteController::class, 'searchResult'])->name('searchResult');
+
 Route::post('/bookmarked', [App\Http\Controllers\SiteController::class, 'bookmarked'])->name('bookmarked');
 
 Route::get('/block', [App\Http\Controllers\SiteController::class, 'block'])->name('block');
-
 Route::post('/sendVerificationCode', [\App\Http\Controllers\VerificationController::class, 'sendVerificationCode']); // send verification sms for client
 
 Route::name('request.')->prefix('request')->group(function () {
@@ -57,6 +55,11 @@ Route::name('request.')->prefix('request')->group(function () {
     Route::get('/estateForm', [App\Http\Controllers\EstateRequestController::class, 'estateForm'])->name('estateForm');
     Route::post('/estate', [App\Http\Controllers\EstateRequestController::class, 'estate'])->name('estate');
 });
+
+Route::get('/forgetPassword', [\App\Http\Controllers\SiteController::class, 'forgetPassword'])->name('forgetPassword');
+Route::post('/sendResetPasswordCode', [\App\Http\Controllers\SiteController::class, 'sendResetPasswordCode'])->name('sendResetPasswordCode');
+Route::post('/resetPasswordForm', [\App\Http\Controllers\SiteController::class, 'resetPasswordForm'])->name('resetPasswordForm');
+Route::post('/resetPassword', [\App\Http\Controllers\SiteController::class, 'resetPassword'])->name('resetPassword');
 
 /* --------------- Public Routes ---------------  */
 
@@ -164,9 +167,32 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::post('/confirmCession/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'confirmCession'])->name('confirmCession');
     });
 
+    Route::prefix('area')->name('area.')->middleware('role:admin')->group(function () {
+        Route::get('/addAreaForm', [App\Http\Controllers\AreaController::class, 'addAreaForm'])->name('addAreaForm');
+        Route::post('/addArea', [App\Http\Controllers\AreaController::class, 'addArea'])->name('addArea');
+        Route::get('/areaList', [App\Http\Controllers\AreaController::class, 'areaList'])->name('areaList');
+        Route::get('/editAreaForm/{id}', [App\Http\Controllers\AreaController::class, 'editAreaForm'])->name('editAreaForm');
+        Route::post('/editArea/{id}', [App\Http\Controllers\AreaController::class, 'editArea'])->name('editArea');
+    });
+
+    Route::prefix('city')->name('city.')->middleware('role:admin')->group(function () {
+        Route::get('/addCityForm', [App\Http\Controllers\CityController::class, 'addCityForm'])->name('addCityForm');
+        Route::post('/addCity', [App\Http\Controllers\CityController::class, 'addCity'])->name('addCity');
+        Route::get('/cityList', [App\Http\Controllers\CityController::class, 'cityList'])->name('cityList');
+        Route::get('/editCityForm/{id}', [App\Http\Controllers\CityController::class, 'editCityForm'])->name('editCityForm');
+        Route::post('/editCity/{id}', [App\Http\Controllers\CityController::class, 'editCity'])->name('editCity');
+    });
+
+    Route::prefix('contact')->name('contact.')->middleware('role:admin')->group(function () {
+        Route::get('/contactList', [App\Http\Controllers\ContactController::class, 'contactList'])->name('contactList');
+        Route::post('/addContact', [App\Http\Controllers\ContactController::class, 'addContact'])->name('addContact');
+    });
+
+    Route::prefix('reminder')->name('reminder.')->group(function () { // ->middleware('role:admin')
+        Route::get('/addReminderForm', [App\Http\Controllers\ReminderController::class, 'addReminderForm'])->name('addReminderForm');
+        Route::post('/addReminder', [App\Http\Controllers\ReminderController::class, 'addReminder'])->name('addReminder');
+    });
 });
-
-
 
 
 /*Route::group(['prefix' => 'author', 'middleware' => ['role:author|estateRequest']], function () {

@@ -24,8 +24,12 @@ class EstateRequestController extends Controller
 
     public function unconfirmedEstateRequestList()
     {
+        $where = [];
+        if (isset(auth()->user()->area_id)) {
+            $where['area_id'] = auth()->user()->area_id;
+        }
         $data = [
-            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('status', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+            'estateRequestList' => EstateRequest::with('direction')->with('estateType')->with('areas')->with('transfer')->where('status', 0)->where($where)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
         return view('panel.estateRequest.unconfirmedEstateRequestList', compact('data'));
     }
@@ -42,9 +46,12 @@ class EstateRequestController extends Controller
 
     public function confirmedEstateRequestList()
     {
-        //echo auth()->user()->roles[0]->name;
+        $where = [];
+        if (isset(auth()->user()->area_id)) {
+            $where['area_id'] = auth()->user()->area_id;
+        }
         $data = [
-            'estateRequestList' => EstateRequest::with('user')->with('direction')->with('estateType')->with('areas')->with('transfer')->where('status', '!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+            'estateRequestList' => EstateRequest::with('user')->with('direction')->with('estateType')->with('areas')->where($where)->with('transfer')->where('status', '!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
         return view('panel.estateRequest.confirmedEstateRequestList', compact('data'));
     }
@@ -126,6 +133,7 @@ class EstateRequestController extends Controller
         $estate = Estate::get();
         $direction = Direction::get();
 
+
         $data = [
             'area' => $area,
             'transfer' => $transfer,
@@ -193,7 +201,7 @@ class EstateRequestController extends Controller
                 'barbecue' => $estate['barbecue'],
                 'unit_zero' => $estate['unit_zero'],
                 'roof_garden' => $estate['roof_garden'],
-                'status' => (auth()->user()->roles[0]->name == 'writer') ? 1 : 0
+                'status' => (isset(auth()->user()->roles[0]->name) && auth()->user()->roles[0]->name == 'writer') ? 1 : 0
             ]);
             ActionController::actionRegister($estateRequest, 'insert');
             return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);

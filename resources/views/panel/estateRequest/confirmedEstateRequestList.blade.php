@@ -54,7 +54,7 @@
                     <tr>
                         <th>کد درخواست</th>
                         <th>نام و نام خانوادگی مالک</th>
-                        <th>نقش</th>
+                        <th>ثبت کننده</th>
                         <th>شماره تماس مالک</th>
                         <th>منطقه</th>
                         <th>نوع واگذاری</th>
@@ -82,7 +82,7 @@
                             <td>{{$request->owner_name}}</td>
                             <td>
                                 @if($request->user_id)
-                                    {{$request->user[0]->roles[0]->display_name}}
+                                    {{$request->user_id}} / {{$request->area_id}}
                                 @else
                                     بازدیدکننده
                                 @endif

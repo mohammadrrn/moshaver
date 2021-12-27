@@ -6,6 +6,15 @@
             <span>پنل اصلی</span>
         </a>
     </li>
+    <hr>
+    <li>
+        <a href="{{route('panel.reminder.addReminderForm')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>افزودن یادآوری</span>
+        </a>
+    </li>
+    <hr>
     <li>
         <a href="{{route('index')}}" target="_blank">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/home.svg')}}" alt="">
@@ -118,6 +127,14 @@
     </li>
     <hr>
     <li>
+        <a href="{{route('panel.contact.contactList')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>دفترچه تلفن</span>
+        </a>
+    </li>
+    <hr>
+    <li>
         <a href="{{route('panel.invoice.invoicesList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
@@ -130,6 +147,35 @@
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
             <span>لیست گزارشات واگذاری</span>
+        </a>
+    </li>
+    <hr>
+    <li>
+        <a href="{{route('panel.area.addAreaForm')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>افزودن منطقه</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('panel.area.areaList')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>لیست مناطق</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('panel.city.addCityForm')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>افزودن شهر</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('panel.city.cityList')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>لیست شهرها</span>
         </a>
     </li>
     <!--

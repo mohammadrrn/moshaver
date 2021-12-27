@@ -48,9 +48,13 @@
                                     <a href="{{route('detail',$file->estate[0]->id)}}" target="_blank"
                                        class="bg-primary rounded text-white p-1">مشاهده فایل</a>
                                 </td>
-                                <th>
-
-                                </th>
+                                <td>
+                                    <form method="post" action="{{route('panel.zoonkan.removeFormZoonkan')}}">
+                                        @csrf
+                                        <input type="hidden" value="{{$file->id}}" name="file_id">
+                                        <button class="btn-danger btn-sm small">حذف</button>
+                                    </form>
+                                </td>
                             </tr>
                         @else
                             <tr class="list-request-table-tr-by">

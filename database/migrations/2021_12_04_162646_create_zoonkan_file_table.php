@@ -21,9 +21,9 @@ class CreateZoonkanFileTable extends Migration
             $table->timestamp('evacuation_day')->comment('تعداد روز های باقی مانده تا تخلیه');
             $table->timestamps();
 
-            $table->foreign('zoonkan_id')->references('id')->on('zoonkans');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('estate_request_id')->references('id')->on('estate_requests');
+            $table->foreign('zoonkan_id')->references('id')->on('zoonkans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('estate_request_id')->references('id')->on('estate_requests')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

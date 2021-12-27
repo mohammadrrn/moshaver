@@ -40,7 +40,7 @@
                                 <div class="group">
                                     <select class="form-select form-select ddlViewBy" name="transfer_id"
                                             aria-label="Default select example">
-                                        <option disabled selected>انتخاب نوع واگذاری</option>
+                                        <option disabled>انتخاب نوع واگذاری</option>
                                         @foreach($data['transfer'] as $transfer)
                                             @if($transfer->id == $data['estateRequest']->transfer_id)
                                                 <option selected value="{{$transfer->id}}">{{$transfer->text}}</option>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="group">
-                                    <select class="form-select form-select ddlViewBy" name="transfer_id"
+                                    <select class="form-select form-select ddlViewBy" name="estate_id"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع ملک</option>
                                         @foreach($data['estate'] as $estate)

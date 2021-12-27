@@ -30,12 +30,13 @@
                         <span class="bar"></span>
                         <label>شماره همراه</label>
                     </div>
-
                     <div class="group">
-                        <input type="text" name="email" value="{{old('email')}}"/>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>ایمیل</label>
+                        <select name="area_id">
+                            <option disabled selected>انتخاب منطقه</option>
+                            @foreach($data['areas'] as $area)
+                                <option value="{{$area->id}}">{{$area->text}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="group">
                         <input type="text" name="password"/>
@@ -72,7 +73,7 @@
                             <div class="list-moshaver-item">
                             <!--                                <img src="{{asset('icon/PanelAdmin/user-moshaver.jpg')}}" alt="">-->
                                 <div class="add-moshaver-box-specifications justify-content-center">
-                                    <span>کد : {{$writer->id}}</span>
+                                    <span>کد : {{$writer->id}} / {{$writer->area_id}}</span>
                                 </div>
                                 <span>تعداد آگهی های ثبت شده : {{count($writer->estateRequest)}}</span>
                                 <span>{{$writer->full_name}}</span>
