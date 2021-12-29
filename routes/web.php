@@ -1,12 +1,9 @@
 <?php
 
-use App\Models\Bookmarks;
 use App\Models\EstateRequest;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
-use GuzzleHttp\Exception\RequestException;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageManager;
-use Zarinpal\Zarinpal;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +17,9 @@ use Zarinpal\Zarinpal;
 */
 
 Route::get('/test', function () {
-    dd(auth()->user()->permissions()->get());
+    //auth()->user()->attachPermission('zoonkan');
 });
+
 
 /*Route::get('/send', [App\Http\Controllers\SiteController::class, 'send'])->name('send');
 Route::get('/received', [App\Http\Controllers\SiteController::class, 'received'])->name('received');*/
@@ -67,6 +65,9 @@ Auth::routes();
 
 Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(function () {
 
+
+    Route::get('/redirectTo/{link}', [App\Http\Controllers\HomeController::class, 'redirectTo'])->name('redirectTo');
+
     /* --------------- Payment Route ---------------  */
 
     Route::get('/pay/{rialPrice}/{planId}/{itemId}', [App\Http\Controllers\SiteController::class, 'pay'])->name('pay');
@@ -100,7 +101,8 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
     });
 
     Route::get('/request/myRequest', [App\Http\Controllers\RequestController::class, 'myRequest'])->name('request.myRequest')->middleware('completeProfile');
-    Route::name('request.')->prefix('request')->middleware(['role:admin'])->group(function () {
+
+    Route::name('request.')->prefix('request')->middleware(['permission:confirmed-request-list,unconfirmed-request-list'])->group(function () {
 
         Route::get('/confirmedRequestList', [App\Http\Controllers\RequestController::class, 'confirmedRequestList'])->name('confirmedRequestList');
         Route::post('/unConfirmRequest', [App\Http\Controllers\RequestController::class, 'unConfirmRequest'])->name('unConfirmRequest');
@@ -173,6 +175,8 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::get('/areaList', [App\Http\Controllers\AreaController::class, 'areaList'])->name('areaList');
         Route::get('/editAreaForm/{id}', [App\Http\Controllers\AreaController::class, 'editAreaForm'])->name('editAreaForm');
         Route::post('/editArea/{id}', [App\Http\Controllers\AreaController::class, 'editArea'])->name('editArea');
+        Route::get('/disableArea/{id}', [App\Http\Controllers\AreaController::class, 'disableArea'])->name('disableArea');
+        Route::get('/enableArea/{id}', [App\Http\Controllers\AreaController::class, 'enableArea'])->name('enableArea');
     });
 
     Route::prefix('city')->name('city.')->middleware('role:admin')->group(function () {
@@ -191,6 +195,10 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
     Route::prefix('reminder')->name('reminder.')->group(function () { // ->middleware('role:admin')
         Route::get('/addReminderForm', [App\Http\Controllers\ReminderController::class, 'addReminderForm'])->name('addReminderForm');
         Route::post('/addReminder', [App\Http\Controllers\ReminderController::class, 'addReminder'])->name('addReminder');
+    });
+
+    Route::prefix('notification')->name('notification.')->group(function () {
+        Route::get('/notificationList', [App\Http\Controllers\NotificationController::class, 'notificationList'])->name('notificationList');
     });
 });
 

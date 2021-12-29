@@ -49,7 +49,14 @@
                                     ****
                                 @endswitch
                             </td>
-                            <td>{{$action->created_at}}</td>
+                            <td>
+                                <span class="bg-dark text-white p-1 mr-1 rounded">
+                                    {{Morilog\Jalali\Jalalian::fromDateTime($action->created_at)->format('%Y/%m/%d')}}
+                                </span>
+                                <span>
+                                    {{Morilog\Jalali\Jalalian::fromDateTime($action->created_at)->format('H:i:s')}}
+                                </span>
+                            </td>
                         </tr>
                     @endforeach
                 </table>

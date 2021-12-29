@@ -39,11 +39,10 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="mobile_number" required
+                                <input type="text" disabled name="mobile_number"
                                        value="{{auth()->user()->mobile_number}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label>شماره تماس</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
@@ -56,7 +55,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="address" required value="{{auth()->user()->address}}"/>
+                                <input type="text" name="address" value="{{auth()->user()->address}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>آدرس</label>

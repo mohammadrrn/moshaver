@@ -128,19 +128,24 @@
                                         </div>
                                         <div class="box-sell-bottom-bottom">
                                             <div class="box-sell-bottom-bottom-right">
-                                                @if($request->estate[0]->rent_price != 0 || $request->estate[0]->mortgage_price != 0)
+                                                @if($request->rent_price != 0 && $request->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>اجاره:</span>
-                                                        <span>{{number_format($request->estate[0]->rent_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->rent_price)}} هزار تومان </span>
                                                     </div>
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>رهن:</span>
-                                                        <span>{{number_format($request->estate[0]->mortgage_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
                                                     </div>
-                                                @else
+                                                @elseif($request->rent_price == 0 && $request->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
-                                                        <span>خرید:</span>
-                                                        <span>{{number_format($request->estate[0]->buy_price)}} هزار تومان </span>
+                                                        <span>رهن کامل:</span>
+                                                        <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
+                                                    </div>
+                                                @elseif($request->participation_price != 0)
+                                                    <div class="box-sell-bottom-bottom-right-item">
+                                                        <span>مشارکت به مبلغ:</span>
+                                                        <span>{{number_format($request->participation_price)}} هزار تومان </span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -156,6 +161,9 @@
                             @foreach($data['estateRequests'] as $request)
                                 <div class="col-12 col-sm-6 col-md-4 main-box-center-item">
                                     <div class="box-sell">
+                                        @if($request->status == 2)
+                                            <div class="ribbon"><span>واگذار شد</span></div>
+                                        @endif
                                         <span class="id-home">کد ملک : {{$request->id}}</span>
                                         <div class="box-sell-top">
                                             <a href="{{route('detail',$request->id)}}">
@@ -179,7 +187,7 @@
                                         </div>
                                         <div class="box-sell-bottom-bottom">
                                             <div class="box-sell-bottom-bottom-right">
-                                                @if($request->rent_price != 0 || $request->mortgage_price != 0)
+                                                @if($request->rent_price != 0 && $request->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>اجاره:</span>
                                                         <span>{{number_format($request->rent_price)}} هزار تومان </span>
@@ -188,10 +196,15 @@
                                                         <span>رهن:</span>
                                                         <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
                                                     </div>
-                                                @else
+                                                @elseif($request->rent_price == 0 && $request->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
-                                                        <span>خرید:</span>
-                                                        <span>{{number_format($request->buy_price)}} هزار تومان </span>
+                                                        <span>رهن کامل:</span>
+                                                        <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
+                                                    </div>
+                                                @elseif($request->participation_price != 0)
+                                                    <div class="box-sell-bottom-bottom-right-item">
+                                                        <span>مشارکت به مبلغ:</span>
+                                                        <span>{{number_format($request->participation_price)}} هزار تومان </span>
                                                     </div>
                                                 @endif
                                             </div>

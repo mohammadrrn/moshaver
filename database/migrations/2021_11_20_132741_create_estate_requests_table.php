@@ -36,6 +36,7 @@ class CreateEstateRequestsTable extends Migration
             $table->unsignedBigInteger('mortgage_price')->comment('مبلغ رهن')->nullable()->default(0);
             $table->unsignedBigInteger('rent_price')->comment('مبلغ اجاره')->nullable()->default(0);
             $table->unsignedBigInteger('buy_price')->comment('مبلغ خرید')->nullable()->default(0);
+            $table->unsignedBigInteger('participation_price')->comment('مبلغ مشارکت')->nullable()->default(0);
             $table->text('description')->comment('توضیحات کامل')->nullable();
             $table->boolean('status')->comment('وضعیت')->default(0);
 
@@ -53,6 +54,7 @@ class CreateEstateRequestsTable extends Migration
             $table->boolean('surface_gas')->comment('امکانات (گاز روکار)')->default(0)->nullable();
             $table->boolean('master_bath')->comment('امکانات (حمام مستر)')->default(0)->nullable();
             $table->boolean('jacuzzi')->comment('امکانات (جکوزی)')->default(0)->nullable();
+            $table->boolean('bathtub')->comment('امکانات (وان)')->default(0)->nullable();
             $table->boolean('security_door')->comment('امکانات (درب ضد سرقت)')->default(0)->nullable();
             $table->boolean('cctv')->comment('امکانات (دوربین مداربسته)')->default(0)->nullable();
             $table->boolean('presence_owner')->comment('امکانات (حضور مالک)')->default(0)->nullable();
@@ -67,6 +69,14 @@ class CreateEstateRequestsTable extends Migration
             $table->boolean('unit_zero')->comment('امکانات (واحد صفر)')->default(0)->nullable();
             $table->boolean('roof_garden')->comment('امکانات (روف گاردن)')->default(0)->nullable();
 
+            $table->unsignedBigInteger('floor_covering_id')->comment('امکانات (نوع کف پوش)')->nullable();
+            $table->unsignedBigInteger('cabinets_id')->comment('امکانات (نوع کابینت)')->nullable();
+            $table->unsignedBigInteger('wall_plugs_id')->comment('امکانات (نوع دیوارپوش)')->nullable();
+            $table->unsignedBigInteger('building_facades_id')->comment('امکانات (نوع نما)')->nullable();
+            $table->unsignedBigInteger('heating_system_id')->comment('امکانات (نوع سیستم گرمایش)')->nullable();
+            $table->unsignedBigInteger('cooling_system_id')->comment('امکانات (نوع سیستم سرمایش)')->nullable();
+            $table->unsignedBigInteger('document_type_id')->comment('امکانات (نوع سند)')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
@@ -74,6 +84,15 @@ class CreateEstateRequestsTable extends Migration
             $table->foreign('transfer_id')->references('id')->on('transfers');
             $table->foreign('estate_id')->references('id')->on('estates');
             $table->foreign('direction_id')->references('id')->on('directions');
+
+            $table->foreign('floor_covering_id')->references('id')->on('estate_request_floor_covering_option');
+            $table->foreign('cabinets_id')->references('id')->on('estate_request_cabinets_option');
+            $table->foreign('wall_plugs_id')->references('id')->on('estate_request_wall_plugs_option');
+            $table->foreign('building_facades_id')->references('id')->on('estate_request_building_facades_option');
+            $table->foreign('heating_system_id')->references('id')->on('estate_request_heating_system_option');
+            $table->foreign('cooling_system_id')->references('id')->on('estate_request_cooling_system_option');
+            $table->foreign('document_type_id')->references('id')->on('estate_request_document_type_option');
+
         });
     }
 

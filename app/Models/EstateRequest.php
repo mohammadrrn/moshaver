@@ -32,6 +32,7 @@ class EstateRequest extends Model
         'mortgage_price',
         'rent_price',
         'buy_price',
+        'participation_price',
         'description',
         'empty',
         'presell',
@@ -60,8 +61,50 @@ class EstateRequest extends Model
         'barbecue',
         'unit_zero',
         'roof_garden',
-        'status'
+        'status',
+        'floor_covering_id',
+        'cabinets_id',
+        'wall_plugs_id',
+        'building_facades_id',
+        'heating_system_id',
+        'cooling_system_id',
+        'document_type_id',
     ];
+
+    public function floorCovering()
+    {
+        return $this->hasMany(EstateRequestFloorCoveringOption::class, 'id', 'floor_covering_id');
+    }
+
+    public function cabinets()
+    {
+        return $this->hasMany(EstateRequestCabinetsOption::class, 'id', 'cabinets_id');
+    }
+
+    public function wallPlugs()
+    {
+        return $this->hasMany(EstateRequestWallPlugsOption::class, 'id', 'wall_plugs_id');
+    }
+
+    public function buildingFacades()
+    {
+        return $this->hasMany(EstateRequestBuildingFacadesOption::class, 'id', 'building_facades_id');
+    }
+
+    public function heatingSystem()
+    {
+        return $this->hasMany(EstateRequestHeatingSystemOption::class, 'id', 'heating_system_id');
+    }
+
+    public function coolingSystem()
+    {
+        return $this->hasMany(EstateRequestCoolingSystemOption::class, 'id', 'cooling_system_id');
+    }
+
+    public function documentType()
+    {
+        return $this->hasMany(EstateRequestDocumentTypeOption::class, 'id', 'document_type_id');
+    }
 
     public function direction()
     {

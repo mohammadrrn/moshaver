@@ -60,7 +60,7 @@
                         <th>نوع ملک</th>
                         <th>آدرس</th>
                         <th>متراژ</th>
-                        <th>نام کوچه و خیابان</th>
+                        <!--                        <th>نام کوچه و خیابان</th>-->
                         <th>پلاک</th>
                         <th>تعداد طبقه</th>
                         <th>تعداد اتاق</th>
@@ -84,16 +84,16 @@
                             <td>{{$request->estateType[0]->text}}</td>
                             <td>{{$request->address}}</td>
                             <td>{{$request->area}}</td>
-                            <td>{{$request->street_name}}</td>
+                        <!--                            <td>{{$request->street_name}}</td>-->
                             <td>{{$request->plaque}}</td>
                             <td>{{$request->number_of_floor}}</td>
                             <td>{{$request->number_of_room}}</td>
                             <td>{{$request->apartment_unit}}</td>
                             <td>{{$request->year_of_construction}}</td>
                             <td>{{$request->direction[0]->text}}</td>
-                            <td>{{$request->buy_price}}</td>
-                            <td>{{$request->mortgage_price}}</td>
-                            <td>{{$request->rent_price}}</td>
+                            <td>{{($request->buy_price != 0 ) ? number_format($request->buy_price) . ' تومان ' : 0}}</td>
+                            <td>{{($request->mortgage_price != 0 ) ? number_format($request->mortgage_price) . ' تومان ' : 0}}</td>
+                            <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>
                             <td>{{$request->drescription}}</td>
                             <td>
                                 <form action="{{route('panel.estateRequest.confirmEstateRequest')}}" method="post">

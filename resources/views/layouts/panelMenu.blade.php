@@ -1,17 +1,9 @@
 <ul class="panel-nav-ul">
-    <li>
+    <li class="mt-2">
         <a href="{{route('panel.index')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/home.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/home-w.svg')}}" alt="">
             <span>پنل اصلی</span>
-        </a>
-    </li>
-    <hr>
-    <li>
-        <a href="{{route('panel.reminder.addReminderForm')}}">
-            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
-            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
-            <span>افزودن یادآوری</span>
         </a>
     </li>
     <hr>
@@ -22,7 +14,6 @@
             <span>مشاهده سایت</span>
         </a>
     </li>
-
     <li>
         <a href="{{route('panel.profile')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8_staff copy.png')}}" alt="">
@@ -30,6 +21,17 @@
             <span>ویرایش پروفایل</span>
         </a>
     </li>
+    <hr>
+    @permission('add-reminder')
+    <li>
+        <a href="{{route('panel.reminder.addReminderForm')}}">
+            <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
+            <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
+            <span>افزودن یادآوری</span>
+        </a>
+    </li>
+    @endpermission
+    @permission('writer-list')
     <li>
         <a href="{{route('panel.writer.addWriterForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8_staff copy.png')}}" alt="">
@@ -37,6 +39,8 @@
             <span>نویسندگان</span>
         </a>
     </li>
+    @endpermission
+    @permission('trusted-offices-list')
     <li>
         <a href="{{route('panel.trustedOffices.addTrustedOfficesForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8_staff copy.png')}}" alt="">
@@ -44,6 +48,8 @@
             <span>دفاتر مورد اعتماد</span>
         </a>
     </li>
+    @endpermission
+    @permission('users-list')
     <li>
         <a href="{{route('panel.users.usersList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8_staff copy.png')}}" alt="">
@@ -51,6 +57,8 @@
             <span>لیست کاربران</span>
         </a>
     </li>
+    @endpermission
+    @role('user')
     <li>
         <a href="{{route('panel.subscription.plans')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-add-basket-60.png')}}" alt="">
@@ -59,6 +67,7 @@
         </a>
     </li>
     <hr/>
+    @endrole
     <li>
         <a href="{{route('request.estateForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -81,6 +90,7 @@
             <span>لیست ثبت ملک های من</span>
         </a>
     </li>
+    @permission('confirmed-estate-request-list')
     <li>
         <a href="{{route('panel.estateRequest.confirmedEstateRequestList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -88,6 +98,8 @@
             <span>لیست ثبت ملک های تایید شده</span>
         </a>
     </li>
+    @endpermission
+    @permission('unconfirmed-estate-request-list')
     <li>
         <a href="{{route('panel.estateRequest.unconfirmedEstateRequestList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -96,6 +108,7 @@
         </a>
     </li>
     <hr>
+    @endpermission
     <li>
         <a href="{{route('panel.request.myRequest')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -103,6 +116,7 @@
             <span>لیست درخواست های من</span>
         </a>
     </li>
+    @permission('confirmed-request-list')
     <li>
         <a href="{{route('panel.request.confirmedRequestList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -110,6 +124,8 @@
             <span>لیست درخواست های تایید شده</span>
         </a>
     </li>
+    @endpermission
+    @permission('unconfirmed-request-list')
     <li>
         <a href="{{route('panel.request.unconfirmedRequestList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
@@ -118,14 +134,18 @@
         </a>
     </li>
     <hr>
+    @endpermission
+    @permission('zoonkan')
     <li>
         <a href="{{route('panel.zoonkan.createZoonkanForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/video_clip-white.svg')}}" alt="">
             <span>زونکن</span>
         </a>
+        <hr>
     </li>
-    <hr>
+    @endpermission
+    @permission('phonebook')
     <li>
         <a href="{{route('panel.contact.contactList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
@@ -134,6 +154,7 @@
         </a>
     </li>
     <hr>
+    @endpermission
     <li>
         <a href="{{route('panel.invoice.invoicesList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
@@ -142,6 +163,7 @@
         </a>
     </li>
     <hr>
+    @permission('cession-list')
     <li>
         <a href="{{route('panel.cession.reportsList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
@@ -150,6 +172,8 @@
         </a>
     </li>
     <hr>
+    @endpermission
+    @role('admin')
     <li>
         <a href="{{route('panel.area.addAreaForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
@@ -164,6 +188,7 @@
             <span>لیست مناطق</span>
         </a>
     </li>
+    <hr>
     <li>
         <a href="{{route('panel.city.addCityForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/video_clip.svg')}}" alt="">
@@ -178,6 +203,7 @@
             <span>لیست شهرها</span>
         </a>
     </li>
+    @endrole
     <!--
         <li>
             <div>

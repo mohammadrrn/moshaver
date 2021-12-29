@@ -25,10 +25,9 @@ class Profile extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'max:255', 'min:3'],
-            'mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
             'national_code' => ['required', 'string', 'min:10'],
-            'email' => ['required', 'email', 'max:255'],
-            'address' => ['required', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'address' => ['nullable', 'max:255'],
         ];
     }
 }

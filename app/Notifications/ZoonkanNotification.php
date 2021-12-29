@@ -57,13 +57,11 @@ class ZoonkanNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'name' => 'saeed qolipour'
         ];
     }
 
     public function toDatabase($notifiable)
     {
         return [$this->description];
-
     }
 }

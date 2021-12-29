@@ -75,9 +75,9 @@
                             <td>{{$request->estateType[0]->text}}</td>
                             <td>{{$request->range_of_address}}</td>
                             <td>{{$request->rang_of_area}}</td>
-                            <td>{{$request->buy_price}}</td>
-                            <td>{{$request->mortgage_price}}</td>
-                            <td>{{$request->rent_price}}</td>
+                            <td>{{($request->buy_price != 0 ) ? number_format($request->buy_price) . ' تومان ' : 0}}</td>
+                            <td>{{($request->mortgage_price != 0 ) ? number_format($request->mortgage_price) . ' تومان ' : 0}}</td>
+                            <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>
                             <td>{{$request->drescription}}</td>
                             <td>
                                 <form action="{{route('panel.request.unConfirmRequest')}}" method="post">

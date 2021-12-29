@@ -17,7 +17,8 @@ class AreaController extends Controller
     public function addArea(AddArea $area)
     {
         Area::create([
-            'text' => $area['area_text']
+            'text' => $area['area_text'],
+            'status' => 1
         ]);
         return redirect(route('panel.area.areaList'))->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
@@ -42,6 +43,22 @@ class AreaController extends Controller
     {
         $area = Area::find($id);
         $area->text = $request['area_text'];
+        $area->save();
+        return redirect(route('panel.area.areaList'))->with(['success' => 'عملیات با موفقیت انجام شد']);
+    }
+
+    public function disableArea($id)
+    {
+        $area = Area::find($id);
+        $area->status = 0;
+        $area->save();
+        return redirect(route('panel.area.areaList'))->with(['success' => 'عملیات با موفقیت انجام شد']);
+    }
+
+    public function enableArea($id)
+    {
+        $area = Area::find($id);
+        $area->status = 1;
         $area->save();
         return redirect(route('panel.area.areaList'))->with(['success' => 'عملیات با موفقیت انجام شد']);
     }

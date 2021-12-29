@@ -18,14 +18,27 @@
                         <label>عنوان یادآوری</label>
                     </div>
                     <div class="group">
-                        <input type="text" name="reminder_date" value="{{old('reminder_date')}}"/>
+                        <input type="text" autocomplete="off" name="reminder_date" id="reminder_date_cal"
+                               value="{{old('reminder_date')}}"
+                               placeholder="انتخاب تاریخ یادآوری"/>
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>تاریخ یادآوری</label>
                     </div>
                     <button type="submit" class="btn btn-lg btn-block moshaver-insert">ثبت یادآوری</button>
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="{{asset('js/kamadatepicker.min.js')}}"></script>
+    <script src="{{asset('js/kamadatepicker.holidays.js')}}"></script>
+    <script>
+        kamaDatepicker('reminder_date_cal');
+    </script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/kamadatepicker.min.css')}}">
 @endsection

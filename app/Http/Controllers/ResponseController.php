@@ -16,4 +16,9 @@ class ResponseController extends Controller
     {
         return ['کد وارد شده اشتباه می باشد'];
     }
+
+    public static function userDoesNotExist()
+    {
+        return ['این شماره همراه در سیستم وجود ندارد'];
+    }
 }

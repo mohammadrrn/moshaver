@@ -7,6 +7,14 @@ use App\Models\Area;
 use App\Models\ContactCategory;
 use App\Models\Direction;
 use App\Models\Estate;
+use App\Models\EstateRequest;
+use App\Models\EstateRequestBuildingFacadesOption;
+use App\Models\EstateRequestCabinetsOption;
+use App\Models\EstateRequestCoolingSystemOption;
+use App\Models\EstateRequestDocumentTypeOption;
+use App\Models\EstateRequestFloorCoveringOption;
+use App\Models\EstateRequestHeatingSystemOption;
+use App\Models\EstateRequestWallPlugsOption;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\SubscriptionPlans;
@@ -67,6 +75,12 @@ class DatabaseSeeder extends Seeder
             'description' => 'کاربر عادی سایت',
         ]);
 
+        $advisor_role = Role::create([
+            'name' => 'advisor',
+            'display_name' => 'مشاور',
+            'description' => 'مشاور یا همکار',
+        ]);
+
         /* --------------------------- Roles --------------------------- */
 
         /* --------------------------- Permissions --------------------------- */
@@ -89,11 +103,70 @@ class DatabaseSeeder extends Seeder
         ]);
         /* Writer Permission */
 
+        /* Advisor Permission */
+        Permission::create([
+            'name' => 'add-reminder',
+            'display_name' => 'افزودن یادآوری',
+            'description' => 'افزودن یادآوری',
+        ]);
+        /* Advisor Permission */
+
         /* Admin Permission */
         Permission::create([
             'name' => 'add-writer',
             'display_name' => 'افزودن نویسنده',
             'description' => 'افزودن نویسنده به سایت',
+        ]);
+
+        Permission::create([
+            'name' => 'writer-list',
+            'display_name' => 'لیست نویسندگان',
+            'description' => 'لیست کامل نویسندگان سایت',
+        ]);
+        Permission::create([
+            'name' => 'trusted-offices-list',
+            'display_name' => 'لیست دفاتر مورداعتماد',
+            'description' => 'لیست کامل دفاتر مورداعتماد',
+        ]);
+        Permission::create([
+            'name' => 'users-list',
+            'display_name' => 'لیست کاربران',
+            'description' => 'لیست کامل کاربران',
+        ]);
+        Permission::create([
+            'name' => 'confirmed-estate-request-list',
+            'display_name' => 'لیست آگهی های تایید شده',
+            'description' => 'لیست کامل آگهی های ثبت ملک تایید شده',
+        ]);
+        Permission::create([
+            'name' => 'unconfirmed-estate-request-list',
+            'display_name' => 'لیست آگهی های تایید نشده',
+            'description' => 'لیست کامل آگهی های ثبت ملک تایید نشده',
+        ]);
+        Permission::create([
+            'name' => 'confirmed-request-list',
+            'display_name' => 'لیست درخواست های تایید شده',
+            'description' => 'لیست کامل آگهی های ثبت درخواست تایید شده',
+        ]);
+        Permission::create([
+            'name' => 'unconfirmed-request-list',
+            'display_name' => 'لیست درخواست های تایید نشده',
+            'description' => 'لیست کامل آگهی های ثبت درخواست تایید نشده',
+        ]);
+        Permission::create([
+            'name' => 'zoonkan',
+            'display_name' => 'زونکن',
+            'description' => 'دسترسی به زونکن',
+        ]);
+        Permission::create([
+            'name' => 'phonebook',
+            'display_name' => 'دفترچه تلفن',
+            'description' => 'دفترچه تلقن و لیست مخاطبین',
+        ]);
+        Permission::create([
+            'name' => 'cession-list',
+            'display_name' => 'لیست درخواست های واگذاری',
+            'description' => 'لیست درخواست های واگذاری',
         ]);
 
         Permission::create([
@@ -121,6 +194,11 @@ class DatabaseSeeder extends Seeder
             'display_name' => 'نمایش اطلاعات در جزئیات',
             'description' => 'نمایش اطلاعات در جزئیات آگهی هنگامی که واگذار شده است ',
         ]);
+        Permission::create([
+            'name' => 'educational-video',
+            'display_name' => 'ویدئو آموزشی',
+            'description' => 'قسمت ویدئو های آموزشی',
+        ]);
         /* Gold Sub Permission */
 
         /* --------------------------- Permissions --------------------------- */
@@ -137,7 +215,8 @@ class DatabaseSeeder extends Seeder
 
 
         Area::create([
-            'text' => 'منطقه 1 : هاشمیه - الهیه - سجاد'
+            'text' => 'منطقه 1 : هاشمیه - الهیه - سجاد',
+            'status' => 1
         ]);
         Transfer::create([
             'text' => 'خرید'
@@ -145,8 +224,26 @@ class DatabaseSeeder extends Seeder
         Transfer::create([
             'text' => 'رهن و اجاره'
         ]);
+        Transfer::create([
+            'text' => 'رهن کامل'
+        ]);
+        Transfer::create([
+            'text' => 'مشارکت'
+        ]);
         Estate::create([
             'text' => 'آپارتمان'
+        ]);
+        Estate::create([
+            'text' => 'دفتر کار'
+        ]);
+        Estate::create([
+            'text' => 'ویلایی'
+        ]);
+        Estate::create([
+            'text' => 'مغازه'
+        ]);
+        Estate::create([
+            'text' => 'زمین'
         ]);
 
         Direction::create([
@@ -154,6 +251,37 @@ class DatabaseSeeder extends Seeder
         ]);
         Direction::create([
             'text' => 'جنوبی'
+        ]);
+        Direction::create([
+            'text' => 'غربی'
+        ]);
+        Direction::create([
+            'text' => 'شرقی'
+        ]);
+        Direction::create([
+            'text' => 'دو نبش'
+        ]);
+
+        EstateRequestFloorCoveringOption::create([
+            'text' => 'کف پوش'
+        ]);
+        EstateRequestCabinetsOption::create([
+            'text' => 'کابینت'
+        ]);
+        EstateRequestWallPlugsOption::create([
+            'text' => 'دیوارپوش'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'نمای ساختمان'
+        ]);
+        EstateRequestHeatingSystemOption::create([
+            'text' => 'سیستم گرمایش'
+        ]);
+        EstateRequestCoolingSystemOption::create([
+            'text' => 'سیستم سرمایش'
+        ]);
+        EstateRequestDocumentTypeOption::create([
+            'text' => 'نوع سند'
         ]);
 
         SubscriptionPlans::create([
@@ -209,5 +337,40 @@ class DatabaseSeeder extends Seeder
                 'name' => $contact
             ]);
         }
+        EstateRequest::create([
+            'owner_name' => 'سعید قلی پور',
+            'owner_mobile_number' => '09900787232',
+            'image' => 'https://jooinn.com/images/home-13.jpg',
+            'estate_id' => 1,
+            'address' => 'طلاب - دریای دوم',
+            'area_id' => 1,
+            'transfer_id' => 1,
+            'area' => 200,
+            'street_name' => 'حسینی محراب',
+            'plaque' => 553,
+            'floor' => 3,
+            'number_of_floor' => 3,
+            'apartment_unit' => 1,
+            'year_of_construction' => 1,
+            'direction_id' => 1,
+            'mortgage_price' => 100000000,
+            'rent_price' => 0,
+            'buy_price' => 0,
+            'description' => 'آپارتمان تازه ساخت هستش',
+            'empty' => 1,
+            'presell' => 1,
+            'exchange' => 1,
+            'parking' => 1,
+            'warehouse' => 1,
+            'elevator' => 1,
+            'electric_door' => 1,
+            'floor_covering_id' => 1,
+            'cabinets_id' => 1,
+            'wall_plugs_id' => 1,
+            'building_facades_id' => 1,
+            'heating_system_id' => 1,
+            'cooling_system_id' => 1,
+            'document_type_id' => 1,
+        ]);
     }
 }

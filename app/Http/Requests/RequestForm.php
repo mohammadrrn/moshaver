@@ -31,9 +31,9 @@ class RequestForm extends FormRequest
             'type_of_estate' => ['required', 'numeric'],
             'range_of_address' => ['required', 'string', 'max:255'],
             'rang_of_area' => ['numeric'],
-            'buy_price' => ['nullable', 'numeric'],
-            'mortgage_price' => ['nullable', 'numeric'],
-            'rent_price' => ['nullable', 'numeric'],
+            'buy_price' => ['nullable'],
+            'mortgage_price' => ['nullable'],
+            'rent_price' => ['nullable'],
             'description' => ['nullable', 'string'],
         ];
     }

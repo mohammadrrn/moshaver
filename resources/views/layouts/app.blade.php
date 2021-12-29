@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/panel.css')}}">
+    @yield('css')
     <title>
         @hasSection('title')
             @yield('title')
@@ -20,29 +21,21 @@
         <div class="col-6 header-right">
             <img class="header-img-logo" src="{{asset('icon/PanelAdmin/header-logo.png')}}" alt="">
             <div class="header-box-img header-box-img-1">
-                <img class="header-img-logo" src="{{asset('icon/PanelAdmin/icons8_notification.png')}}" alt="">
-                <div class="main-content">
-                    <div class="blinker-container">
-                        <div class="blinker blinker-six">
-                            <div class="circle"></div>
-                            <div class="circle"></div>
+                <a href="{{route('panel.notification.notificationList')}}">
+                    <img class="header-img-logo" src="{{asset('icon/PanelAdmin/icons8_notification.png')}}" alt="">
+                </a>
+                @if(count(auth()->user()->unreadNotifications) > 0)
+                    <div class="main-content">
+                        <div class="blinker-container">
+                            <div class="blinker blinker-six">
+                                <div class="circle"></div>
+                                <div class="circle"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="header-box-img">
-                <img class="header-img-logo" src="{{asset('icon/PanelAdmin/icons8_group_message.png')}}" alt="">
-                <div class="main-content">
-                    <div class="blinker-container">
-                        <div class="blinker blinker-six">
-                            <div class="circle"></div>
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
-
         <div class="col-6 header-left">
             <a href="{{route('request.requestForm')}}" class="header-left-box-span">
                 <div class="header-left-span-left-alert header-left-span-left-alert-1"></div>
@@ -117,6 +110,7 @@
 <script src="{{asset('js/rtlcss.com.js')}}"></script>
 <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 <script src="{{asset('js/js2.js')}}"></script>
+@yield('js')
 <!--<script>
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {

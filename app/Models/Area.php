@@ -10,6 +10,7 @@ class Area extends Model
     use HasFactory;
 
     protected $fillable = [
-        'text'
+        'text',
+        'status'
     ];
 }

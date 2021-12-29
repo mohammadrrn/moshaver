@@ -79,9 +79,14 @@
         <div class="container main-box-center">
             <div class="row  main-box-center-row">
                 @foreach($data['estateRequest'] as $request)
-
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 main-box-center-item">
                         <div class="box-sell">
+                            <div class="estate_code">
+                                کد ملک : {{$request->id}}
+                            </div>
+                            @if($request->status == 2)
+                                <div class="ribbon"><span>واگذار شد</span></div>
+                            @endif
                             <div class="box-sell-top">
                                 <a href="{{route('detail',$request->id)}}">
                                     <img class="box-sell-top-img" src="{{asset($request->thumbnail)}}">
@@ -101,7 +106,7 @@
                             </div>
                             <div class="box-sell-bottom-bottom">
                                 <div class="box-sell-bottom-bottom-right">
-                                    @if($request->rent_price != 0 || $request->mortgage_price != 0)
+                                    @if($request->rent_price != 0 && $request->mortgage_price != 0)
                                         <div class="box-sell-bottom-bottom-right-item">
                                             <span>اجاره:</span>
                                             <span>{{number_format($request->rent_price)}} هزار تومان </span>
@@ -110,10 +115,15 @@
                                             <span>رهن:</span>
                                             <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
                                         </div>
-                                    @else
+                                    @elseif($request->rent_price == 0 && $request->mortgage_price != 0)
                                         <div class="box-sell-bottom-bottom-right-item">
-                                            <span>خرید:</span>
-                                            <span>{{number_format($request->buy_price)}} هزار تومان </span>
+                                            <span>رهن کامل:</span>
+                                            <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
+                                        </div>
+                                    @elseif($request->participation_price != 0)
+                                        <div class="box-sell-bottom-bottom-right-item">
+                                            <span>مشارکت به مبلغ:</span>
+                                            <span>{{number_format($request->participation_price)}} هزار تومان </span>
                                         </div>
                                     @endif
                                 </div>
@@ -139,9 +149,6 @@
                                 <span>{{$request->owner_name}}</span>
                                 <span>{{$request->created_at->diffForHumans()}}</span>
                             </div>
-                            @if($request->status == 2)
-                                <span class="bg-danger text-white rounded p-1">واگذار شد</span>
-                            @endif
                         </div>
                     </div>
                 @endforeach

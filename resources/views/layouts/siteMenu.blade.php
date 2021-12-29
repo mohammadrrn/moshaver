@@ -4,27 +4,31 @@
             <img class="header-right-icon-moshaver" src="{{asset('icon/moshaver-007.png')}}">
             <ul>
                 <li>
-                    <a class="mmad" href="{{route('index')}}">
+                    <a @if(Request::route()->getName() == 'index') class="mmad" @endif href="{{route('index')}}">
                         صفحه اصلی
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('search')}}">
+                    <a href="{{route('search')}}"
+                       @if(Request::route()->getName() == 'search' && count(Request::route()->parameters()) == 0) class="mmad" @endif >
                         جستجو
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('request.requestForm')}}">
-                        ارسال درخواست
+                    <a href="{{route('request.requestForm')}}"
+                       @if(Request::route()->getName() == 'request.requestForm') class="mmad" @endif >
+                        ثبت درخواست
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('request.estateForm')}}">
-                        ثبت ملک
+                    <a href="{{route('request.estateForm')}}"
+                       @if(Request::route()->getName() == 'request.estateForm') class="mmad" @endif>
+                        ثبت آگهی
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('search','marked')}}">
+                    <a href="{{route('search','marked')}}"
+                       @isset(Request::route()->parameters()['type']) class="mmad" @endif>
                         نشان شده
                     </a>
                 </li>

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\AssistantController;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 

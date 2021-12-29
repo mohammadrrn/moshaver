@@ -42,6 +42,10 @@ class HomeController extends Controller
             $expiry_date = $to->diffInDays($from);
         }
 
+        /*foreach () {
+            echo $notification->type;
+        }*/
+
         $data = [
             'subscribeExpiry' => $expiry_date,
             'subscribePlan' => $userSubscriptionPlan,
@@ -62,12 +66,12 @@ class HomeController extends Controller
             'full_name' => $profile['full_name'],
             'national_code' => $profile['national_code'],
             'email' => $profile['email'],
+            'address' => $profile['address']
         ]);
 
         $columns = [
             'full_name',
             'national_code',
-            'email'
         ]; // Fields to be completed
 
         foreach ($columns as $column) {
@@ -92,5 +96,16 @@ class HomeController extends Controller
             }
         }
         return redirect(route('panel.profile'))->withErrors('کلمه عبور فعلی نادرست می باشد');
+    }
+
+    public function redirectTo($notification_id)
+    {
+        foreach (auth()->user()->unreadNotifications as $notification) {
+            if ($notification->id == $notification_id) {
+                $notification->markAsRead();
+                return redirect($notification->data[1]);
+            }
+        }
+        return 0;
     }
 }

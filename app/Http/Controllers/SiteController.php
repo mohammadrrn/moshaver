@@ -61,18 +61,19 @@ class SiteController extends Controller
         $estateType = Estate::get();
         $direction = Direction::get();
         $options = AssistantController::estateRequestOptions();
-
         $where = [];
+
         switch ($type) {
             case 'rentAndMortgage':
                 $where = [
                     ['rent_price', '!=', 0],
-                    ['mortgage_price', '!=', 0]
                 ];
                 break;
             case 'buy':
                 $where = [
                     ['buy_price', '!=', 0],
+                    ['rent_price', '==', 0],
+                    ['mortgage_price', '==', 0],
                 ];
                 break;
         }
@@ -91,7 +92,7 @@ class SiteController extends Controller
             $data['estateRequests'] = Bookmarks::with('estate')->where('user_id', auth()->id())->paginate($this->searchPagination);
             $data['type'] = 'marked';
         } else {
-            $data['estateRequests'] = EstateRequest::where('status', '1')->where($where)->paginate($this->searchPagination);
+            $data['estateRequests'] = EstateRequest::where('status', '!=', '0')->where($where)->paginate($this->searchPagination);
         }
 
         return view('site.search', compact('data'));
@@ -109,6 +110,7 @@ class SiteController extends Controller
             'id' => ['numeric', 'nullable'],
             'option' => ['array']
         ]);
+
         if ($filter['id'] == null || $filter['id'] == '') {
             unset($filter['id']);
         }
@@ -252,15 +254,21 @@ class SiteController extends Controller
         $valid = $request->validate([
             'mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
         ]);
+        $checkExistUser = User::where('mobile_number', $valid['mobile_number'])->first();
+        if (!$checkExistUser)
+            return redirect(route('forgetPassword'))->withErrors(ResponseController::userDoesNotExist());
         $checkExistCode = ResetPassword::where('mobile_number', $valid['mobile_number'])->get();
         if (count($checkExistCode) > 2) {
             return redirect(route('forgetPassword'))->withErrors(ResponseController::tooManyRequestsForPasswordReset());
         }
+        $code = AssistantController::randomCode();
 
         ResetPassword::create([
             'mobile_number' => $valid['mobile_number'],
-            'code' => AssistantController::randomCode()
+            'code' => $code
         ]);
+
+        ResetPasswordController::sendResetPasswordCode($code, $valid['mobile_number']);
 
         $data = [
             'mobile_number' => $valid['mobile_number']

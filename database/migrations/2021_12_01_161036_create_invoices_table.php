@@ -14,7 +14,7 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from(1000);
             $table->unsignedBigInteger('user_id')->comment('آیدی کاربر');
             $table->unsignedBigInteger('plan_id')->comment('آیدی پلن');
             $table->unsignedBigInteger('item_id')->comment('آیدی آیتم');

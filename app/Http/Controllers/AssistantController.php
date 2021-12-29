@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class AssistantController extends Controller
@@ -35,12 +37,13 @@ class AssistantController extends Controller
             'elevator' => 'آسانسور',
             'electric_door' => 'درب برقی',
             'iphone_video' => 'آیفون تصویری',
-            'toilet' => 'دستشویی',
-            'balcony' => 'بالکن',
+            'toilet' => 'سرویس فرنگی',
+            'balcony' => 'تراس',
             'wall_cupboard' => 'کمد دیواری',
             'surface_gas' => 'گاز روکار',
             'master_bath' => 'حمام مستر',
             'jacuzzi' => 'جکوزی',
+            'bathtub' => 'وان',
             'security_door' => 'درب ضد سرقت',
             'cctv' => 'دوربین مداربسته',
             'presence_owner' => 'حضور مالک',
@@ -66,6 +69,13 @@ class AssistantController extends Controller
         return str_replace($arabic, $num, $convertedPersianNums);
     }
 
+    public static function clearSeparator($number)
+    {
+        $number = explode(',', $number);
+        $number = implode($number);
+        return self::filterNumber($number);
+    }
+
     public static function getTableColumns($table)
     {
         return DB::getSchemaBuilder()->getColumnListing($table);
@@ -85,12 +95,20 @@ class AssistantController extends Controller
     {
         return [
             'add-writer',
+            'writer-list',
             'inactivity-writer',
             'active-writer',
             'edit-writer',
+            'trusted-offices-list',
+            'users-list',
             'confirm-estate-request',
+            'confirmed-estate-request-list',
+            'unconfirmed-estate-request-list',
             'update-estate-request',
-            'delete-estate-request'
+            'delete-estate-request',
+            'confirmed-request-list',
+            'unconfirmed-request-list',
+            'cession-list',
         ];
     }
 
@@ -99,9 +117,11 @@ class AssistantController extends Controller
         return [
             'confirm-estate-request',
             'update-estate-request',
-            'delete-estate-request'
+            'delete-estate-request',
+            'confirmed-estate-request-list',
+            'unconfirmed-estate-request-list',
+            'confirmed-request-list',
+            'unconfirmed-request-list',
         ];
     }
-
-
 }

@@ -89,7 +89,7 @@
                                     <label>آدرس</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                        <!--                            <div class="col-12 col-md-6">
                                 <div class="group">
                                     <input type="text" name="street_name"
                                            value="{{$data['estateRequest']->street_name}}"/>
@@ -97,7 +97,7 @@
                                     <span class="bar"></span>
                                     <label>نام کوچه</label>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-12 col-md-6">
                                 <div class="group">
                                     <input type="text" name="plaque" value="{{$data['estateRequest']->plaque}}"/>
@@ -197,7 +197,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 col-md-6">
                                 <div class="group">
                                     <input type="text" name="description"
                                            value="{{$data['estateRequest']->description}}"/>

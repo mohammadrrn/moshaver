@@ -54,7 +54,7 @@ class RequestController extends Controller
 
     public function updateRequestForm($id)
     {
-        $area = Area::get();
+        $area = Area::where('status', 1)->get();
         $transfer = Transfer::get();
         $estate = Estate::get();
         $direction = Direction::get();
@@ -93,7 +93,7 @@ class RequestController extends Controller
 
     public function requestForm()
     {
-        $area = Area::get();
+        $area = Area::where('status', 1)->get();
         $transfer = Transfer::get();
         $estate = Estate::get();
         $direction = Direction::get(); // direction of estate
@@ -120,10 +120,10 @@ class RequestController extends Controller
                 'transfer_id' => $requestForm['type_of_transfer'],
                 'estate_id' => $requestForm['type_of_estate'],
                 'range_of_address' => $requestForm['range_of_address'],
-                'rang_of_area' => $requestForm['rang_of_area'],
-                'buy_price' => $requestForm['buy_price'],
-                'mortgage_price' => $requestForm['mortgage_price'],
-                'rent_price' => $requestForm['rent_price'],
+                'rang_of_area' => AssistantController::filterNumber($requestForm['rang_of_area']),
+                'buy_price' => ($requestForm['buy_price'] == '') ? 0 : AssistantController::clearSeparator($requestForm['buy_price']),
+                'mortgage_price' => ($requestForm['mortgage_price'] == '') ? 0 : AssistantController::clearSeparator($requestForm['mortgage_price']),
+                'rent_price' => ($requestForm['rent_price'] == '') ? 0 : AssistantController::clearSeparator($requestForm['rent_price']),
                 'description' => $requestForm['description'],
             ]);
             return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);

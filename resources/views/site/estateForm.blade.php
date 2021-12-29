@@ -1,6 +1,6 @@
 @extends('index')
 
-@section('title','ثبت ملک')
+@section('title','ثبت آگهی')
 
 @section('content')
     <main class="container-fluid">
@@ -10,7 +10,7 @@
                   enctype="multipart/form-data">
                 @csrf
                 <div class="col-12 titr test">
-                    <span>ثبت ملک</span>
+                    <span>ثبت آگهی</span>
                     <br>
                     @if(session('success'))
                         {{session('success')}}
@@ -77,30 +77,6 @@
                         </select>
                     @endisset
                 </div>
-                <div class="col-12 view-order">
-                    <div class="group">
-                        <input type="text" name="address" value="{{old('address')}}">
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>آدرس</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 view-order">
-                    <div class="group">
-                        <input type="text" name="street_name" value="{{old('street_name')}}">
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>نام کوچه و خیابان</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 view-order">
-                    <div class="group">
-                        <input type="text" name="plaque" value="{{old('plaque')}}">
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>پلاک</label>
-                    </div>
-                </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
                         <input type="text" name="owner_name" value="{{old('owner_name')}}">
@@ -114,32 +90,56 @@
                         <input type="text" name="owner_mobile_number" value="{{old('owner_mobile_number')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>شماره همراه</label>
+                        <label>شماره تماس</label>
                     </div>
                 </div>
-                <div id="box-by" class="col-12 view-order">
+                <div class="col-12 col-md-6 view-order">
+                    <div class="group">
+                        <input type="text" name="address" value="{{old('address')}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>آدرس</label>
+                    </div>
+                </div>
+            <!--                <div class="col-12 col-md-6 view-order">
+                    <div class="group">
+                        <input type="text" name="street_name" value="{{old('street_name')}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>نام کوچه و خیابان</label>
+                    </div>
+                </div>-->
+                <div class="col-12 col-md-6 view-order">
+                    <div class="group">
+                        <input type="text" name="plaque" value="{{old('plaque')}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>پلاک</label>
+                    </div>
+                </div>
+                <div id="box-by" class="col-12 view-order number-separator">
                     <div class="group">
                         <input type="text" id="buy_price" name="buy_price" value="{{old('buy_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ خرید</label>
+                        <label>مبلغ خرید (تومان)</label>
                     </div>
                 </div>
-                <div id="box-mortgage" class="col-12 view-order">
+                <div id="box-mortgage" class="col-12 col-md-6 view-order number-separator">
                     <div class="group">
                         <input type="text" id="mortgage_price" name="mortgage_price" value="{{old('mortgage_price')}}"
                         >
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ رهن</label>
+                        <label>مبلغ رهن (تومان)</label>
                     </div>
                 </div>
-                <div id="box-rent" class="col-12 view-order">
+                <div id="box-rent" class="col-12 col-md-6 view-order number-separator">
                     <div class="group">
                         <input type="text" name="rent_price" id="rent_price" value="{{old('rent_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ اجاره</label>
+                        <label>مبلغ اجاره (تومان)</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 view-order">
@@ -201,12 +201,90 @@
                         <label>توضیحات</label>
                     </div>
                 </div>
+                @role('admin|user|writer')
                 <div class="col-12">
                     <div class="row send-request-user-group-option">
                         <div class="col-12">
                             <span>
                                 امکانات ملک
                             </span>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="floor_covering_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب نوع کف پوش</option>
+                                    @foreach($data['floorCovering'] as $floorCovering)
+                                        <option value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="cabinets_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب نوع کابینت</option>
+                                    @foreach($data['cabinets'] as $cabinets)
+                                        <option value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="wall_plugs_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب نوع دیوارپوش</option>
+                                    @foreach($data['wallPlugs'] as $wallPlugs)
+                                        <option value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="building_facades_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب نوع نما</option>
+                                    @foreach($data['buildingFacades'] as $buildingFacades)
+                                        <option value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="heating_system_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب سیستم گرمایش</option>
+                                    @foreach($data['heatingSystem'] as $heatingSystem)
+                                        <option value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="cooling_system_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب سیستم سرمایش</option>
+                                    @foreach($data['coolingSystem'] as $coolingSystem)
+                                        <option value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 view-order">
+                            <div class="group">
+                                <select name="document_type_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب نوع سند</option>
+                                    @foreach($data['documentType'] as $documentType)
+                                        <option value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item =>$value)
                             <div class="col-12 col-md-3 ">
@@ -220,13 +298,10 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="box-theree">
-                    <img class="box-theree-1" src="{{asset('icon/icons8_camera_26px.png')}}" alt="">
-                </div>
-                <button class="btn insert-btn" type="submit">ثبت فایل</button>
+                @endrole
+                <button class="btn insert-btn m-3" type="submit">ثبت آگهی</button>
             </form>
         </div>
-
 
     </main>
 @endsection
