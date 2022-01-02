@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Morilog\Jalali\Jalalian;
 
 class HomeController extends Controller
 {
@@ -35,9 +36,11 @@ class HomeController extends Controller
 
         // Calculation Subscription Expiry
         $expiry_date = null;
+        $date = null;
         $userSubscriptionPlan = Subscription::where('user_id', auth()->id())->with('plan', 'item')->first();
         if ($userSubscriptionPlan) {
             $to = Carbon::createFromFormat('Y-m-d H:s:i', $userSubscriptionPlan->expiry_date);
+            $date = Jalalian::fromDateTime($userSubscriptionPlan->expiry_date)->format('%Y/%m/%d');
             $from = Carbon::now();
             $expiry_date = $to->diffInDays($from);
         }
@@ -49,7 +52,8 @@ class HomeController extends Controller
         $data = [
             'subscribeExpiry' => $expiry_date,
             'subscribePlan' => $userSubscriptionPlan,
-            'myEstateRequest' => $myEstateRequest
+            'myEstateRequest' => $myEstateRequest,
+            'date' => $date
         ];
         return view('panel.index', compact('data'));
     }

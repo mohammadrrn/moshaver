@@ -16,6 +16,7 @@ class CreateSubscriptionPlansTable extends Migration
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
             $table->string('title')->comment('عنوان طرح');
+            $table->string('level')->comment('سطح اشتراک');
             $table->string('icon')->comment('آیکون طرح');
             $table->text('properties')->comment('امکانات طرح');
             $table->timestamps();

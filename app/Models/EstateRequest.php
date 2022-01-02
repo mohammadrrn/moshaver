@@ -15,6 +15,7 @@ class EstateRequest extends Model
         'owner_mobile_number',
         'image',
         'thumbnail',
+        'sliders',
         'area_id',
         'user_id',
         'transfer_id',

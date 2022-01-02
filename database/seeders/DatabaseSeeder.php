@@ -69,16 +69,16 @@ class DatabaseSeeder extends Seeder
             'description' => 'نویسنده سایت',
         ]);
 
+        $advisor_role = Role::create([
+            'name' => 'advisor',
+            'display_name' => 'مشاور',
+            'description' => 'مشاور سایت',
+        ]);
+
         $user_role = Role::create([
             'name' => 'user',
             'display_name' => 'کاربر عادی',
             'description' => 'کاربر عادی سایت',
-        ]);
-
-        $advisor_role = Role::create([
-            'name' => 'advisor',
-            'display_name' => 'مشاور',
-            'description' => 'مشاور یا همکار',
         ]);
 
         /* --------------------------- Roles --------------------------- */
@@ -286,6 +286,7 @@ class DatabaseSeeder extends Seeder
 
         SubscriptionPlans::create([
             'title' => 'اشتراک طلایی',
+            'level' => 'gold',
             'icon' => 'icon/PanelAdmin/diamond-gold.svg',
             'properties' => json_encode([
                 'property 1',
@@ -305,6 +306,7 @@ class DatabaseSeeder extends Seeder
 
         SubscriptionPlans::create([
             'title' => 'اشتراک نقره ای',
+            'level' => 'silver',
             'icon' => 'icon/PanelAdmin/diamond-silver.svg',
             'properties' => json_encode([
                 'property 1',
@@ -353,9 +355,9 @@ class DatabaseSeeder extends Seeder
             'apartment_unit' => 1,
             'year_of_construction' => 1,
             'direction_id' => 1,
-            'mortgage_price' => 100000000,
+            'mortgage_price' => 0,
             'rent_price' => 0,
-            'buy_price' => 0,
+            'buy_price' => 100000000,
             'description' => 'آپارتمان تازه ساخت هستش',
             'empty' => 1,
             'presell' => 1,

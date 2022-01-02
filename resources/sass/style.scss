@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'IRANYekanWebFn';
-    src: url('font/IRANYekanWebFn.woff2') format('woff2'),
-    url('font/IRANYekanWebFn.woff') format('woff');
+    src: url('../../public/css/font/IRANYekanWebFn.woff2') format('woff2'),
+    url('../../public/css/font/IRANYekanWebFn.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -569,8 +569,8 @@ main {
                         }
 
                         .mark {
+                            background: transparent;
                             display: block;
-                            background: #03a9f4;
                         }
                     }
                 }
@@ -1251,17 +1251,17 @@ footer {
         }
     }
 
-    .social-1 {
-        background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-google-48.png);
+    /*.social-1 {
+        background-image: url('public/icon/icons8-google-48.png');
     }
 
     .social-2 {
-        background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-github-24-2.png);
+        background-image: url('public/icon/icons8-github-24-2.png');
     }
 
     .social-3 {
-        background-image: url(../../../../../Users/SoKo_Ot/Desktop/moshaver/mrcomputer78-moshaver007-8fd134c3a595/icon/icons8-facebook-48.png);
-    }
+        background-image: url('public/icon/icons8-facebook-48.png');
+    }*/
 
     button.ghost-responsiv {
         background-color: #ff4b2b;
@@ -1497,7 +1497,7 @@ footer {
         padding: 8px 10px;
         border-radius: 5px;
         outline: none;
-        max-width: auto;
+        //max-width: auto;
         margin: 5px;
         transition: all 0.3s;
 
@@ -1587,7 +1587,7 @@ footer {
 
         &:active {
             box-shadow: none !important;
-            border-color: none !important;
+            //border-color: none !important;
         }
     }
 
@@ -1751,7 +1751,7 @@ main {
         // width: calc(100% - 35px);
         // background: red !important;
         color: #999;
-        font-size: 13x;
+        font-size: 13px;
         font-weight: normal;
         position: absolute;
         // pointer-events:none;
@@ -1760,6 +1760,7 @@ main {
         transition: 0.4s ease all;
         -moz-transition: 0.4s ease all;
         -webkit-transition: 0.4s ease all;
+        background: #fff;
     }
 
     /* active state */

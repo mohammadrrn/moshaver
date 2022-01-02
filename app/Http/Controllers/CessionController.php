@@ -42,4 +42,20 @@ class CessionController extends Controller
         $cession->delete();
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
+
+    public function unconfirmedCession($estateRequestId)
+    {
+        $estateRequest = EstateRequest::find($estateRequestId);
+        $estateRequest->status = 1;
+        $estateRequest->save();
+        return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
+    }
+
+    public function confirmCessionManual($estateRequestId)
+    {
+        $estateRequest = EstateRequest::find($estateRequestId);
+        $estateRequest->status = 2;
+        $estateRequest->save();
+        return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
+    }
 }

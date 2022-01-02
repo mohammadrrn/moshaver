@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="group">
-                        <select name="area_id">
+                        <select name="area_id" class="form-select form-select">
                             <option disabled selected>انتخاب منطقه</option>
                             @foreach($data['areas'] as $area)
                                 @if($data['writer']->area_id == $area->id)

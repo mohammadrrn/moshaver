@@ -127,27 +127,35 @@ $("#colorWell").on("change", function () {
 //     inside.style.background = event.target.value;
 //   });
 // };
-
 //group select option
-//$('#mortgage_price').val(0);
-//$('#buy_price').val(0);
-//$('#rent_price').val(0);
+$('.price').css('display', 'none');
 $('.ddlViewBy').on('change', function () {
+    $('.price').css('display', 'none');
     var change_input = parseInt(this.value);
-    if (change_input === 1 || change_input === 3) {
-        $("#box-by").css("display", "block");
-        $("#box-mortgage").css("display", "none");
-        $("#box-rent").css("display", "none");
-        //$('#rent_price').val(0);
-        //$('#mortgage_price').val(0);
-    } else {
-        $("#box-by").css("display", "none");
-        $("#box-mortgage").css("display", "block");
-        $("#box-rent").css("display", "block");
-        //$('#buy_price').val(0);
+    $('.price > div > input').val(0);
+    if (change_input == 1) {
+        $('#buy_price').css('display', 'block');
+    } else if (change_input == 2) {
+        $('#mortgage_price').css('display', 'block');
+        $('#rent_price').css('display', 'block');
+    } else if (change_input == 3) {
+        $('#mortgage_price').css('display', 'block');
+    } else if (change_input == 4) {
+        $("#participation_price").css("display", "block");
     }
-    // console.log(change_input);
 });
+
+var transfer_id = $('.transfer_id').val();
+if (transfer_id == 1) {
+    $('#buy_price').css('display', 'block');
+} else if (transfer_id == 2) {
+    $('#mortgage_price').css('display', 'block');
+    $('#rent_price').css('display', 'block');
+} else if (transfer_id == 3) {
+    $('#mortgage_price').css('display', 'block');
+} else if (transfer_id == 4) {
+    $("#participation_price").css("display", "block");
+}
 
 
 $('img.marked').click(function (e) {
@@ -221,3 +229,5 @@ $(document).ready(function () {
 
 
 })
+
+

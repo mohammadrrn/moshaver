@@ -18,7 +18,7 @@
                         {{$error}}<br>
                     @endforeach
                 </div>
-                <div class="col-12 view-order">
+                <div class="col-12 col-md-6 view-order">
                     <div class="group">
                         <input type="text" name="full_name" value="{{old('full_name')}}">
                         <span class="highlight"></span>
@@ -26,7 +26,7 @@
                         <label>نام و نام خانوادگی</label>
                     </div>
                 </div>
-                <div class="col-12 view-order">
+                <div class="col-12 col-md-6 view-order">
                     <div class="group">
                         <input type="text" name="mobile_number" value="{{old('mobile_number')}}"
                         >
@@ -35,7 +35,7 @@
                         <label>شماره همراه</label>
                     </div>
                 </div>
-                <div class="col-12 view-order city">
+                <div class="col-12 col-md-6 view-order city">
                     <span>
                         منطقه
                     </span>
@@ -46,7 +46,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 view-order city">
+                <div class="col-12 col-md-6 view-order city">
                     <span>
                         نوع واگذاری
                     </span>
@@ -58,7 +58,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 view-order city">
+                <div class="col-12 col-md-6 view-order city">
                     <span>
                         نوع ملک
                     </span>
@@ -72,7 +72,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 view-order">
+                <div class="col-12 col-md-6 view-order">
                     <div class="group">
 
                         <input type="text" name="range_of_address" value="{{old('range_of_address')}}"
@@ -93,31 +93,37 @@
                         <label>حدود متراژ درخواستی </label>
                     </div>
                 </div>
-                <div id="box-by" class="col-12 view-order number-separator">
+                <div id="buy_price" class="col-12 view-order number-separator price">
                     <div class="group">
-                        <input id="buy_price" type="text" name="buy_price" value="{{old('buy_price')}}">
+                        <input type="text" name="buy_price" value="{{old('buy_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ خرید</label>
+                        <label>مبلغ خرید (تومان)</label>
                     </div>
                 </div>
-                <div id="box-mortgage" class="col-12 view-order number-separator">
+                <div id="mortgage_price" class="col-12 col-md-6 view-order number-separator price">
                     <div class="group">
-                        <input type="text" id="mortgage_price" name="mortgage_price" value="{{old('mortgage_price')}}"
+                        <input type="text" name="mortgage_price" value="{{old('mortgage_price')}}"
                         >
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ رهن</label>
+                        <label>مبلغ رهن (تومان)</label>
                     </div>
                 </div>
-
-                <div id="box-rent" class="col-12 view-order number-separator">
+                <div id="rent_price" class="col-12 col-md-6 view-order number-separator price">
                     <div class="group">
-
-                        <input type="text" name="rent_price" id="rent_price" value="{{old('rent_price')}}">
+                        <input type="text" name="rent_price" value="{{old('rent_price')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label>مبلغ اجاره</label>
+                        <label>مبلغ اجاره (تومان)</label>
+                    </div>
+                </div>
+                <div id="participation_price" class="col-12 col-md-6 view-order number-separator price">
+                    <div class="group">
+                        <input type="text" name="participation_price" value="{{old('participation_price')}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>مبلغ مشارکت (تومان)</label>
                     </div>
                 </div>
                 <div class="col-12 view-order">

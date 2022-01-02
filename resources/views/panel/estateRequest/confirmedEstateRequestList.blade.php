@@ -73,8 +73,7 @@
                         <th>مبلغ اجاره</th>
                         <th>توضیحات</th>
                         <th>وضعیت</th>
-                        <th>عدم نمایش</th>
-                        <th>عملیات</th>
+                        <th>جزئیات</th>
                     </tr>
                     @foreach($data['estateRequestList'] as $request)
                         <tr>
@@ -105,24 +104,13 @@
                             <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>
                             <td>{{$request->drescription}}</td>
                             <td>
-                                @if($request->status == 1)
-                                    تایید شده
-                                @elseif($request->status == 2)
+                                @if($request->status == 2)
                                     واگذار شده
                                 @endif
                             </td>
                             <td>
-                                <form action="{{route('panel.estateRequest.unConfirmEstateRequest')}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="estate_request_id" value="{{$request->id}}">
-                                    <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
-                                </form>
-                            </td>
-                            <td>
-                                <a class="btn btn-sm btn-primary btn-sm"
-                                   href="{{route('panel.estateRequest.updateEstateRequestForm',$request->id)}}">ویرایش</a>
-                                <a class="btn btn-sm btn-danger btn-sm"
-                                   href="{{route('panel.estateRequest.deleteEstateRequestForm',$request->id)}}">حذف</a>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{route('panel.estateRequest.updateEstateRequestForm',$request->id)}}">جزئیات</a>
                             </td>
                         </tr>
                     @endforeach

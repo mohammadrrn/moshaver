@@ -31,7 +31,7 @@
                         <label>شماره همراه</label>
                     </div>
                     <div class="group">
-                        <select name="area_id">
+                        <select name="area_id" class="form-select form-select">
                             <option disabled selected>انتخاب منطقه</option>
                             @foreach($data['areas'] as $area)
                                 <option value="{{$area->id}}">{{$area->text}}</option>

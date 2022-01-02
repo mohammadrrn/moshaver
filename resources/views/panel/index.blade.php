@@ -7,7 +7,7 @@
             <div class="col-12 col-md-4">
                 <div class="bottom-box-1-box">
                     <div class="bottom-box-1-box-img-top-background"></div>
-                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/icons8_Add_Graph_Report.png')}}"
+                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/my-ad.svg')}}"
                          alt="">
                     <span>آگهی های من</span>
                     <div class="bottom-box-1-box-bottom">
@@ -21,7 +21,7 @@
             <div class="col-12 col-md-4">
                 <div class="bottom-box-1-box">
                     <div class="bottom-box-1-box-img-top-background"></div>
-                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/icons8-pay-date-50.png')}}"
+                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/expire.svg')}}"
                          alt="">
                     <span>تاانقضای اشتراک</span>
                     <div class="bottom-box-1-box-bottom">
@@ -34,10 +34,10 @@
                             </div>
                         @else
                             <span class="bottom-box-1-box-bottom-right">
-                                {{$data['subscribeExpiry']}}
+                                {{$data['subscribeExpiry']}} روز دیگر
                             </span>
                             <div class="bottom-box-1-box-bottom-left">
-                                <span>روز</span>
+                                <span>{{$data['date']}}</span>
                             </div>
                         @endif
                     </div>
@@ -46,7 +46,7 @@
             <div class="col-12 col-md-4">
                 <div class="bottom-box-1-box">
                     <div class="bottom-box-1-box-img-top-background"></div>
-                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/icons8-staff-60.png')}}" alt="">
+                    <img class="bottom-box-1-box-img-top" src="{{asset('icon/PanelAdmin/medal.svg')}}" alt="">
                     <span>اشتراک پنل شما</span>
                     @if($data['subscribePlan'])
                         <div class="bottom-box-1-box-bottom">
@@ -70,22 +70,22 @@
         <div class="row">
             <div class="col-12 col-md-6 col-lg-3">
                 <a href="{{route('panel.estateRequest.myEstateRequest')}}" class="services-box">
-                    <img class="services-box-img-1" src="{{asset('icon/PanelAdmin/icons8-happy-file-64.png')}}" alt="">
-                    <img class="services-box-img-2" src="{{asset('icon/PanelAdmin/icons8-happy-file-64-w.png')}}"
+                    <img class="services-box-img-1" src="{{asset('icon/PanelAdmin/my-ad.svg')}}" alt="">
+                    <img class="services-box-img-2" src="{{asset('icon/PanelAdmin/my-ad-w.svg')}}"
                          alt="">
                     <span>
-                                نمایش ثبت ملک
+                                ملک های من
                             </span>
                 </a>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <a href="{{route('panel.request.myRequest')}}" class="services-box">
-                    <img class="services-box-img-1" src="{{asset('icon/PanelAdmin/icons8-important-file-64.png')}}"
+                    <img class="services-box-img-1" src="{{asset('icon/PanelAdmin/my-ad.svg')}}"
                          alt="">
-                    <img class="services-box-img-2" src="{{asset('icon/PanelAdmin/icons8-important-file-64-w.png')}}"
+                    <img class="services-box-img-2" src="{{asset('icon/PanelAdmin/my-ad-w.svg')}}"
                          alt="">
                     <span>
-                                نمایش  درخواست ها
+                                درخواست های من
                             </span>
                 </a>
             </div>

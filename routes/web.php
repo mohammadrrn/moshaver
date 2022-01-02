@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
+    return view('test');
     //auth()->user()->attachPermission('zoonkan');
 });
 
@@ -167,6 +168,8 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::get('/report/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'report'])->name('report');
         Route::get('/reportsList', [App\Http\Controllers\CessionController::class, 'reportsList'])->name('reportsList');
         Route::post('/confirmCession/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'confirmCession'])->name('confirmCession');
+        Route::post('/unconfirmedCession/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'unconfirmedCession'])->name('unconfirmedCession');
+        Route::post('/confirmCessionManual/{estateRequestId}', [App\Http\Controllers\CessionController::class, 'confirmCessionManual'])->name('confirmCessionManual');
     });
 
     Route::prefix('area')->name('area.')->middleware('role:admin')->group(function () {

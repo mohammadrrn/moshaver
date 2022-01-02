@@ -43,7 +43,6 @@ class EstateRequestController extends Controller
 
     public function confirmEstateRequest(Request $request)
     {
-
         $confirm = EstateRequest::findOrFail($request->input('estate_request_id'));
         $confirm->status = 1;
         $confirm->save();
@@ -78,13 +77,27 @@ class EstateRequestController extends Controller
         $transfer = Transfer::get();
         $estate = Estate::get();
         $direction = Direction::get();
+        $floorCovering = EstateRequestFloorCoveringOption::get();
+        $cabinets = EstateRequestCabinetsOption::get();
+        $wallPlugs = EstateRequestWallPlugsOption::get();
+        $buildingFacades = EstateRequestBuildingFacadesOption::get();
+        $heatingSystem = EstateRequestHeatingSystemOption::get();
+        $coolingSystem = EstateRequestCoolingSystemOption::get();
+        $documentType = EstateRequestDocumentTypeOption::get();
 
         $data = [
             'area' => $area,
             'transfer' => $transfer,
             'estate' => $estate,
             'direction' => $direction,
-            'estateRequest' => EstateRequest::findOrFail($id)
+            'floorCovering' => $floorCovering,
+            'cabinets' => $cabinets,
+            'wallPlugs' => $wallPlugs,
+            'buildingFacades' => $buildingFacades,
+            'heatingSystem' => $heatingSystem,
+            'coolingSystem' => $coolingSystem,
+            'documentType' => $documentType,
+            'estateRequest' => EstateRequest::with('floorCovering')->with('cabinets')->with('wallPlugs')->with('buildingFacades')->with('heatingSystem')->with('coolingSystem')->with('documentType')->findOrFail($id)
         ];
         return view('panel.estateRequest.updateEstateRequestForm', compact('data'));
     }
@@ -92,6 +105,30 @@ class EstateRequestController extends Controller
     public function updateEstateRequest(Request $request, $id)
     {
         $estateRequest = EstateRequest::findOrFail($id);
+
+        $request['buy_price'] = ($request['buy_price'] == 0) ? 0 : AssistantController::clearSeparator($request['buy_price']);
+        $request['mortgage_price'] = ($request['mortgage_price'] == 0) ? 0 : AssistantController::clearSeparator($request['mortgage_price']);
+        $request['rent_price'] = ($request['rent_price'] == 0) ? 0 : AssistantController::clearSeparator($request['rent_price']);
+        $request['participation_price'] = ($request['participation_price'] == 0) ? 0 : AssistantController::clearSeparator($request['participation_price']);
+
+        if ($request['deleted_image'] == 1) {
+            $estateRequest->thumbnail = 'default-thumbnail.png';
+            $estateRequest->image = 'default.png';
+        }
+
+        if ($request['deleted_slider'] != '') {
+            $deleted_slider = explode(',', $request['deleted_slider']);
+            $sliders = json_decode($estateRequest->sliders);
+            foreach ($deleted_slider as $deleted) {
+                foreach ($sliders as $key => $slider) {
+                    if ($deleted == $key) {
+                        unset($sliders[$key]);
+                    }
+                }
+            }
+            $estateRequest->sliders = json_decode(json_encode($sliders), true);;
+        }
+
         if ($request->input('options')) {
             $checkedOptions = [];
             foreach ($request->input('options') as $option => $value) {
@@ -104,15 +141,15 @@ class EstateRequestController extends Controller
             foreach ($checkedOptions as $checkedOption) {
                 $estateRequest->$checkedOption = 1;
             }
-            $estateRequest->update($request->all());
-            $estateRequest->save();
         } else {
             foreach (AssistantController::estateRequestOptions() as $option => $value) {
                 $estateRequest->$option = 0;
             }
-            $estateRequest->update($request->all());
-            $estateRequest->save();
         }
+
+        $estateRequest->update($request->all());
+        $estateRequest->save();
+
         ActionController::actionRegister($estateRequest, 'update');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
@@ -168,10 +205,24 @@ class EstateRequestController extends Controller
     {
         $checkEstateRequest = EstateRequest::where('owner_mobile_number', $estate['owner_mobile_number'])->where('address', $estate['address'])->where('area', $estate['area'])->where('floor', $estate['floor'])->first();
         if (!$checkEstateRequest) {
-            $imageName = 'estateRequestImg/' . time() . '-image.jpg';
-            $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
-            Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
-            Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
+            if ($estate['image']) {
+                $imageName = 'estateRequestImg/' . time() . '-image.jpg';
+                $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
+                Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
+                Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
+            } else {
+                $imageName = 'default.jpg';
+                $thumbnailName = 'defaultThumbnail.jpg';
+            }
+
+            $sliders = [];
+            if (count($estate['slider']) > 0) {
+                foreach ($estate['slider'] as $key => $slider) {
+                    $imageName = 'estateRequestImg/' . time() . $key . '-slider.jpg';
+                    $sliders[] = $imageName;
+                    Image::make($slider)->insert('watermark.png')->save($imageName);
+                }
+            }
 
             $status = (isset(auth()->user()->roles[0]->name) && auth()->user()->roles[0]->name == 'writer') ? 1 : 0;
             $estateRequest = EstateRequest::create([
@@ -180,6 +231,7 @@ class EstateRequestController extends Controller
                 'owner_mobile_number' => AssistantController::filterNumber($estate['owner_mobile_number']),
                 'image' => $imageName,
                 'thumbnail' => $thumbnailName,
+                'sliders' => json_encode($sliders),
                 'area_id' => $estate['area_id'],
                 'transfer_id' => $estate['transfer_id'],
                 'estate_id' => $estate['estate_id'],

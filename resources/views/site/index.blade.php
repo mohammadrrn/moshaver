@@ -39,39 +39,38 @@
                        class="main-box-top-left-item main-box-top-left-item-mortgage">
                         <img class="mortgage" src="{{asset('icon/mortgage.svg')}}">
                         <img class="mortgage-1" src="{{asset('icon/mortgage-1.svg')}}">
-                        <span>رهن اجاره</span>
+                        <span>رهن و اجاره</span>
                     </a>
                     <a href="{{route('search','buy')}}"
                        class="main-box-top-left-item main-box-top-left-item-ordera">
-                        <img class="ordera" src="{{asset('icon/create_order.svg')}}">
-                        <img class="ordera-1" src="{{asset('icon/create_order-1.svg')}}">
+                        <img class="ordera" src="{{asset('icon/buy-and-sale.svg')}}">
+                        <img class="ordera-1" src="{{asset('icon/buy-and-sale-w.svg')}}">
                         <span>خرید و فروش</span>
                     </a>
                     <a href="{{route('trustedOfficesList')}}"
                        class="main-box-top-left-item main-box-top-left-item-chair">
-                        <img class="chair" src="{{asset('icon/wing_chair.svg')}}">
-                        <img class="chair-1" src="{{asset('icon/wing_chair-1.svg')}}">
+                        <img class="chair" src="{{asset('icon/star-w.svg')}}">
+                        <img class="chair-1" src="{{asset('icon/star.svg')}}">
                         <span>دفاتر مورد اعتماد</span>
                     </a>
                     <a href="{{route('request.requestForm')}}"
                        class="main-box-top-left-item main-box-top-left-item-invite">
-                        <img class="invite" src="{{asset('icon/invite.svg')}}">
-                        <img class="invite-1" src="{{asset('icon/invite-1.svg')}}">
+                        <img class="invite" src="{{asset('icon/submit-request-w.svg')}}">
+                        <img class="invite-1" src="{{asset('icon/submit-request.svg')}}">
                         <span>ثبت درخواست</span>
                     </a>
                     <a href="{{route('request.estateForm')}}"
                        class="main-box-top-left-item main-box-top-left-item-mark">
-                        <img class="mark" src="{{asset('icon/mark_as_favorite.svg')}}">
-                        <img class="mark-1" src="{{asset('icon/mark_as_favorite-1.svg')}}">
+                        <img class="mark" src="{{asset('icon/submit-ad-w.svg')}}">
+                        <img class="mark-1" src="{{asset('icon/submit-ad.svg')}}">
                         <span>ثبت ملک</span>
                     </a>
                     <a href="{{route('search','marked')}}"
                        class="main-box-top-left-item main-box-top-left-item-new-file">
-                        <img class="new-file" src="{{asset('icon/file_settings.svg')}}">
-                        <img class="new-file-1" src="{{asset('icon/file_settings-1.svg')}}">
+                        <img class="new-file" src="{{asset('icon/bookmark-w.svg')}}">
+                        <img class="new-file-1" src="{{asset('icon/bookmark.svg')}}">
                         <span>نشان شده ها</span>
                     </a>
-
                 </div>
             </div>
         </div>
@@ -124,6 +123,11 @@
                                         <div class="box-sell-bottom-bottom-right-item">
                                             <span>مشارکت به مبلغ:</span>
                                             <span>{{number_format($request->participation_price)}} هزار تومان </span>
+                                        </div>
+                                    @elseif($request->buy_price != 0 && $request->mortgage_price == 0)
+                                        <div class="box-sell-bottom-bottom-right-item">
+                                            <span>مبلغ خرید:</span>
+                                            <span>{{number_format($request->buy_price)}} هزار تومان </span>
                                         </div>
                                     @endif
                                 </div>

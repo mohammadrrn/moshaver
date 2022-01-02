@@ -7,14 +7,77 @@
             <span class="title-services">
                 ویرایش درخواست ثبت ملک
             </span>
+                @if($data['estateRequest']->status == 1)
+                    <form class="mt-3"
+                          action="{{route('panel.cession.confirmCessionManual',$data['estateRequest']->id)}}"
+                          method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                        <input class="btn btn-sm btn-success" type="submit" value="اعلام واگذاری">
+                    </form>
+                    <form class="mt-3" action="{{route('panel.estateRequest.unConfirmEstateRequest')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                        <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
+                        <a class="btn btn-sm btn-danger btn-sm"
+                           href="{{route('panel.estateRequest.deleteEstateRequestForm',$data['estateRequest']->id)}}">حذف</a>
+                    </form>
+                @elseif($data['estateRequest']->status == 0)
+                    <form class="mt-3" action="{{route('panel.estateRequest.confirmEstateRequest')}}"
+                          method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id"
+                               value="{{$data['estateRequest']->id}}">
+                        <input class="btn btn-sm btn-success btn-sm" type="submit" value="تایید">
+                        <a class="btn btn-sm btn-danger btn-sm"
+                           href="{{route('panel.estateRequest.deleteEstateRequestForm',$data['estateRequest']->id)}}">حذف</a>
+                    </form>
+                @elseif($data['estateRequest']->status == 2)
+                    <form class="mt-3" action="{{route('panel.cession.unconfirmedCession',$data['estateRequest']->id)}}"
+                          method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                        <input class="btn btn-sm btn-danger" type="submit" value="اشتباه واگذار شده">
+                        <a class="btn btn-sm btn-danger btn-sm"
+                           href="{{route('panel.estateRequest.deleteEstateRequestForm',$data['estateRequest']->id)}}">حذف</a>
+                    </form>
+                    <form class="mt-3" action="{{route('panel.estateRequest.unConfirmEstateRequest')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                        <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
+                    </form>
+                @endif
             </div>
-
             <form class="send-request" method="post"
                   action="{{route('panel.estateRequest.updateEstateRequest',$data['estateRequest']->id)}}">
                 @method('patch')
                 @csrf
+                <input type="hidden" name="deleted_slider" id="deleted_slider">
+                <input type="hidden" name="deleted_image" id="deleted_image">
                 <div class="row">
                     <div class="col-12 col-md-8">
+                        <div style="position:relative;display: inline-block" id="image">
+                            <span class="delete-image"
+                                  style="position: absolute;top: 15px;padding: 5px 10px;left: 5px;background: rgba(0,0,0,0.5);border-radius: 5px;color: white;cursor: pointer">🗙</span>
+                            <a href="{{asset($data['estateRequest']->image)}}" target="_blank">
+                                <img
+                                    style="width: 400px;height: 200px;border-radius: 10px;box-shadow: 0 5px 10px #dbdbdb;margin: 10px 0"
+                                    src="{{asset($data['estateRequest']->image)}}">
+                            </a>
+                        </div>
+                        @if($data['estateRequest']->sliders)
+                            @foreach(json_decode($data['estateRequest']->sliders) as $key=>$slider)
+                                <div style="position:relative;display: inline-block" id="slider_{{$key}}">
+                                    <span class="delete-slider" aria-valuetext="{{$key}}"
+                                          style="position: absolute;top: 15px;padding: 5px 10px;left: 5px;background: rgba(0,0,0,0.5);border-radius: 5px;color: white;cursor: pointer">🗙</span>
+                                    <a href="{{asset($slider)}}" target="_blank">
+                                        <img
+                                            style="width: 200px;height: 200px;border-radius: 10px;box-shadow: 0 5px 10px #dbdbdb;margin: 10px 0"
+                                            src="{{asset($slider)}}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="col-md-12">
                         <div class="form row">
@@ -37,6 +100,8 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
+                                <input type="hidden" class="transfer_id"
+                                       value="{{$data['estateRequest']->transfer_id}}">
                                 <div class="group">
                                     <select class="form-select form-select ddlViewBy" name="transfer_id"
                                             aria-label="Default select example">
@@ -68,8 +133,7 @@
                             </div>
                             <div class="col-12 col-md-12">
                                 <div class="group">
-                                    <select class="form-select form-select" aria-label="Default select example"
-                                            name="area_id">
+                                    <select class="form-select form-select" name="area_id">
                                         <option selected disabled>انتخاب منطقه</option>
                                         @foreach($data['area'] as $area)
                                             @if($area->id == $data['estateRequest']->area_id)
@@ -114,30 +178,41 @@
                                     <label>متراژ</label>
                                 </div>
                             </div>
-                            <div id="box-by" class="col-12 col-md-6">
+                            <div id="buy_price" class="col-12 view-order number-separator price">
                                 <div class="group">
-                                    <input type="text" name="buy_price" value="{{$data['estateRequest']->buy_price}}"/>
+                                    <input type="text" name="buy_price"
+                                           value="{{number_format($data['estateRequest']->buy_price)}}">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label>قیمت خرید</label>
+                                    <label>مبلغ خرید (تومان)</label>
                                 </div>
                             </div>
-                            <div id="box-mortgage" class="col-12 col-md-6">
+                            <div id="mortgage_price" class="col-12 col-md-6 view-order number-separator price">
                                 <div class="group">
                                     <input type="text" name="mortgage_price"
-                                           value="{{$data['estateRequest']->mortgage_price}}"/>
+                                           value="{{number_format($data['estateRequest']->mortgage_price)}}"
+                                    >
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label>قیمت رهن</label>
+                                    <label>مبلغ رهن (تومان)</label>
                                 </div>
                             </div>
-                            <div id="box-rent" class="col-12 col-md-6">
+                            <div id="rent_price" class="col-12 col-md-6 view-order number-separator price">
                                 <div class="group">
                                     <input type="text" name="rent_price"
-                                           value="{{$data['estateRequest']->rent_price}}"/>
+                                           value="{{number_format($data['estateRequest']->rent_price)}}">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
-                                    <label>قیمت اجاره</label>
+                                    <label>مبلغ اجاره (تومان)</label>
+                                </div>
+                            </div>
+                            <div id="participation_price" class="col-12 col-md-6 view-order number-separator price">
+                                <div class="group">
+                                    <input type="text" name="participation_price"
+                                           value="{{number_format($data['estateRequest']->participation_price)}}">
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label>مبلغ مشارکت (تومان)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -213,6 +288,122 @@
                                             امکانات ملک
                                         </span>
                             </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="floor_covering_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب نوع کف پوش</option>
+                                        @foreach($data['floorCovering'] as $floorCovering)
+                                            @if($floorCovering->id == $data['estateRequest']->floor_covering_id)
+                                                <option selected
+                                                        value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                            @else
+                                                <option
+                                                    value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="cabinets_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب نوع کابینت</option>
+                                        @foreach($data['cabinets'] as $cabinets)
+                                            @if($cabinets->id == $data['estateRequest']->cabinets_id)
+                                                <option selected
+                                                        value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                            @else
+                                                <option
+                                                    value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="wall_plugs_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب نوع دیوارپوش</option>
+                                        @foreach($data['wallPlugs'] as $wallPlugs)
+                                            @if($wallPlugs->id == $data['estateRequest']->wall_plugs_id)
+                                                <option selected
+                                                        value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                            @else
+                                                <option
+                                                    value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="building_facades_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب نوع نما</option>
+                                        @foreach($data['buildingFacades'] as $buildingFacades)
+                                            @if($buildingFacades->id == $data['estateRequest']->building_facades_id)
+                                                <option selected
+                                                        value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                            @else
+                                                <option
+                                                    value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="heating_system_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب سیستم گرمایش</option>
+                                        @foreach($data['heatingSystem'] as $heatingSystem)
+                                            @if($heatingSystem->id == $data['estateRequest']->heating_system_id)
+                                                <option selected
+                                                        value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                            @else
+                                                <option value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="cooling_system_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب سیستم سرمایش</option>
+                                        @foreach($data['coolingSystem'] as $coolingSystem)
+                                            @if($coolingSystem->id == $data['estateRequest']->cooling_system_id)
+                                                <option selected
+                                                        value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                            @else
+                                                <option value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 view-order">
+                                <div class="group">
+                                    <select name="document_type_id" class="view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب نوع سند</option>
+                                        @foreach($data['documentType'] as $documentType)
+                                            @if($documentType->id == $data['estateRequest']->document_type_id)
+                                                <option selected
+                                                        value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                            @else
+                                                <option value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item =>$value)
                                 <div class="col-12 col-md-3 ">
                                     <div class="send-request-group-option-box group-option-box">
@@ -225,8 +416,10 @@
                                 </div>
                             @endforeach
                             <div class="col-12 send-request-end">
-                                <div class="send-request-left-bottom">
-                                    <button type="submit" class="btn moshaver-insert">ویرایش ملک</button>
+                                <div class="send-request-left-bottom m-3">
+                                    <a class="btn btn-primary btn-sm"
+                                       href="{{route('panel.estateRequest.unconfirmedEstateRequestList')}}">بازگشت</a>
+                                    <button type="submit" class="btn m-3 moshaver-insert">ویرایش ملک</button>
                                 </div>
                             </div>
                         </div>
@@ -236,4 +429,21 @@
         </div>
     </div>
 
+@endsection
+
+
+@section('js')
+    <script>
+        const deleted_slider = [];
+        $('.delete-slider').click(function () {
+            const slider_id = $(this).attr('aria-valuetext');
+            deleted_slider.push(slider_id);
+            $('#slider_' + slider_id).fadeOut();
+            $('#deleted_slider').val(deleted_slider);
+        });
+        $('.delete-image').click(function () {
+            $('#image').fadeOut();
+            $('#deleted_image').val(1);
+        });
+    </script>
 @endsection

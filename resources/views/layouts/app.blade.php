@@ -46,7 +46,7 @@
                 <span class="header-left-span-left header-left-new-ad">ثبت ملک</span>
             </a>
             <div class="box-lang header-left-profile">
-                <img class="box-lang-img-1" src="{{asset('icon/PanelAdmin/down.png')}}">
+                <img class="box-lang-img-1" src="{{asset('icon/PanelAdmin/down.svg')}}">
                 <span>{{auth()->user()->full_name}}</span>
                 <div class="box-lang-select">
                     <div class="box-lang-select-box box-lang-select-box-1">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/icons8-user-male-30.png')}}">
+            <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/profile-w.svg')}}">
         </div>
     </div>
 </header>

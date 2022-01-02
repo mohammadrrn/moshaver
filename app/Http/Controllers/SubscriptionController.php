@@ -28,7 +28,14 @@ class SubscriptionController extends Controller
         $itemCheckExist = SubscriptionPlansItem::find($itemId);
         if ($planCheckExist && $itemCheckExist && $itemCheckExist->plan_id == $planCheckExist->id) {
             $checkSubscriptionUser = Subscription::where('user_id', auth()->id())->first();
+
             if (!$checkSubscriptionUser) {
+
+                if ($planCheckExist->level == 'gold') // Attach Subscription Plan Permissions For User Role
+                    auth()->user()->attachPermissions(AssistantController::goldPermissions());
+                elseif ($planCheckExist->level == 'silver')
+                    auth()->user()->attachPermissions(AssistantController::silverPermissions());
+
                 $now = Carbon::now();
                 $dayToAdd = $itemCheckExist->time * 30;
                 Subscription::create([

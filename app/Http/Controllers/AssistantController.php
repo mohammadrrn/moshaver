@@ -124,4 +124,20 @@ class AssistantController extends Controller
             'unconfirmed-request-list',
         ];
     }
+
+    public static function goldPermissions()
+    {
+        return [
+            'zoonkan',
+            'add-reminder',
+            'phonebook'
+        ];
+    }
+
+    public static function silverPermissions()
+    {
+        return [
+            'phonebook'
+        ];
+    }
 }

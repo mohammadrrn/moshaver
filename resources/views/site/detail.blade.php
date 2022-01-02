@@ -18,12 +18,24 @@
                             @endif
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                @if($data['detail']->sliders != '')
+                                    @foreach(json_decode($data['detail']->sliders) as $key=>$slider)
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="{{$key+1}}"></li>
+                                    @endforeach
+                                @endif
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img class="d-block w-100" src="{{asset($data['detail']->image)}}"
                                          alt="First slide">
                                 </div>
+                                @if($data['detail']->sliders != '')
+                                    @foreach(json_decode($data['detail']->sliders) as $key=>$slider)
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="{{asset($slider)}}">
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
                                data-slide="prev">
@@ -79,9 +91,14 @@
                                     <p>مشارکت به مبلغ : {{number_format($data['detail']->participation_price)}} هزار
                                         تومان </p>
                                 </div>
+                            @elseif($data['detail']->buy_price != 0 && $data['detail']->mortgage_price == 0)
+                                <div class="box-sell-bottom-bottom-right-item">
+                                    <span>مبلغ خرید:</span>
+                                    <span>{{number_format($data['detail']->buy_price)}} هزار تومان </span>
+                                </div>
                             @endif
                             <div class="detile-specifications-top-2-left">
-                                <img src="{{asset('icon/error.svg')}}">
+                            <!--                                <img src="{{asset('icon/error.svg')}}">-->
                                 @isset($data['detail']->bookmark)
                                     <img class="marked" id="mark_{{$data['detail']->id}}"
                                          aria-valuetext="{{$data['detail']->id}}"
@@ -90,8 +107,8 @@
                                     <img class="marked" id="mark_{{$data['detail']->id}}"
                                          aria-valuetext="{{$data['detail']->id}}"
                                          src="{{asset('icon/mark-icon.png')}}">
-                                @endisset
-                                <img src="{{asset('icon/share.svg')}}">
+                            @endisset
+                            <!--                                <img src="{{asset('icon/share.svg')}}">-->
                             </div>
                         </div>
                         <div class="detile-specifications-top-3">
@@ -216,8 +233,6 @@
                             @if($data['detail']->status != 2)
                                 <a href="{{route('panel.cession.report',$data['detail']->id)}}"
                                    class="detile-specifications-top-5-button">گزارش واگذاری این ملک</a>
-                            @else
-                                <div class="bg-danger text-white rounded">این ملک واگذار شده است</div>
                             @endif
                         </div>
                         @endability
