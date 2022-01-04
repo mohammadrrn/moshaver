@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'IRANYekanWebFn';
-    src: url('../../public/css/font/IRANYekanWebFn.woff2') format('woff2'),
-    url('../../public/css/font/IRANYekanWebFn.woff') format('woff');
+    src: url('/css/font/IRANYekanWebFn.woff2') format('woff2'),
+    url('/css/font/IRANYekanWebFn.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -569,8 +569,8 @@ main {
                         }
 
                         .mark {
-                            background: transparent;
                             display: block;
+                            background: #03a9f4;
                         }
                     }
                 }
@@ -804,6 +804,58 @@ main {
             }
         }
     }
+
+    .ribbon {
+        position: absolute;
+        left: -5px;
+        transform: rotate(-90deg);
+        top: -5px;
+        z-index: 1;
+        overflow: hidden;
+        width: 93px;
+        height: 93px;
+        text-align: right;
+    }
+
+    .ribbon span {
+        font-size: 13px;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+        line-height: 25px;
+        transform: rotate(45deg);
+        width: 125px;
+        display: block;
+        background: #d40202;
+        position: absolute;
+        top: 20px;
+        right: -30px;
+    }
+
+    .ribbon span::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 5px solid #b10101;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid #b10101;
+    }
+
+    .ribbon span::after {
+        content: "";
+        position: absolute;
+        right: 0%;
+        top: 100%;
+        z-index: -1;
+        border-right: 5px solid #b10101;
+        border-left: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid #b10101;
+    }
 }
 
 .page-item:first-child .page-link {
@@ -827,6 +879,7 @@ main {
 .page-link:not(:disabled):not(.disabled) {
     border-radius: 50%;
     margin: 0 5px;
+    border: 1px solid #f0f0f0;
     color: #2e2e2e;
     border: 1px solid #e9e9e9;
 }
@@ -1251,18 +1304,6 @@ footer {
         }
     }
 
-    /*.social-1 {
-        background-image: url('public/icon/icons8-google-48.png');
-    }
-
-    .social-2 {
-        background-image: url('public/icon/icons8-github-24-2.png');
-    }
-
-    .social-3 {
-        background-image: url('public/icon/icons8-facebook-48.png');
-    }*/
-
     button.ghost-responsiv {
         background-color: #ff4b2b;
         border-color: #ff4b2b;
@@ -1399,6 +1440,58 @@ footer {
     }
 }
 
+.select-folder-zoonckan {
+    margin: 4px 0;
+
+    select {
+        border: 1px solid #e2e2e2;
+        border-radius: 8px;
+        margin: 0 5px;
+        padding: 4px 8px;
+    }
+
+    button {
+        background: #12c2e9;
+        color: #fff;
+        font-size: 14px;
+        padding: 4px 20px;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s;
+
+        &:hover {
+            cursor: pointer;
+            background: #919191;
+        }
+    }
+}
+
+.time-discharge {
+    margin: 10px 0;
+
+    input {
+        border: 1px solid #e2e2e2;
+        border-radius: 8px;
+        margin: 0 5px;
+        padding: 4px 8px;
+    }
+
+    button {
+        background: #12c2e9;
+        color: #fff;
+        font-size: 14px;
+        padding: 4px 20px;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s;
+
+        &:hover {
+            cursor: pointer;
+            background: #919191;
+        }
+    }
+}
+
 // ____________specifications_________
 .detile-specifications-box {
     background: rgb(255, 255, 255);
@@ -1477,11 +1570,14 @@ footer {
     font-weight: bold;
     border-top: 1px solid #e2e2e2;
 }
-
+.detile-specifications-box-5-form{
+    display: flex;
+    //justify-content: space-between;
+}
 .detile-specifications-top-5 {
     border-top: 1px solid #e2e2e2;
     padding-top: 10px;
-    margin-top: 10px;
+    margin: 10px 0;
     display: flex;
     flex-direction: column;
     // align-items: flex-end;
@@ -1489,7 +1585,26 @@ footer {
     &-button:last-child {
         background: #f64f59;
     }
-
+    .row{
+        width: 100%;
+    }
+    input{
+        width: 100%;
+        color: #78909c;
+        border: 1px solid #929292;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 8px;
+        margin: 4px 5px 0 0;
+    }
+    select{
+        margin: 0 5px;
+        color: #78909c;
+        border: 1px solid #929292;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 8px 0;
+    }
     &-button {
         background: #12c2e9;
         color: #fff;
@@ -1510,7 +1625,10 @@ footer {
             outline: none;
         }
     }
-
+    &-left{
+        width: 50%;
+        background: red;
+    }
 }
 
 .detile-more-advertising {
@@ -1587,7 +1705,6 @@ footer {
 
         &:active {
             box-shadow: none !important;
-            //border-color: none !important;
         }
     }
 
@@ -1725,8 +1842,10 @@ main {
 .send-product {
     .group {
         position: relative;
-        // margin-bottom:45px;
-        // margin: 10px 0;
+
+        label {
+            pointer-events: none;
+        }
     }
 
     input {
@@ -1751,7 +1870,7 @@ main {
         // width: calc(100% - 35px);
         // background: red !important;
         color: #999;
-        font-size: 13px;
+        font-size: 13x;
         font-weight: normal;
         position: absolute;
         // pointer-events:none;
@@ -1760,20 +1879,31 @@ main {
         transition: 0.4s ease all;
         -moz-transition: 0.4s ease all;
         -webkit-transition: 0.4s ease all;
-        background: #fff;
     }
 
-    /* active state */
-    input:focus ~ label, input:valid ~ label {
+    // .box-group{
+    label {
         top: -10px;
-        right: 20px;
-        font-size: 13px;
+        right: 30px;
+        font-size: 11px;
         color: #5264AE;
-        // background: #fff;
+        background: #fff;
         padding: 2px 5px;
         border-radius: 5px;
     }
 
+    // }
+
+    /* active state */
+    input:focus ~ label {
+        top: -10px;
+        right: 20px;
+        font-size: 13px;
+        color: #5264AE;
+        background: #fff;
+        padding: 2px 5px;
+        border-radius: 5px;
+    }
 
     /* active state */
     input:focus ~ .highlight {
@@ -2040,71 +2170,6 @@ $unchecked-color: #888;
 $checked-star: '\2605';
 $checked-color: #f9d028;
 
-.star-cb-group {
-    /* remove inline-block whitespace */
-    font-size: 0;
-
-    * {
-        font-size: 22px;
-    }
-
-    /* flip the order so we can use the + and ~ combinators */
-    unicode-bidi: bidi-override;
-    direction: rtl;
-
-    & > input {
-        display: none;
-
-        & + label {
-            /* only enough room for the star */
-            display: inline-block;
-            overflow: hidden;
-            text-indent: 9999px;
-            width: 1em;
-            white-space: nowrap;
-            cursor: pointer;
-
-            &:before {
-                display: inline-block;
-                text-indent: -9999px;
-                content: $unchecked-star;
-                color: $unchecked-color;
-            }
-        }
-
-        &:checked ~ label:before,
-        & + label:hover ~ label:before,
-        & + label:hover:before {
-            content: $checked-star;
-            color: #f9d028;
-            text-shadow: 0 0 1px #333;
-        }
-    }
-
-    /* the hidden clearer */
-    & > .star-cb-clear + label {
-        text-indent: -9999px;
-        width: .5em;
-        margin-left: -.5em;
-    }
-
-    & > .star-cb-clear + label:before {
-        width: .5em;
-    }
-
-    &:hover > input + label:before {
-        content: $unchecked-star;
-        color: $unchecked-color;
-        text-shadow: none;
-    }
-
-    &:hover > input + label:hover ~ label:before,
-    &:hover > input + label:hover:before {
-        content: $checked-star;
-        color: $checked-color;
-        text-shadow: 0 0 1px #333;
-    }
-}
 
 .form-star {
     width: 100%;
@@ -2145,6 +2210,15 @@ fieldset {
     justify-content: flex-end;
     position: absolute;
     top: 5px;
+
+    &-box {
+        display: flex;
+        flex-direction: row-reverse;
+
+        img {
+            width: 20px;
+        }
+    }
 }
 
 // colors
@@ -2357,11 +2431,14 @@ $color-white: #fff;
 }
 
 #box-by {
-    /*display: none;*/
+    display: none;
+
 }
 
-.page-link {
-    border-radius: 0 !important;
-    color: white !important;
-    margin: 0 !important;
+//alert-box
+.alert-message {
+    position: fixed;
+    bottom: 10px;
+    right: -100%;
+    width: 400px;
 }

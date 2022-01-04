@@ -20,6 +20,14 @@ class RequestController extends Controller
         return view('panel.request.myRequest', compact('data'));
     }
 
+    public function userRequests()
+    {
+        $data = [
+            'estateRequestList' => Request::with('estateType')->with('areas')->with('transfer')->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+        ];
+        return view('panel.request.userRequests', compact('data'));
+    }
+
     public function unconfirmedRequestList()
     {
         $data = [
@@ -33,6 +41,7 @@ class RequestController extends Controller
         $requests = Request::findOrFail($request->input('request_id'));
         $requests->status = 1;
         $requests->save();
+        NotificationController::newRequest($requests->id);
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 

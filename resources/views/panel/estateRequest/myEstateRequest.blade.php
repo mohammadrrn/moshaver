@@ -29,7 +29,8 @@
                         <th>مبلغ خرید</th>
                         <th>مبلغ رهن</th>
                         <th>مبلغ اجاره</th>
-                        <th>توضیحات</th>
+                        <th>دلیل رد تایید</th>
+                        <th>جزئیات</th>
                         <th>وضعیت</th>
                     </tr>
                     @foreach($data['estateRequestList'] as $request)
@@ -50,7 +51,15 @@
                             <td>{{($request->buy_price != 0 ) ? number_format($request->buy_price) . ' تومان ' : 0}}</td>
                             <td>{{($request->mortgage_price != 0 ) ? number_format($request->mortgage_price) . ' تومان ' : 0}}</td>
                             <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>
-                            <td>{{$request->description}}</td>
+                            <td>
+                                @if($request->reason != '')
+                                    {{$request->reason}}
+                                @endif
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{route('panel.estateRequest.updateEstateRequestForm',$request->id)}}">جزئیات</a>
+                            </td>
                             <td>
                                 @if($request->status == 0)
                                     <span class="bg-danger text-white p-1">تایید نشده</span>
@@ -58,6 +67,8 @@
                                     <span class="bg-success text-white p-1">تایید شده</span>
                                 @elseif($request->status == 2)
                                     <span class="bg-primary text-white p-1">واگذار شده</span>
+                                @elseif($request->status == 3)
+                                    <span class="bg-warning text-white p-1">رد شده</span>
                                 @else
                                     نامشخص
                                 @endif

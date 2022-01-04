@@ -34,8 +34,8 @@ class SiteController extends Controller
     public function detail($id)
     {
         $userZoonkan = Zoonkan::where('user_id', auth()->id())->get(); // TODO : if buy gold plan then fetch zoonkan for best performance
-        $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('status', '!=', 0)->findOrFail($id);
-        $similar = EstateRequest::with('estateType')->with('direction')->where('area_id', $estateRequest->area_id)->where('status', '!=', 0)->where('id', '!=', $estateRequest->id)->take(3)->get();
+        $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('status', 1)->orWhere('status', 2)->findOrFail($id);
+        $similar = EstateRequest::with('estateType')->with('direction')->where('area_id', $estateRequest->area_id)->where('status', 1)->orWhere('status', 2)->where('id', '!=', $estateRequest->id)->take(3)->get();
         $data = [
             'detail' => $estateRequest,
             'zoonkan' => $userZoonkan,
@@ -92,7 +92,7 @@ class SiteController extends Controller
             $data['estateRequests'] = Bookmarks::with('estate')->where('user_id', auth()->id())->paginate($this->searchPagination);
             $data['type'] = 'marked';
         } else {
-            $data['estateRequests'] = EstateRequest::where('status', '!=', '0')->where($where)->paginate($this->searchPagination);
+            $data['estateRequests'] = EstateRequest::where('status', 1)->orWhere('status', 2)->where($where)->paginate($this->searchPagination);
         }
 
         return view('site.search', compact('data'));

@@ -197,6 +197,7 @@ return [
         'city_text' => 'عنوان شهر',
         'reminder_title' => 'عنوان یادآوری',
         'reminder_date' => 'تاریخ یادآوری',
+        'reason' => 'دلیل رد تایید',
     ],
 
 ];

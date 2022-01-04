@@ -21,6 +21,13 @@ use Intervention\Image\Facades\Image;
 class EstateRequestController extends Controller
 {
 
+    /*
+     * unconfirmed = 0
+     * confirmed = 1
+     * granted = 2
+     * rejected = 3
+     * */
+
     public function myEstateRequest()
     {
         $data = [
@@ -45,6 +52,7 @@ class EstateRequestController extends Controller
     {
         $confirm = EstateRequest::findOrFail($request->input('estate_request_id'));
         $confirm->status = 1;
+        $confirm->reason = '';
         $confirm->save();
         ActionController::actionRegister($confirm, 'confirmed');
         return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
@@ -57,7 +65,7 @@ class EstateRequestController extends Controller
             $where['area_id'] = auth()->user()->area_id;
         }
         $data = [
-            'estateRequestList' => EstateRequest::with('user')->with('direction')->with('estateType')->with('areas')->where($where)->with('transfer')->where('status', '!=', 0)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
+            'estateRequestList' => EstateRequest::with('user')->with('direction')->with('estateType')->with('areas')->where($where)->with('transfer')->where('status', 1)->orWhere('status', 2)->orderBy('id', 'desc')->paginate($this->pagination) // paginate(10)
         ];
         return view('panel.estateRequest.confirmedEstateRequestList', compact('data'));
     }
@@ -112,21 +120,8 @@ class EstateRequestController extends Controller
         $request['participation_price'] = ($request['participation_price'] == 0) ? 0 : AssistantController::clearSeparator($request['participation_price']);
 
         if ($request['deleted_image'] == 1) {
-            $estateRequest->thumbnail = 'default-thumbnail.png';
-            $estateRequest->image = 'default.png';
-        }
-
-        if ($request['deleted_slider'] != '') {
-            $deleted_slider = explode(',', $request['deleted_slider']);
-            $sliders = json_decode($estateRequest->sliders);
-            foreach ($deleted_slider as $deleted) {
-                foreach ($sliders as $key => $slider) {
-                    if ($deleted == $key) {
-                        unset($sliders[$key]);
-                    }
-                }
-            }
-            $estateRequest->sliders = json_decode(json_encode($sliders), true);;
+            $estateRequest->image = AssistantController::defaultImage();
+            $estateRequest->thumbnail = AssistantController::defaultThumbnail();
         }
 
         if ($request->input('options')) {
@@ -148,6 +143,46 @@ class EstateRequestController extends Controller
         }
 
         $estateRequest->update($request->all());
+
+        if ($request['image'] != '') {
+            $imageName = 'estateRequestImg/' . time() . '-image.jpg';
+            Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
+            $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
+            Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
+            $estateRequest->image = $imageName;
+            $estateRequest->thumbnail = $thumbnailName;
+        }
+
+        $sliders = [];
+        if ($request['slider'] > 0) {
+            foreach ($request['slider'] as $key => $slider) {
+                $imageName = 'estateRequestImg/' . time() . $key . '-slider.jpg';
+                $sliders[] = $imageName;
+                Image::make($slider)->insert('watermark.png')->save($imageName);
+            }
+            $currentSliders = json_decode($estateRequest->sliders);
+            $estateRequest->sliders = ($currentSliders == null) ? json_encode($sliders) : array_merge($sliders, $currentSliders);
+        } else {
+            $request['sliders'] = $estateRequest->sliders;
+        }
+
+        if ($request['deleted_slider'] != '') {
+            $deleted_slider = explode(',', $request['deleted_slider']);
+            $sliders = json_decode($estateRequest->sliders);
+            foreach ($deleted_slider as $deleted) {
+                foreach ($sliders as $key => $slider) {
+                    if ($deleted == $key) {
+                        unset($sliders[$key]);
+                    }
+                }
+            }
+            $estateRequest->sliders = json_decode(json_encode($sliders), true);;
+        }
+
+        if (AssistantController::getUserRole() != 'writer' && AssistantController::getUserRole() != 'admin') {
+            $estateRequest->status = 0;
+        }
+
         $estateRequest->save();
 
         ActionController::actionRegister($estateRequest, 'update');
@@ -207,16 +242,16 @@ class EstateRequestController extends Controller
         if (!$checkEstateRequest) {
             if ($estate['image']) {
                 $imageName = 'estateRequestImg/' . time() . '-image.jpg';
-                $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
                 Image::make($_FILES['image']['tmp_name'])->insert('watermark.png')->save($imageName);
+                $thumbnailName = 'estateRequestImg/' . time() . '-thumbnail.jpg';
                 Image::make($_FILES['image']['tmp_name'])->resize(200, 150)->insert('watermark.png')->save($thumbnailName);
             } else {
-                $imageName = 'default.jpg';
-                $thumbnailName = 'defaultThumbnail.jpg';
+                $imageName = AssistantController::defaultImage();
+                $thumbnailName = AssistantController::defaultThumbnail();
             }
 
             $sliders = [];
-            if (count($estate['slider']) > 0) {
+            if (isset($estate['slider']) && count($estate['slider']) > 0) {
                 foreach ($estate['slider'] as $key => $slider) {
                     $imageName = 'estateRequestImg/' . time() . $key . '-slider.jpg';
                     $sliders[] = $imageName;
@@ -293,5 +328,18 @@ class EstateRequestController extends Controller
             return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
         }
         return redirect()->back()->with(['success' => 'این درخواست قبلا ثبت شده است']);
+    }
+
+    public function rejectConfirmation(Request $request)
+    {
+        $valid = $request->validate([
+            'reason' => ['required']
+        ]);
+
+        $estateRequest = EstateRequest::find($request['estate_request_id']);
+        $estateRequest->reason = $valid['reason'];
+        $estateRequest->status = 3;
+        $estateRequest->save();
+        return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);
     }
 }

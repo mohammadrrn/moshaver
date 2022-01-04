@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\DB;
 
 class AssistantController extends Controller
 {
+
+    public static function defaultImage()
+    {
+        return 'default.png';
+    }
+
+    public static function defaultThumbnail()
+    {
+        return 'default-thumbnail.png';
+    }
+
+
     public static function sendVerificationCode()
     {
         return rand(1000, 9999); // generate rand code
@@ -81,26 +93,28 @@ class AssistantController extends Controller
         return DB::getSchemaBuilder()->getColumnListing($table);
     }
 
-    public static function writerRole($userId)
-    {
-
-    }
-
     public static function getUserRole()
     {
         return auth()->user()->roles[0]->name;
     }
 
+    public static function userPermissions(): array
+    {
+        return [
+            'update-estate-request',
+        ];
+    }
+
     public static function adminPermissions(): array
     {
         return [
-            'add-writer',
-            'writer-list',
-            'inactivity-writer',
-            'active-writer',
-            'edit-writer',
-            'trusted-offices-list',
-            'users-list',
+            'add-writer', // افزودن نویسنده
+            'writer-list', // لیست نویسندگا
+            'inactivity-writer', // غیرفعال کردن نویسنده
+            'active-writer', // فعال کردن نویسنده
+            'edit-writer', // ویرایش نویسنده
+            'trusted-offices-list', // لیست دفاتر مورد اعتماد
+            'users-list', // لیست کاربران
             'confirm-estate-request',
             'confirmed-estate-request-list',
             'unconfirmed-estate-request-list',
@@ -115,29 +129,35 @@ class AssistantController extends Controller
     public static function writerPermissions(): array
     {
         return [
-            'confirm-estate-request',
-            'update-estate-request',
-            'delete-estate-request',
-            'confirmed-estate-request-list',
-            'unconfirmed-estate-request-list',
-            'confirmed-request-list',
-            'unconfirmed-request-list',
+            'confirm-estate-request', // تایید آگهی ثبت ملک
+            'update-estate-request', // ویرایش آگهی ثبت ملک
+            'delete-estate-request', // حذف آگهی ثبت ملک
+            'confirmed-estate-request-list', // لیست آگهی های ثبت ملک تایید نشده
+            'unconfirmed-estate-request-list', // لیست آگهی های ثبت ملک تایید نشده
+            'confirm-request', // تایید درخواست
+            'unconfirm-request', // رد تایید درخواست
+            'update-request', // ویرایش درخواست
+            'delete-request', // حذف درخواست
+            'confirmed-request-list',// لیست درخواست های تایید شده
+            'unconfirmed-request-list', // لیست درخواست تایید نشده
+            'reject-confirmation-estate-request', // رد تایید آگهی
+            'cession-list', // گزارشات واگذاری
         ];
     }
 
     public static function goldPermissions()
     {
         return [
-            'zoonkan',
-            'add-reminder',
-            'phonebook'
+            'zoonkan', // زونکن
+            'add-reminder', // افزودن یادآوری
+            'phonebook' // دفترچه تلفن
         ];
     }
 
     public static function silverPermissions()
     {
         return [
-            'phonebook'
+            'phonebook' // دفترچه تلفن
         ];
     }
 }

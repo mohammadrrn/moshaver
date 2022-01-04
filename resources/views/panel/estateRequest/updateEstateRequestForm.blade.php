@@ -7,6 +7,7 @@
             <span class="title-services">
                 ویرایش درخواست ثبت ملک
             </span>
+                @role('writer|admin')
                 @if($data['estateRequest']->status == 1)
                     <form class="mt-3"
                           action="{{route('panel.cession.confirmCessionManual',$data['estateRequest']->id)}}"
@@ -47,14 +48,30 @@
                         <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
                     </form>
                 @endif
+                <div class="mt-3">
+                    <form action="{{route('panel.estateRequest.rejectConfirmation')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                        <textarea name="reason"
+                                  style="width: 100%;border: 1px solid #ccc;padding: 5px;border-radius: 5px;"
+                                  placeholder="دلیل رد تایید آگهی"></textarea>
+                        <input class="btn btn-danger btn-sm" type="submit" value="رد تایید">
+                    </form>
+                </div>
+                @endrole
             </div>
-            <form class="send-request" method="post"
+            <form class="send-request" method="post" enctype="multipart/form-data"
                   action="{{route('panel.estateRequest.updateEstateRequest',$data['estateRequest']->id)}}">
                 @method('patch')
                 @csrf
+                @if($data['estateRequest']->reason != '')
+                    <h5 class="text-danger">دلایل رد تایید آگهی</h5>
+                    <span class="alert-danger">{{$data['estateRequest']->reason}}</span>
+                    <hr>
+                @endif
                 <input type="hidden" name="deleted_slider" id="deleted_slider">
                 <input type="hidden" name="deleted_image" id="deleted_image">
-                <div class="row">
+                <div class=" row send-product">
                     <div class="col-12 col-md-8">
                         <div style="position:relative;display: inline-block" id="image">
                             <span class="delete-image"
@@ -80,6 +97,30 @@
                         @endif
                     </div>
                     <div class="col-md-12">
+                        <div class="row form">
+                            <div class="col-12">
+                                <div class="group">
+                                    <input type="file" name="image" accept=".jpg,.jpeg,.png">
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label>
+                                        تغییر عکس اصلی آگهی
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group">
+                                    <input type="file" name="slider[]" multiple accept=".jpg,.jpeg,.png">
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label>
+                                        تغییر عکس های اسلایدر
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 ">
                         <div class="form row">
                             <div class="col-12 col-md-6">
                                 <div class="group">
@@ -282,15 +323,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row send-request-group-option">
+                        <div class="form row send-request-group-option">
                             <div class="col-12">
-                                        <span>
-                                            امکانات ملک
-                                        </span>
+                                <h5>
+                                    امکانات ملک
+                                </h5>
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="floor_covering_id" class="view-order-select ddlViewBy"
+                                    <select name="floor_covering_id"
+                                            class="form-select form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع کف پوش</option>
                                         @foreach($data['floorCovering'] as $floorCovering)
@@ -307,7 +349,7 @@
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="cabinets_id" class="view-order-select ddlViewBy"
+                                    <select name="cabinets_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع کابینت</option>
                                         @foreach($data['cabinets'] as $cabinets)
@@ -324,7 +366,7 @@
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="wall_plugs_id" class="view-order-select ddlViewBy"
+                                    <select name="wall_plugs_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع دیوارپوش</option>
                                         @foreach($data['wallPlugs'] as $wallPlugs)
@@ -341,7 +383,7 @@
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="building_facades_id" class="view-order-select ddlViewBy"
+                                    <select name="building_facades_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع نما</option>
                                         @foreach($data['buildingFacades'] as $buildingFacades)
@@ -358,7 +400,7 @@
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="heating_system_id" class="view-order-select ddlViewBy"
+                                    <select name="heating_system_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب سیستم گرمایش</option>
                                         @foreach($data['heatingSystem'] as $heatingSystem)
@@ -374,7 +416,7 @@
                             </div>
                             <div class="col-12 col-md-6 view-order">
                                 <div class="group">
-                                    <select name="cooling_system_id" class="view-order-select ddlViewBy"
+                                    <select name="cooling_system_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب سیستم سرمایش</option>
                                         @foreach($data['coolingSystem'] as $coolingSystem)
@@ -390,7 +432,7 @@
                             </div>
                             <div class="col-12 view-order">
                                 <div class="group">
-                                    <select name="document_type_id" class="view-order-select ddlViewBy"
+                                    <select name="document_type_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
                                         <option disabled selected>انتخاب نوع سند</option>
                                         @foreach($data['documentType'] as $documentType)
@@ -404,8 +446,12 @@
                                     </select>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="row send-request-group-option">
                             @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item =>$value)
-                                <div class="col-12 col-md-3 ">
+                                <div class="col-12  col-md-3 ">
                                     <div class="send-request-group-option-box group-option-box">
                                         <input type="checkbox" name="{{$item}}" id="option_{{$item}}"
                                                value="1" {{ $data['estateRequest']->$item === 1 ? 'checked' : false }}>
@@ -423,6 +469,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </form>

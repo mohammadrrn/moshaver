@@ -25,17 +25,15 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <h1 class="title-page">ثبت‌ نام</h1>
-                <div class="login-alert">
-                    <ul id="errors"></ul>
-                    <ul id="success"></ul>
-                    @if($errors->all())
-                        <hr>
+                @if($errors->all())
+                    <br>
+                    <div class="alert alert-danger" role="alert">
                         @foreach($errors->all() as $error)
-                            {{$error}}<br>
+                            <span class="small">{{$error}}</span><br>
                         @endforeach
-                    @endif
-                </div>
-                <!-- <hr> -->
+                    </div>
+            @endif
+            <!-- <hr> -->
                 <!-- <div class="social-container">
                     <a href="#" class="social social-1"><img class="social-img" src="icon/icons8-google-24.png"></a>
                     <a href="#" class="social social-2"><img class="social-img" src="icon/icons8-github-24.png"></a>
@@ -66,22 +64,20 @@
         <div class="form-container sign-in-container">
             <form method="POST" action="{{ route('login') }}">
                 <h1 class="title-page">ورود به ناحیه کاربری</h1>
-                <span class="login-alert">
-                    <ul>
-                    @foreach($errors->all() as $error)
-                            <li>
-                            {{$error}}
-                        </li>
+                <br>
+                @if($errors->all())
+                    <div class="alert alert-danger" role="alert">
+                        @foreach($errors->all() as $error)
+                            <span class="small">{{$error}}</span><br>
                         @endforeach
-                    </ul>
-                </span>
+                    </div>
+                @endif
                 @csrf
                 <input type="text" name="mobile_number" placeholder="شماره همراه">
-                <br>
                 <input type="password" name="password" placeholder="کلمه عبور">
                 <br>
-                <div>
-                    <input type="checkbox" name="remember"
+                <div class="box-remember">
+                    <input class="box-remember-checkbox" type="checkbox" name="remember"
                            id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <label for="remember">
                         {{ __('مرا به خاطر بسپار') }}

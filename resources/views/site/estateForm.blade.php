@@ -12,14 +12,19 @@
                 <div class="col-12 titr test">
                     <span>ثبت آگهی</span>
                     <br>
-                    @if(session('success'))
-                        {{session('success')}}
+                    @if($errors->all())
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                            @foreach($errors->all() as $error)
+                                {{$error}} <br>
+                            @endforeach
+                        </div>
                     @endif
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{$error}}</li>
-                        @endforeach
-                    </ul>
+                    @if(session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{session('success')}}
+                        </div>
+                    @endif
                 </div>
                 <div class="col-12 col-md-12 view-order">
                     <span>
@@ -37,7 +42,8 @@
                     <span>
                         نوع واگذاری
                     </span>
-                    <select name="transfer_id" class="view-order-select ddlViewBy " aria-label="Default select example">
+                    <select name="transfer_id" class="view-order-select ddlViewBy" id="transfer"
+                            aria-label="Default select example">
                         <option disabled selected>انتخاب نوع واگذاری</option>
                         @foreach($data['transfer'] as $transfer)
                             <option value="{{$transfer->id}}">{{$transfer->text}}</option>
@@ -48,7 +54,7 @@
                     <span>
                         نوع ملک
                     </span>
-                    <select name="estate_id" class="view-order-select" aria-label="Default select example">
+                    <select name="estate_id" class="view-order-select" id="estate" aria-label="Default select example">
                         <option disabled selected>انتخاب نوع ملک</option>
                         @foreach($data['estate'] as $estate)
                             <option value="{{$estate->id}}">{{$estate->text}}</option>
@@ -115,7 +121,7 @@
                         <label>نام کوچه و خیابان</label>
                     </div>
                 </div>-->
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="plaque">
                     <div class="group">
                         <input type="text" name="plaque" value="{{old('plaque')}}">
                         <span class="highlight"></span>
@@ -156,7 +162,7 @@
                         <label>مبلغ مشارکت (تومان)</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="floor">
                     <div class="group">
                         <input type="text" name="floor" value="{{old('floor')}}">
                         <span class="highlight"></span>
@@ -164,7 +170,7 @@
                         <label>طبقه</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="number_of_floor">
                     <div class="group">
                         <input type="text" name="number_of_floor" value="{{old('number_of_floor')}}">
                         <span class="highlight"></span>
@@ -172,7 +178,7 @@
                         <label>تعداد طبقه</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="apartment_unit">
                     <div class="group">
                         <input type="text" name="apartment_unit" value="{{old('apartment_unit')}}">
                         <span class="highlight"></span>
@@ -180,7 +186,7 @@
                         <label>تعداد واحد</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="number_of_room">
                     <div class="group">
                         <input type="text" name="number_of_room" value="{{old('number_of_room')}}">
                         <span class="highlight"></span>
@@ -188,7 +194,7 @@
                         <label>تعداد اتاق</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order">
+                <div class="col-12 col-md-6 view-order" id="year_of_construction">
                     <div class="group">
                         <input type="text" name="year_of_construction" value="{{old('year_of_construction')}}">
                         <span class="highlight"></span>
@@ -201,7 +207,7 @@
                         جهت ملک
                     </span>
                     <select name="direction_id" class="view-order-select" aria-label="Default select example">
-                        <option disabled selected>انتخاب جهت ساختمان</option>
+                        <option disabled selected>انتخاب جهت ملک</option>
                         @foreach($data['direction'] as $direction)
                             <option value="{{$direction->id}}">{{$direction->text}}</option>
                         @endforeach

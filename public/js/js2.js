@@ -129,7 +129,7 @@ $("#colorWell").on("change", function () {
 // };
 //group select option
 $('.price').css('display', 'none');
-$('.ddlViewBy').on('change', function () {
+$('#transfer').on('change', function () {
     $('.price').css('display', 'none');
     var change_input = parseInt(this.value);
     $('.price > div > input').val(0);
@@ -142,6 +142,25 @@ $('.ddlViewBy').on('change', function () {
         $('#mortgage_price').css('display', 'block');
     } else if (change_input == 4) {
         $("#participation_price").css("display", "block");
+    }
+});
+
+$('#estate').on('change', function () {
+    var change_input = parseInt(this.value);
+    if (change_input == 5) {
+        $('#year_of_construction').css('display', 'none');
+        $('#floor').css('display', 'none');
+        $('#plaque').css('display', 'none');
+        $('#number_of_floor').css('display', 'none');
+        $('#apartment_unit').css('display', 'none');
+        $('#number_of_room').css('display', 'none');
+    } else {
+        $('#year_of_construction').css('display', 'block');
+        $('#plaque').css('display', 'block');
+        $('#floor').css('display', 'block');
+        $('#number_of_floor').css('display', 'block');
+        $('#apartment_unit').css('display', 'block');
+        $('#number_of_room').css('display', 'block');
     }
 });
 
@@ -226,8 +245,11 @@ $(document).ready(function () {
             return false;
         }
     });
-
-
 })
+
+$(".panel-nav-ul-li-sub").click(function () {
+    $(this).find('.panel-nav-ul-li-sub-ul').slideToggle();
+});
+
 
 

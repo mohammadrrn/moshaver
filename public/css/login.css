@@ -510,6 +510,18 @@ body {
 #success {
     color: green;
 }
+.box-remember{
+    width: 100%;
+    /* background: red; */
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
+.box-remember-checkbox{
+    width: auto !important;
+    margin: 8px !important;
+}
+
 
 /*# sourceMappingURL=style.css.map */
 

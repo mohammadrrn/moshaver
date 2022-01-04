@@ -59,10 +59,10 @@
                         <img class="invite-1" src="{{asset('icon/submit-request.svg')}}">
                         <span>ثبت درخواست</span>
                     </a>
-                    <a href="{{route('request.estateForm')}}"
-                       class="main-box-top-left-item main-box-top-left-item-mark">
-                        <img class="mark" src="{{asset('icon/submit-ad-w.svg')}}">
-                        <img class="mark-1" src="{{asset('icon/submit-ad.svg')}}">
+                    <a href="{{route('search','marked')}}"
+                       class="main-box-top-left-item main-box-top-left-item-new-file">
+                        <img class="new-file" src="{{asset('icon/submit-ad-w.svg')}}">
+                        <img class="new-file-1" src="{{asset('icon/submit-ad.svg')}}">
                         <span>ثبت ملک</span>
                     </a>
                     <a href="{{route('search','marked')}}"
@@ -80,7 +80,7 @@
                 @foreach($data['estateRequest'] as $request)
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 main-box-center-item">
                         <div class="box-sell">
-                            <div class="estate_code">
+                            <div class="id-home">
                                 کد ملک : {{$request->id}}
                             </div>
                             @if($request->status == 2)

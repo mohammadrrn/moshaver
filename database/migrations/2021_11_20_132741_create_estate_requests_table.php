@@ -40,6 +40,7 @@ class CreateEstateRequestsTable extends Migration
             $table->string('participation_price')->comment('مبلغ مشارکت')->nullable()->default(0);
             $table->text('description')->comment('توضیحات کامل')->nullable();
             $table->boolean('status')->comment('وضعیت')->default(0);
+            $table->text('reason')->comment('دلیل رد تایید آگهی')->default('')->nullable();
 
             $table->boolean('empty')->comment('امکانات (تخلیه)')->default(0)->nullable();
             $table->boolean('presell')->comment('امکانات (پیش فروش)')->default(0)->nullable();

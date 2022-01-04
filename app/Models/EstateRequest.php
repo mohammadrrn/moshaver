@@ -35,6 +35,7 @@ class EstateRequest extends Model
         'buy_price',
         'participation_price',
         'description',
+        'reason',
         'empty',
         'presell',
         'exchange',

@@ -210,26 +210,43 @@
 
                         @role('admin')
                         <div class="detile-specifications-top-5">
+                            @if($errors->all())
+                                <div class="alert alert-danger" role="alert">
+                                    @foreach($errors->all() as $error)
+                                        {{$error}}
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if(session('success'))
+                                <div class="alert alert-success" role="alert">
+                                    {{session('success')}}
+                                </div>
+                            @endif
+                            <form method="post" class="detile-specifications-box-5-form"
+                                  action="{{route('panel.zoonkan.addToZoonkan')}}">
+                                <div class="row">
+                                    @csrf
+                                    <input type="hidden" name="file_id" value="{{$data['detail']->id}}">
+                                    <div class="col-12 col-md-6">
+                                        <div>
+                                            <input type="number" min="0" placeholder="چند روز تا تخلیه باقی مانده ؟"
+                                                   name="evacuation_day" class="evacuation">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select name="zoonkan_id">
+                                            <option selected disabled>انتخاب زونکن</option>
+                                            @foreach($data['zoonkan'] as $zoonkan)
+                                                <option value="{{$zoonkan->id}}">{{$zoonkan->zoonkan_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="submit" class="detile-specifications-top-5-button">افزودن به زونکن
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                             <a class="detile-specifications-top-5-button"
                                href="{{route('panel.estateRequest.updateEstateRequestForm',$data['detail']->id)}}">ویرایش</a>
-                            @foreach($errors->all() as $error)
-                                {{$error}}
-                            @endforeach
-                            {{session('success')}}
-                            <form method="post" action="{{route('panel.zoonkan.addToZoonkan')}}">
-                                @csrf
-                                <input type="hidden" name="file_id" value="{{$data['detail']->id}}">
-                                <input type="number" min="0" placeholder="چند روز تا تخلیه باقی مانده ؟"
-                                       name="evacuation_day" class="evacuation">
-                                <select name="zoonkan_id">
-                                    <option selected disabled>انتخاب زونکن</option>
-                                    @foreach($data['zoonkan'] as $zoonkan)
-                                        <option value="{{$zoonkan->id}}">{{$zoonkan->zoonkan_name}}</option>
-                                    @endforeach
-                                </select>
-                                <button type="submit" class="detile-specifications-top-5-button">افزودن به زونکن
-                                </button>
-                            </form>
                             @if($data['detail']->status != 2)
                                 <a href="{{route('panel.cession.report',$data['detail']->id)}}"
                                    class="detile-specifications-top-5-button">گزارش واگذاری این ملک</a>

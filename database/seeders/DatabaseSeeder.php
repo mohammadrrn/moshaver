@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         $writer_user = User::create([
             'full_name' => 'محمدرضا',
             'mobile_number' => '09921190611',
+            'area_id' => 1,
             'mac_address' => 'mac_address', // AssistantController::getMacAddress()
             'password' => bcrypt('saeed23s'),
         ]);
@@ -100,6 +101,31 @@ class DatabaseSeeder extends Seeder
             'name' => 'delete-estate-request',
             'display_name' => 'حذف ثبت ملک',
             'description' => 'حذف آگهی های ثبت ملک',
+        ]);
+        Permission::create([
+            'name' => 'reject-confirmation-estate-request',
+            'display_name' => 'رد تایید آگهی',
+            'description' => 'رد تایید آگهی های ثبت ملک',
+        ]);
+        Permission::create([
+            'name' => 'confirm-request',
+            'display_name' => 'تایید درخواست',
+            'description' => 'تایید درخواست ثبت شده',
+        ]);
+        Permission::create([
+            'name' => 'update-request',
+            'display_name' => 'ویرایش درخواست',
+            'description' => 'ویرایش درخواست ثبت شده',
+        ]);
+        Permission::create([
+            'name' => 'delete-request',
+            'display_name' => 'حذف درخواست',
+            'description' => 'حذف درخواست ثبت شده',
+        ]);
+        Permission::create([
+            'name' => 'unconfirm-request',
+            'display_name' => 'رد تایید درخواست',
+            'description' => 'رد تایید درخواست ثبت شده',
         ]);
         /* Writer Permission */
 
@@ -199,6 +225,11 @@ class DatabaseSeeder extends Seeder
             'display_name' => 'ویدئو آموزشی',
             'description' => 'قسمت ویدئو های آموزشی',
         ]);
+        Permission::create([
+            'name' => 'user-requests-list',
+            'display_name' => 'لیست درخواست های کاربران',
+            'description' => 'لیست درخواست های کاربران',
+        ]);
         /* Gold Sub Permission */
 
         /* --------------------------- Permissions --------------------------- */
@@ -207,6 +238,7 @@ class DatabaseSeeder extends Seeder
         /* --------------------------- Attach Permissions --------------------------- */
         $writer_role->attachPermissions(AssistantController::writerPermissions());
         $admin_role->attachPermissions(AssistantController::adminPermissions());
+        $user_role->attachPermissions(AssistantController::userPermissions());
         /* --------------------------- Attach Permissions --------------------------- */
 
         $admin_user->attachRole('admin');
@@ -342,7 +374,8 @@ class DatabaseSeeder extends Seeder
         EstateRequest::create([
             'owner_name' => 'سعید قلی پور',
             'owner_mobile_number' => '09900787232',
-            'image' => 'https://jooinn.com/images/home-13.jpg',
+            'image' => 'default.png',
+            'thumbnail' => 'default-thumbnail.png',
             'estate_id' => 1,
             'address' => 'طلاب - دریای دوم',
             'area_id' => 1,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\EstateRequest;
+use App\Models\Permission;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    return view('test');
+Route::get('/saeed', function () {
+
+    //auth()->user()->attachPermission('user-requests-list');
+    //return view('test');
     //auth()->user()->attachPermission('zoonkan');
 });
 
@@ -28,7 +31,7 @@ Route::get('/received', [App\Http\Controllers\SiteController::class, 'received']
 
 /* --------------- Public Routes ---------------  */
 Route::get('/', function () {
-    $estateRequest = EstateRequest::with('estateType')->with('book')->where('status', '!=', 0)->orderBy('updated_at')->paginate(12); //
+    $estateRequest = EstateRequest::with('estateType')->with('book')->where('status', 1)->orWhere('status', 2)->orderBy('updated_at')->paginate(12); //
     $data = [
         'estateRequest' => $estateRequest
     ];
@@ -84,26 +87,29 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
     Route::patch('/updateProfile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
     Route::patch('/changePassword', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('changePassword');
 
-    Route::get('/estateRequest/myEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'myEstateRequest'])->name('estateRequest.myEstateRequest')->middleware('completeProfile');
-    Route::name('estateRequest.')->prefix('estateRequest')->middleware(['role:admin|writer'])->group(function () {
+    Route::get('/estateRequest/myEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'myEstateRequest'])->name('estateRequest.myEstateRequest');
+    Route::name('estateRequest.')->prefix('estateRequest')->group(function () {
 
-        Route::get('/confirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'confirmedEstateRequestList'])->name('confirmedEstateRequestList');
-        Route::post('/unConfirmEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'unConfirmEstateRequest'])->name('unConfirmEstateRequest');
+        Route::get('/confirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'confirmedEstateRequestList'])->name('confirmedEstateRequestList')->middleware(['permission:confirmed-request-list']);
+        Route::post('/unConfirmEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'unConfirmEstateRequest'])->name('unConfirmEstateRequest')->middleware(['permission:confirmed-request-list']);
 
-        Route::get('/unconfirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'unconfirmedEstateRequestList'])->name('unconfirmedEstateRequestList');
-        Route::post('/confirmEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'confirmEstateRequest'])->name('confirmEstateRequest');
+        Route::get('/unconfirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'unconfirmedEstateRequestList'])->name('unconfirmedEstateRequestList')->middleware(['permission:unconfirmed-request-list']);
+        Route::post('/confirmEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'confirmEstateRequest'])->name('confirmEstateRequest')->middleware(['permission:unconfirmed-request-list']);
 
-        Route::get('/updateEstateRequestForm/{id}', [App\Http\Controllers\EstateRequestController::class, 'updateEstateRequestForm'])->name('updateEstateRequestForm');
-        Route::patch('/updateEstateRequest/{id}', [App\Http\Controllers\EstateRequestController::class, 'updateEstateRequest'])->name('updateEstateRequest');
+        Route::get('/updateEstateRequestForm/{id}', [App\Http\Controllers\EstateRequestController::class, 'updateEstateRequestForm'])->name('updateEstateRequestForm')->middleware(['permission:update-estate-request']);
+        Route::patch('/updateEstateRequest/{id}', [App\Http\Controllers\EstateRequestController::class, 'updateEstateRequest'])->name('updateEstateRequest')->middleware(['permission:update-estate-request']);
 
-        Route::get('/deleteEstateRequestForm/{id}', [App\Http\Controllers\EstateRequestController::class, 'deleteEstateRequestForm'])->name('deleteEstateRequestForm');
-        Route::delete('/deleteEstateRequest/{id}', [App\Http\Controllers\EstateRequestController::class, 'deleteEstateRequest'])->name('deleteEstateRequest');
+        Route::get('/deleteEstateRequestForm/{id}', [App\Http\Controllers\EstateRequestController::class, 'deleteEstateRequestForm'])->name('deleteEstateRequestForm')->middleware(['permission:delete-estate-request']);
+        Route::delete('/deleteEstateRequest/{id}', [App\Http\Controllers\EstateRequestController::class, 'deleteEstateRequest'])->name('deleteEstateRequest')->middleware(['permission:delete-estate-request']);
+
+        Route::post('/rejectConfirmation', [App\Http\Controllers\EstateRequestController::class, 'rejectConfirmation'])->name('rejectConfirmation')->middleware(['permission:reject-confirmation-estate-request']);
 
     });
 
     Route::get('/request/myRequest', [App\Http\Controllers\RequestController::class, 'myRequest'])->name('request.myRequest')->middleware('completeProfile');
+    Route::get('/request/userRequests', [App\Http\Controllers\RequestController::class, 'userRequests'])->name('request.userRequests')->middleware('completeProfile');
 
-    Route::name('request.')->prefix('request')->middleware(['permission:confirmed-request-list,unconfirmed-request-list'])->group(function () {
+    Route::name('request.')->prefix('request')->middleware(['role:admin|writer'])->group(function () {
 
         Route::get('/confirmedRequestList', [App\Http\Controllers\RequestController::class, 'confirmedRequestList'])->name('confirmedRequestList');
         Route::post('/unConfirmRequest', [App\Http\Controllers\RequestController::class, 'unConfirmRequest'])->name('unConfirmRequest');

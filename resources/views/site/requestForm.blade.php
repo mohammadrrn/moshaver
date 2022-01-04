@@ -12,11 +12,18 @@
                     <span>ثبت درخواست</span>
                     <br>
                     @if(session('success'))
-                        {{session('success')}}
+                        <div class="alert alert-success" role="alert">
+                            {{session('success')}}
+                        </div>
                     @endif
-                    @foreach($errors->all() as $error)
-                        {{$error}}<br>
-                    @endforeach
+                    @if($errors->all())
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                            @foreach($errors->all() as $error)
+                                <span class="small">{{$error}}</span><br>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
@@ -50,7 +57,7 @@
                     <span>
                         نوع واگذاری
                     </span>
-                    <select name="type_of_transfer" class="view-order-select ddlViewBy"
+                    <select name="type_of_transfer" class="view-order-select ddlViewBy" id="transfer"
                             aria-label="Default select example">
                         <option disabled selected>انتخاب نوع واگذاری</option>
                         @foreach($data['transfer'] as $transfer)
