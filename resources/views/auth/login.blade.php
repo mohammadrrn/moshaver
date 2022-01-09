@@ -42,14 +42,14 @@
 
                 <input type="text" name="full_name" placeholder="نام و نام خانوادگی" value="{{old('full_name')}}">
 
-                <input type="text" name="mobile_number" placeholder="شماره همراه" value="{{old('mobile_number')}}">
+                <input type="text" name="mobile_number" maxlength="11" placeholder="شماره همراه" value="{{old('mobile_number')}}">
 
                 <div class="box-send-number">
                     <span class="login-send-code" id="send_code"
                           style="position: absolute;top: 15px;left:10px;cursor: pointer">ارسال کد</span>
 
                     <div class="js-counter"></div>
-                    <input type="text" name="code" placeholder="کد ارسالی" value="{{old('code')}}">
+                    <input type="text" name="code" maxlength="4" placeholder="کد ارسالی" value="{{old('code')}}">
 
                 </div>
                 <input type="password" name="password" placeholder="کلمه عبور">
@@ -73,7 +73,7 @@
                     </div>
                 @endif
                 @csrf
-                <input type="text" name="mobile_number" placeholder="شماره همراه">
+                <input type="text" name="mobile_number" maxlength="11" placeholder="شماره همراه">
                 <input type="password" name="password" placeholder="کلمه عبور">
                 <br>
                 <div class="box-remember">

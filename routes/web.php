@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/saeed', function () {
-
-    //auth()->user()->attachPermission('user-requests-list');
+    auth()->user()->attachPermission('reject-confirmation-estate-request');
     //return view('test');
     //auth()->user()->attachPermission('zoonkan');
 });
@@ -88,6 +87,8 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
     Route::patch('/changePassword', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('changePassword');
 
     Route::get('/estateRequest/myEstateRequest', [App\Http\Controllers\EstateRequestController::class, 'myEstateRequest'])->name('estateRequest.myEstateRequest');
+    Route::get('/search/{type}', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
+
     Route::name('estateRequest.')->prefix('estateRequest')->group(function () {
 
         Route::get('/confirmedEstateRequestList', [App\Http\Controllers\EstateRequestController::class, 'confirmedEstateRequestList'])->name('confirmedEstateRequestList')->middleware(['permission:confirmed-request-list']);
@@ -145,6 +146,8 @@ Route::name('panel.')->prefix('panel')->middleware(['block', 'auth'])->group(fun
         Route::get('/updateTrustedOfficesForm/{id}', [App\Http\Controllers\TrustedOfficeController::class, 'updateTrustedOfficesForm'])->name('updateTrustedOfficesForm');
         Route::post('/updateTrustedOffices/{id}', [App\Http\Controllers\TrustedOfficeController::class, 'updateTrustedOffices'])->name('updateTrustedOffices');
 
+        Route::get('/deleteTrustedOfficesForm/{id}', [App\Http\Controllers\TrustedOfficeController::class, 'deleteTrustedOfficesForm'])->name('deleteTrustedOfficesForm');
+        Route::delete('/deleteTrustedOffices/{id}', [App\Http\Controllers\TrustedOfficeController::class, 'deleteTrustedOffices'])->name('deleteTrustedOffices');
     });
 
     Route::prefix('subscription')->name('subscription.')->group(function () {

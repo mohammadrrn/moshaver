@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="national_code" required
+                                <input type="text" maxlength="10" name="national_code" required
                                        value="{{auth()->user()->national_code}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>

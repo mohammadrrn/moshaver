@@ -59,7 +59,7 @@
                         <img class="invite-1" src="{{asset('icon/submit-request.svg')}}">
                         <span>ثبت درخواست</span>
                     </a>
-                    <a href="{{route('search','marked')}}"
+                    <a href="{{route('request.estateForm')}}"
                        class="main-box-top-left-item main-box-top-left-item-new-file">
                         <img class="new-file" src="{{asset('icon/submit-ad-w.svg')}}">
                         <img class="new-file-1" src="{{asset('icon/submit-ad.svg')}}">

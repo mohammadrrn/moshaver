@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EstateForm;
+use App\Http\Requests\UpdateEstateRequest;
 use App\Models\Area;
 use App\Models\Direction;
 use App\Models\Estate;
@@ -110,7 +111,7 @@ class EstateRequestController extends Controller
         return view('panel.estateRequest.updateEstateRequestForm', compact('data'));
     }
 
-    public function updateEstateRequest(Request $request, $id)
+    public function updateEstateRequest(UpdateEstateRequest $request, $id)
     {
         $estateRequest = EstateRequest::findOrFail($id);
 
@@ -126,23 +127,25 @@ class EstateRequestController extends Controller
 
         if ($request->input('options')) {
             $checkedOptions = [];
+            $uncheckedOptions = AssistantController::estateRequestOptions();
             foreach ($request->input('options') as $option => $value) {
-                $checkedOptions[] = $option;
+                $checkedOptions[$option] = $value;
+                unset($uncheckedOptions[$option]);
             }
-            $uncheckedOptions = array_diff(AssistantController::estateRequestOptions(), $checkedOptions);
             foreach ($uncheckedOptions as $uncheckedOption => $value) {
                 $estateRequest->$uncheckedOption = 0;
             }
-            foreach ($checkedOptions as $checkedOption) {
+            foreach ($checkedOptions as $checkedOption => $val) {
                 $estateRequest->$checkedOption = 1;
             }
-        } else {
+        }/* else {
             foreach (AssistantController::estateRequestOptions() as $option => $value) {
                 $estateRequest->$option = 0;
             }
-        }
+        }*/
 
         $estateRequest->update($request->all());
+
 
         if ($request['image'] != '') {
             $imageName = 'estateRequestImg/' . time() . '-image.jpg';
@@ -253,9 +256,9 @@ class EstateRequestController extends Controller
             $sliders = [];
             if (isset($estate['slider']) && count($estate['slider']) > 0) {
                 foreach ($estate['slider'] as $key => $slider) {
-                    $imageName = 'estateRequestImg/' . time() . $key . '-slider.jpg';
-                    $sliders[] = $imageName;
-                    Image::make($slider)->insert('watermark.png')->save($imageName);
+                    $sliderName = 'estateRequestImg/' . time() . $key . '-slider.jpg';
+                    $sliders[] = $sliderName;
+                    Image::make($slider)->insert('watermark.png')->save($sliderName);
                 }
             }
 
@@ -268,13 +271,14 @@ class EstateRequestController extends Controller
                 'thumbnail' => $thumbnailName,
                 'sliders' => json_encode($sliders),
                 'area_id' => $estate['area_id'],
+                'city_id' => 1, // TODO : Dynamic
                 'transfer_id' => $estate['transfer_id'],
                 'estate_id' => $estate['estate_id'],
                 'address' => $estate['address'],
                 'area' => AssistantController::filterNumber($estate['area']),
                 /*'street_name' => $estate['street_name'],*/
                 'plaque' => AssistantController::filterNumber($estate['plaque']),
-                'floor' => AssistantController::filterNumber($estate['floor']),
+                'floor' => ($estate['all_floor'] == 1) ? 100 : AssistantController::filterNumber($estate['floor']),
                 'number_of_floor' => AssistantController::filterNumber($estate['number_of_floor']),
                 'number_of_room' => AssistantController::filterNumber($estate['number_of_room']),
                 'apartment_unit' => AssistantController::filterNumber($estate['apartment_unit']),

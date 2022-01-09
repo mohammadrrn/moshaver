@@ -19,7 +19,7 @@
                     <form class="mt-3" action="{{route('panel.estateRequest.unConfirmEstateRequest')}}" method="post">
                         @csrf
                         <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
-                        <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
+                        <input class="btn btn-sm btn-danger" type="submit" value="عدم نمایش">
                         <a class="btn btn-sm btn-danger btn-sm"
                            href="{{route('panel.estateRequest.deleteEstateRequestForm',$data['estateRequest']->id)}}">حذف</a>
                     </form>
@@ -45,19 +45,21 @@
                     <form class="mt-3" action="{{route('panel.estateRequest.unConfirmEstateRequest')}}" method="post">
                         @csrf
                         <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
-                        <input class="btn btn-sm btn-danger" type="submit" value="رد تایید">
+                        <input class="btn btn-sm btn-danger" type="submit" value="عدم نمایش">
                     </form>
                 @endif
-                <div class="mt-3">
-                    <form action="{{route('panel.estateRequest.rejectConfirmation')}}" method="post">
-                        @csrf
-                        <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
-                        <textarea name="reason"
-                                  style="width: 100%;border: 1px solid #ccc;padding: 5px;border-radius: 5px;"
-                                  placeholder="دلیل رد تایید آگهی"></textarea>
-                        <input class="btn btn-danger btn-sm" type="submit" value="رد تایید">
-                    </form>
-                </div>
+                @if($data['estateRequest']->user_id != null)
+                    <div class="mt-3">
+                        <form action="{{route('panel.estateRequest.rejectConfirmation')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="estate_request_id" value="{{$data['estateRequest']->id}}">
+                            <textarea name="reason"
+                                      style="width: 100%;border: 1px solid #ccc;padding: 5px;border-radius: 5px;"
+                                      placeholder="دلیل رد تایید آگهی"></textarea>
+                            <input class="btn btn-danger btn-sm" type="submit" value="رد تایید">
+                        </form>
+                    </div>
+                @endif
                 @endrole
             </div>
             <form class="send-request" method="post" enctype="multipart/form-data"
@@ -145,6 +147,7 @@
                                        value="{{$data['estateRequest']->transfer_id}}">
                                 <div class="group">
                                     <select class="form-select form-select ddlViewBy" name="transfer_id"
+                                            id="transfer"
                                             aria-label="Default select example">
                                         <option disabled>انتخاب نوع واگذاری</option>
                                         @foreach($data['transfer'] as $transfer)
@@ -158,9 +161,11 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
+                                <input type="hidden" class="selected_estate"
+                                       value="{{$data['estateRequest']->estate_id}}">
                                 <div class="group">
                                     <select class="form-select form-select ddlViewBy" name="estate_id"
-                                            aria-label="Default select example">
+                                            aria-label="Default select example" id="estate">
                                         <option disabled selected>انتخاب نوع ملک</option>
                                         @foreach($data['estate'] as $estate)
                                             @if($estate->id == $data['estateRequest']->estate_id)
@@ -256,15 +261,31 @@
                                     <label>مبلغ مشارکت (تومان)</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-3" id="floor">
                                 <div class="group">
-                                    <input type="text" name="floor" value="{{$data['estateRequest']->floor}}"/>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>طبقه</label>
+                                    @if($data['estateRequest']->floor == 100)
+                                        <input type="text" name="floor" value="100" id="floor_disable"
+                                               style="display: none"
+                                               placeholder="طبقه"/>
+                                    @else
+                                        <input type="text" name="floor" value="{{$data['estateRequest']->floor}}"
+                                               id="floor_disable" placeholder="طبقه"/>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12  col-md-3" id="all_floor">
+                                <div class="send-request-group-option-box group-option-box">
+                                    @if($data['estateRequest']->floor == 100)
+                                        <input value="1" type="checkbox" name="all_floor" checked id="all_floor_status">
+                                    @else
+                                        <input value="1" type="checkbox" name="all_floor" id="all_floor_status">
+                                    @endif
+                                    <label for="all_floor">
+                                        کل طبقات
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6" id="number_of_floor">
                                 <div class="group">
                                     <input type="text" name="number_of_floor"
                                            value="{{$data['estateRequest']->number_of_floor}}"/>
@@ -273,7 +294,7 @@
                                     <label>تعداد طبقه</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6" id="apartment_unit">
                                 <div class="group">
                                     <input type="text" name="apartment_unit"
                                            value="{{$data['estateRequest']->apartment_unit}}"/>
@@ -282,16 +303,16 @@
                                     <label>تعداد واحد</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6" id="number_of_room">
                                 <div class="group">
-                                    <input type="text" name="owner_mobile_room"
+                                    <input type="text" name="number_of_room"
                                            value="{{$data['estateRequest']->number_of_room}}"/>
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label>تعداد اتاق</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6" id="year_of_construction">
                                 <div class="group">
                                     <input type="text" name="year_of_construction"
                                            value="{{$data['estateRequest']->year_of_construction}}"/>
@@ -453,7 +474,7 @@
                             @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item =>$value)
                                 <div class="col-12  col-md-3 ">
                                     <div class="send-request-group-option-box group-option-box">
-                                        <input type="checkbox" name="{{$item}}" id="option_{{$item}}"
+                                        <input type="checkbox" name="options[{{$item}}]" id="option_{{$item}}"
                                                value="1" {{ $data['estateRequest']->$item === 1 ? 'checked' : false }}>
                                         <label for="option_{{$item}}">
                                             {{$value}}

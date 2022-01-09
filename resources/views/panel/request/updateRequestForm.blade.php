@@ -50,8 +50,10 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <input type="hidden" class="transfer_id"
+                                           value="{{$data['request']->transfer_id}}">
                                     <select class="form-select form-select ddlViewBy" name="transfer_id"
-                                            aria-label="Default select example">
+                                            aria-label="Default select example" id="transfer">
                                         <option disabled selected>انتخاب نوع واگذاری</option>
                                         @foreach($data['transfer'] as $transfer)
                                             @if($transfer->id == $data['request']->transfer_id)
@@ -71,34 +73,43 @@
                                         <label>حدود متراژ درخواستی</label>
                                     </div>
                                 </div>
-                                <div id="box-by" class="col-12 col-md-6">
+                                <div id="buy_price" class="col-12 view-order number-separator price">
                                     <div class="group">
                                         <input type="text" name="buy_price"
-                                               value="{{$data['request']->buy_price}}"/>
+                                               value="{{number_format($data['request']->buy_price)}}">
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
-                                        <label>مبلغ خرید</label>
+                                        <label>مبلغ خرید (تومان)</label>
                                     </div>
                                 </div>
-                                <div id="box-mortgage" class="col-12 col-md-6">
+                                <div id="mortgage_price" class="col-12 col-md-6 view-order number-separator price">
                                     <div class="group">
                                         <input type="text" name="mortgage_price"
-                                               value="{{$data['request']->mortgage_price}}"/>
+                                               value="{{number_format($data['request']->mortgage_price)}}"
+                                        >
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
-                                        <label>مبلغ رهن</label>
+                                        <label>مبلغ رهن (تومان)</label>
                                     </div>
                                 </div>
-                                <div id="box-rent" class="col-12 col-md-6">
+                                <div id="rent_price" class="col-12 col-md-6 view-order number-separator price">
                                     <div class="group">
                                         <input type="text" name="rent_price"
-                                               value="{{$data['request']->rent_price}}"/>
+                                               value="{{number_format($data['request']->rent_price)}}">
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
-                                        <label>مبلغ اجاره</label>
+                                        <label>مبلغ اجاره (تومان)</label>
                                     </div>
                                 </div>
-
+                                <div id="participation_price" class="col-12 col-md-6 view-order number-separator price">
+                                    <div class="group">
+                                        <input type="text" name="participation_price"
+                                               value="{{number_format($data['request']->participation_price)}}">
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>مبلغ مشارکت (تومان)</label>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-6">
                                     <div class="group">
                                         <input type="text" name="description"

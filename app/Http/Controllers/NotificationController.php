@@ -17,7 +17,7 @@ class NotificationController extends Controller
 
     public static function newEstateRequestNotification($id)
     {
-        $writers = User::whereRoleIs('writer')->where('area_id', 1)->get();
+        $writers = User::where('area_id', 1)->get();  // whereRoleIs('writer')
         Notification::send($writers, new EstateRequestNotification("آگهی جدید با کد : $id", route('panel.estateRequest.unconfirmedEstateRequestList')));
     }
 

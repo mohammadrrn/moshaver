@@ -9,26 +9,52 @@
                         </span>
             </div>
             <div class="col-12">
+                <form action="{{route('panel.search','myEstateRequest')}}">
+                    <div class="row list-moshaver-top">
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="نام مالک" name="owner_name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="شماره تماس" name="owner_mobile_number">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="کد ملک" name="code">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group-button">
+                                <button class=" btn-block">جستجو</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                تعداد آگهی ها : {{count($data['estateRequestList'])}} مورد
             </div>
             <div class="col-12 table list-customer-table">
                 <table>
                     <tr>
                         <th>کد درخواست</th>
-                        <th>منطقه</th>
+                        <th>نام مالک</th>
+                        <!--                        <th>منطقه</th>-->
                         <th>نوع واگذاری</th>
                         <th>نوع ملک</th>
                         <th>آدرس</th>
                         <th>متراژ</th>
                         <!--                        <th>نام کوچه و خیابان</th>-->
-                        <th>پلاک</th>
-                        <th>تعداد طبقه</th>
-                        <th>تعداد اتاق</th>
-                        <th>تعداد واحد</th>
-                        <th>سال ساخت</th>
-                        <th>جهت ملک</th>
-                        <th>مبلغ خرید</th>
-                        <th>مبلغ رهن</th>
-                        <th>مبلغ اجاره</th>
+                        <!--                        <th>پلاک</th>
+                                                <th>تعداد طبقه</th>
+                                                <th>تعداد اتاق</th>
+                                                <th>تعداد واحد</th>
+                                                <th>سال ساخت</th>
+                                                <th>جهت ملک</th>
+                                                <th>مبلغ خرید</th>
+                                                <th>مبلغ رهن</th>
+                                                <th>مبلغ اجاره</th>-->
                         <th>دلیل رد تایید</th>
                         <th>جزئیات</th>
                         <th>وضعیت</th>
@@ -36,13 +62,13 @@
                     @foreach($data['estateRequestList'] as $request)
                         <tr>
                             <td>{{$request->id}}</td>
-                            <td>{{$request->areas[0]->text}}</td>
+                            <td>{{$request->owner_name}}</td>
                             <td>{{$request->transfer[0]->text}}</td>
                             <td>{{$request->estateType[0]->text}}</td>
                             <td>{{$request->address}}</td>
                             <td>{{$request->area}}</td>
                         <!--                            <td>{{$request->street_name}}</td>-->
-                            <td>{{$request->plaque}}</td>
+                        <!--                            <td>{{$request->plaque}}</td>
                             <td>{{$request->number_of_floor}}</td>
                             <td>{{$request->number_of_room}}</td>
                             <td>{{$request->apartment_unit}}</td>
@@ -50,7 +76,7 @@
                             <td>{{$request->direction[0]->text}}</td>
                             <td>{{($request->buy_price != 0 ) ? number_format($request->buy_price) . ' تومان ' : 0}}</td>
                             <td>{{($request->mortgage_price != 0 ) ? number_format($request->mortgage_price) . ' تومان ' : 0}}</td>
-                            <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>
+                            <td>{{($request->rent_price != 0 ) ? number_format($request->rent_price) . ' تومان ' : 0}}</td>-->
                             <td>
                                 @if($request->reason != '')
                                     {{$request->reason}}

@@ -22,17 +22,18 @@ class CreateEstateRequestsTable extends Migration
             $table->string('thumbnail')->comment('تامبنیل عکس آگهی')->nullable();
             $table->text('sliders')->comment('عکس های اسلایدر')->nullable();
             $table->unsignedBigInteger('area_id')->comment('آیدی منطقه')->nullable();
+            $table->unsignedBigInteger('city_id')->comment('آیدی منطقه');
             $table->unsignedBigInteger('transfer_id')->comment('آیدی نوع واگذاری')->nullable();
             $table->unsignedBigInteger('estate_id')->comment('آیدی نوع ملک')->nullable();
             $table->string('address')->comment('آدرس')->nullable();
-            $table->string('area')->comment('متراژ')->default(0);
-            $table->string('street_name')->comment('نام کوچه و خیابان')->nullable();
-            $table->string('plaque')->comment('پلاک')->default(0);
-            $table->string('floor')->comment('طبقه')->default(0);
-            $table->string('number_of_floor')->comment('تعداد طبقه')->default(0);
-            $table->string('number_of_room')->comment('تعداد اتاق')->default(0);
-            $table->string('apartment_unit')->comment('تعداد واحد')->default(0);
-            $table->string('year_of_construction')->comment('سال ساخت')->default(0);
+            $table->string('area')->comment('متراژ')->nullable()->default(0);
+            //$table->string('street_name')->comment('نام کوچه و خیابان')->nullable();
+            $table->string('plaque')->comment('پلاک')->nullable()->default(0);
+            $table->string('floor')->comment('طبقه')->nullable()->default(0);
+            $table->string('number_of_floor')->comment('تعداد طبقه')->nullable()->default(0);
+            $table->string('number_of_room')->comment('تعداد اتاق')->nullable()->default(0);
+            $table->string('apartment_unit')->comment('تعداد واحد')->nullable()->default(0);
+            $table->string('year_of_construction')->comment('سال ساخت')->nullable()->default(0);
             $table->unsignedBigInteger('direction_id')->comment('آیدی جهت ملک')->nullable();
             $table->string('mortgage_price')->comment('مبلغ رهن')->nullable()->default(0);
             $table->string('rent_price')->comment('مبلغ اجاره')->nullable()->default(0);
@@ -83,6 +84,7 @@ class CreateEstateRequestsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('area_id')->references('id')->on('areas');
+            $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('transfer_id')->references('id')->on('transfers');
             $table->foreign('estate_id')->references('id')->on('estates');
             $table->foreign('direction_id')->references('id')->on('directions');

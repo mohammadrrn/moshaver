@@ -147,6 +147,10 @@
                                     <a href="{{route('panel.trustedOffices.updateTrustedOfficesForm',$office->id)}}"
                                        class="btn-block-user">ویرایش</a>
                                 </div>
+                                <div class="add-trusted-offices-bottom-button">
+                                    <a href="{{route('panel.trustedOffices.deleteTrustedOfficesForm',$office->id)}}"
+                                       class="btn-block-user">حذف</a>
+                                </div>
                             </div>
                         </div>
                     @endforeach

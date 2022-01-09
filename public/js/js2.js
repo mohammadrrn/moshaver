@@ -147,13 +147,14 @@ $('#transfer').on('change', function () {
 
 $('#estate').on('change', function () {
     var change_input = parseInt(this.value);
-    if (change_input == 5) {
+    if (change_input == 5 || change_input == 6) {
         $('#year_of_construction').css('display', 'none');
         $('#floor').css('display', 'none');
         $('#plaque').css('display', 'none');
         $('#number_of_floor').css('display', 'none');
         $('#apartment_unit').css('display', 'none');
         $('#number_of_room').css('display', 'none');
+        $('#all_floor').css('display', 'none');
     } else {
         $('#year_of_construction').css('display', 'block');
         $('#plaque').css('display', 'block');
@@ -161,6 +162,7 @@ $('#estate').on('change', function () {
         $('#number_of_floor').css('display', 'block');
         $('#apartment_unit').css('display', 'block');
         $('#number_of_room').css('display', 'block');
+        $('#all_floor').css('display', 'block');
     }
 });
 
@@ -174,6 +176,25 @@ if (transfer_id == 1) {
     $('#mortgage_price').css('display', 'block');
 } else if (transfer_id == 4) {
     $("#participation_price").css("display", "block");
+}
+
+var estate_id = $('.selected_estate').val();
+if (estate_id == 5) {
+    $('#year_of_construction').css('display', 'none');
+    $('#floor').css('display', 'none');
+    $('#plaque').css('display', 'none');
+    $('#number_of_floor').css('display', 'none');
+    $('#apartment_unit').css('display', 'none');
+    $('#number_of_room').css('display', 'none');
+    $('#all_floor').css('display', 'none');
+} else {
+    $('#year_of_construction').css('display', 'block');
+    $('#plaque').css('display', 'block');
+    $('#floor').css('display', 'block');
+    $('#number_of_floor').css('display', 'block');
+    $('#apartment_unit').css('display', 'block');
+    $('#number_of_room').css('display', 'block');
+    $('#all_floor').css('display', 'block');
 }
 
 
@@ -251,5 +272,13 @@ $(".panel-nav-ul-li-sub").click(function () {
     $(this).find('.panel-nav-ul-li-sub-ul').slideToggle();
 });
 
-
+$('#all_floor_status').click(function () {
+    if ($(this).prop("checked") === true) {
+        $('#floor_disable').css('display', 'none');
+        $('#floor_disable').val(100);
+    } else if ($(this).prop("checked") === false) {
+        $('#floor_disable').css('display', 'block');
+        $('#floor_disable').val('');
+    }
+});
 

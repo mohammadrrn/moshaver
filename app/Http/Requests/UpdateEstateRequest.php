@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstateForm extends FormRequest
+class UpdateEstateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,21 +23,16 @@ class EstateForm extends FormRequest
      */
     public function rules()
     {
-
         return [
+            "deleted_slider" => ['array', 'nullable'],
+            "deleted_image" => ['nullable'],
             'owner_name' => ['nullable', 'string', 'max:255', 'min:3'],
             'owner_mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
-            'image' => ['nullable', 'mimes:jpeg,jpg,png', 'max:200'], // max 1000kb
-            'slider.*' => ['nullable', 'mimes:jpeg,jpg,png', 'max:200'], // max 1000kb
-            'estate_id' => ['required', 'numeric'],
-            'address' => ['required', 'string'],
-            'area_id' => ['required', 'numeric'],
             'transfer_id' => ['required', 'numeric'],
             'area' => ['nullable', 'numeric'],
             'street_name' => ['nullable', 'string'],
             'plaque' => ['nullable', 'numeric'],
             'floor' => ['numeric', 'nullable'],
-            'all_floor' => ['nullable', 'boolean'],
             'number_of_floor' => ['nullable', 'numeric'],
             'number_of_room' => ['nullable', 'numeric'],
             'apartment_unit' => ['nullable', 'numeric'],
@@ -83,15 +78,6 @@ class EstateForm extends FormRequest
             'heating_system_id' => ['nullable'],
             'cooling_system_id' => ['nullable'],
             'document_type_id' => ['nullable'],
-        ];
-    }
-
-    public function messages()
-    {
-
-        return [
-            'slider.*.mimes' => 'فرمت قابل قبول برای عکس های اسلایدر jpeg, jpg, png می باشد',
-            'slider.*.max' => 'حجم عکس ها نباید بیشتر از باشد 200 کیلوبایت.',
         ];
     }
 }

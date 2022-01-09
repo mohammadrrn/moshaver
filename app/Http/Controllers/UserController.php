@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubscriptionPlans;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class UserController extends Controller
     {
         $usersList = User::with('plan')->with('item')->with('role')->paginate($this->pagination);
         $data = [
-            'usersList' => $usersList
+            'usersList' => $usersList,
+            'plan' => SubscriptionPlans::get()
         ];
         return view('panel.users.usersList', compact('data'));
     }

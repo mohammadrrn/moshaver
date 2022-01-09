@@ -40,6 +40,21 @@ class TrustedOfficeController extends Controller
         return view('panel.trustedOffices.updateTrustedOfficesForm', compact('data'));
     }
 
+    public function deleteTrustedOfficesForm($id)
+    {
+        $data = [
+            'trustedOffice' => TrustedOffice::find($id)
+        ];
+        return view('panel.trustedOffices.deleteTrustedOfficesForm', compact('data'));
+    }
+
+    public function deleteTrustedOffices($id)
+    {
+        $office = TrustedOffice::find($id);
+        $office->delete();
+        return redirect(route('panel.trustedOffices.addTrustedOfficesForm'))->with(['success' => 'عملیات با موفقیت انجام شد']);
+    }
+
     public function updateTrustedOffices(TrustedOfficesUpdate $update, $id)
     {
         $trustedOffice = TrustedOffice::find($id);

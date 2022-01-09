@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','افزودن دفاتر مورد اعتماد')
+@section('title','لیست کاربران')
 
 @section('content')
     <div class="col-12 col-md-10 main-left">
@@ -11,45 +11,57 @@
                         </span>
             </div>
             <div class="col-12">
-                <!--                <div class="row list-moshaver-top">
-
-
-                                    <div class="col-12 col-md-3">
-                                        <div class="list-request-box-group">
-                                            <input type="text" placeholder="نام کاربر">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="list-request-box-group">
-                                            <input type="text" placeholder="کد ملی کاربر">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3 ">
-                                        <div class="list-request-box-group">
-                                            <select class="form-select form-select" aria-label="Default select example">
-                                                <option selected disabled>نوع کاربر</option>
-                                                <option value="1">طلایی</option>
-                                                <option value="2">نقره ای</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3 ">
-                                        <div class="list-request-box-group">
-                                            <select class="form-select form-select" aria-label="Default select example">
-                                                <option selected disabled>وضعیت کاربر</option>
-                                                <option value="1">فعال</option>
-                                                <option value="2">غیر فعال</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="list-request-box-group-button">
-                                            <button class=" btn-block">جستجو</button>
-                                        </div>
-                                    </div>
-
-
-                                </div>-->
+                <form action="{{route('panel.search','usersList')}}">
+                    <div class="row list-moshaver-top">
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="کد کاربر" name="code">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="نام کاربر" name="full_name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="کد ملی کاربر" name="national_code">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group">
+                                <input type="text" placeholder="شماره همراه" name="mobile_number">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 ">
+                            <div class="list-request-box-group">
+                                <select class="form-select form-select" aria-label="Default select example" name="plan">
+                                    <option selected disabled>نوع اشتراک</option>
+                                    @foreach($data['plan'] as $plan)
+                                        <option value="{{$plan->id}}">{{$plan->title}}</option>
+                                    @endforeach
+                                    <option value="no-plan">بدون اشتراک</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 ">
+                            <div class="list-request-box-group">
+                                <select class="form-select form-select" aria-label="Default select example"
+                                        name="status">
+                                    <option selected disabled>وضعیت کاربر</option>
+                                    <option value="1">فعال</option>
+                                    <option value="0">غیر فعال</option>
+                                    <option value="2">مسدود</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="list-request-box-group-button">
+                                <button class=" btn-block">جستجو</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="col-12 table list-customer-table">
                 <table>
@@ -140,3 +152,5 @@
         </div>
     </div>
 @endsection
+
+

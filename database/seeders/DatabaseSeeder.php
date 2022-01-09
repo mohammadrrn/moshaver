@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Http\Controllers\AssistantController;
 use App\Models\Area;
+use App\Models\Cities;
 use App\Models\ContactCategory;
 use App\Models\Direction;
 use App\Models\Estate;
@@ -247,7 +248,51 @@ class DatabaseSeeder extends Seeder
 
 
         Area::create([
-            'text' => 'منطقه 1 : هاشمیه - الهیه - سجاد',
+            'text' => 'منطقه 1 : خیام-ملک آباد-فردوسی-سجاد -ملاصدرا-سازمان آب-آبکوه-فلسطین-کلاهدوز-سناباد-راهنمایی-احمد آباد-کوهسنگی-مطهری',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 2 :فرامرز عباسی-بلوار فردوسی- جانباز-خیام-ابوطالب-عبدالمطلب-موسوی قوچانی-هنرور-کریمی-عبادی',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 3 : گاز-رسالت-فاطمیه-ابوذر-طبرسی-المهدی-بلال حبشی-مهر مادر-المهدی-مسلم-مجلسی-خواجه ربیع-22 بهمن',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 4 : طبرسی- ایثار-شهید حاتمی -مفتح-نبوت-علامه امینی-ستایش-صاحب دلان-المهدی -وحید',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 5 : آوینی-سرخس-ولایت-مهر آباد-عبادت-همت آباد-عباس آباد-مهدی آباد-تلاش-کرامت-الزهرا-ولایت-بابا نظر',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 6:  مصلی-چمن-شیرودی-بلوار رستمی- محمد آباد-کارمندان - صدوقی(چهنو) - بیست و دو بهمن - چمن-پنجراه',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 7 : هفده شهریور-امام رضا-عنصری-فدائیان اسلام-کوشش-جمهوری اسلامی-ثامن-سپاه-رجایی-کوشش-ولیعصر-طرق',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 8 : دانشگاه-امام خمینی-پاسداران-آخوندی خراسانی-ارشاد-کوهسنگی-رازی-جهاد-نامجو-امام خمینی-رزم-گلستان',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 9 : وکیل آباد-نماز -دلاوان-رضوی -پیروزی -باهنر -کوثر -هاشمیه -هنرستان- هفت تیر -صیاد-اقبال- لادن – فکوری-صارمی',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 10 : اندیشه-حجاب-امامیه-ادیب-فلاحی -شاهد-شریعتی- حسابی-میثاق-مجیدیه',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 11 : وکیل آباد-امامت-جلال-سید رضی-دانش آموز-دانشجو-صدف-دندانپزشکان-فارغ التحصیلان-نمایشگاه-فرهنگ-معلم-آموزگار-مهران',
+            'status' => 1
+        ]);
+        Area::create([
+            'text' => 'منطقه 12 : الهیه-مجیدیه-اقدسیه-امیریه-میثاق-سجادیه-رحمانیه-مشایخی-عصمتیه-نقویه-بوستان-جاهد شهر-تقویه-هاشمی رفسنجانی فرد(میثاق)-صادقیه',
             'status' => 1
         ]);
         Transfer::create([
@@ -277,6 +322,9 @@ class DatabaseSeeder extends Seeder
         Estate::create([
             'text' => 'زمین'
         ]);
+        Estate::create([
+            'text' => 'سوله و انبار'
+        ]);
 
         Direction::create([
             'text' => 'شمالی'
@@ -295,25 +343,100 @@ class DatabaseSeeder extends Seeder
         ]);
 
         EstateRequestFloorCoveringOption::create([
+            'text' => 'سرامیک'
+        ]);
+        EstateRequestFloorCoveringOption::create([
+            'text' => 'پارکت'
+        ]);
+        EstateRequestFloorCoveringOption::create([
+            'text' => 'موکت'
+        ]);
+        EstateRequestFloorCoveringOption::create([
             'text' => 'کف پوش'
         ]);
+        EstateRequestFloorCoveringOption::create([
+            'text' => 'سنگ'
+        ]);
         EstateRequestCabinetsOption::create([
-            'text' => 'کابینت'
+            'text' => 'ام دی اف'
+        ]);
+        EstateRequestCabinetsOption::create([
+            'text' => 'فلز'
+        ]);
+        EstateRequestCabinetsOption::create([
+            'text' => 'های گلس'
+        ]);
+        EstateRequestCabinetsOption::create([
+            'text' => 'طرح ام دی اف'
+        ]);
+        EstateRequestCabinetsOption::create([
+            'text' => 'چوب'
         ]);
         EstateRequestWallPlugsOption::create([
-            'text' => 'دیوارپوش'
+            'text' => 'کاغذ دیواری'
+        ]);
+        EstateRequestWallPlugsOption::create([
+            'text' => 'نقاشی'
+        ]);
+        EstateRequestWallPlugsOption::create([
+            'text' => 'ترکیبی'
         ]);
         EstateRequestBuildingFacadesOption::create([
-            'text' => 'نمای ساختمان'
+            'text' => 'سنگ'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'آجر سه سانت'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'سنگ و آجر'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'رومی'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'سرامیک'
+        ]);
+        EstateRequestBuildingFacadesOption::create([
+            'text' => 'سایز'
         ]);
         EstateRequestHeatingSystemOption::create([
-            'text' => 'سیستم گرمایش'
+            'text' => 'بخاری'
+        ]);
+        EstateRequestHeatingSystemOption::create([
+            'text' => 'پکیج'
+        ]);
+        EstateRequestHeatingSystemOption::create([
+            'text' => 'هواساز'
+        ]);
+        EstateRequestHeatingSystemOption::create([
+            'text' => 'گرمایش از کف'
+        ]);
+        EstateRequestHeatingSystemOption::create([
+            'text' => 'چیلر'
         ]);
         EstateRequestCoolingSystemOption::create([
-            'text' => 'سیستم سرمایش'
+            'text' => 'کولر آبی'
+        ]);
+        EstateRequestCoolingSystemOption::create([
+            'text' => 'کولر گازی'
+        ]);
+        EstateRequestCoolingSystemOption::create([
+            'text' => 'هوا ساز'
+        ]);
+        EstateRequestCoolingSystemOption::create([
+            'text' => 'چیلر'
         ]);
         EstateRequestDocumentTypeOption::create([
-            'text' => 'نوع سند'
+            'text' => 'شش دانگ'
+        ]);
+        EstateRequestDocumentTypeOption::create([
+            'text' => 'سه دانگ'
+        ]);
+        EstateRequestDocumentTypeOption::create([
+            'text' => 'وکالتی'
+        ]);
+        EstateRequestDocumentTypeOption::create([
+            'text' => 'قولنامه ای'
         ]);
 
         SubscriptionPlans::create([
@@ -371,6 +494,11 @@ class DatabaseSeeder extends Seeder
                 'name' => $contact
             ]);
         }
+
+        Cities::create([
+            'text' => 'مشهد'
+        ]);
+
         EstateRequest::create([
             'owner_name' => 'سعید قلی پور',
             'owner_mobile_number' => '09900787232',
@@ -379,14 +507,16 @@ class DatabaseSeeder extends Seeder
             'estate_id' => 1,
             'address' => 'طلاب - دریای دوم',
             'area_id' => 1,
+            'city_id' => 1,
             'transfer_id' => 1,
             'area' => 200,
-            'street_name' => 'حسینی محراب',
+            /*'street_name' => 'حسینی محراب',*/
             'plaque' => 553,
             'floor' => 3,
             'number_of_floor' => 3,
+            'number_of_room' => 1,
             'apartment_unit' => 1,
-            'year_of_construction' => 1,
+            'year_of_construction' => 8,
             'direction_id' => 1,
             'mortgage_price' => 0,
             'rent_price' => 0,

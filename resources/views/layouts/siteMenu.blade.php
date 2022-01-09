@@ -1,5 +1,5 @@
 <header class="container-fluid">
-    <div class="header">
+    <div class="header container">
         <div class="header-right">
             <img class="header-right-icon-moshaver" src="{{asset('icon/moshaver-007.png')}}">
             <ul>
@@ -28,8 +28,14 @@
                 </li>
                 <li>
                     <a href="{{route('search','marked')}}"
-                       @isset(Request::route()->parameters()['type']) class="mmad" @endif>
+                       @if(isset(Request::route()->parameters()['type']) &&  Request::route()->parameters()['type'] == 'marked') class="mmad" @endif>
                         نشان شده
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('trustedOfficesList')}}"
+                       @if(Request::route()->getName() == 'trustedOfficesList') class="mmad" @endif >
+                        دفاتر مورد اعتماد
                     </a>
                 </li>
             </ul>

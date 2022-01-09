@@ -122,6 +122,7 @@ class AssistantController extends Controller
             'delete-estate-request',
             'confirmed-request-list',
             'unconfirmed-request-list',
+            'reject-confirmation-estate-request', // رد تایید آگهی
             'cession-list',
         ];
     }

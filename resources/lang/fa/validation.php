@@ -82,11 +82,11 @@ return [
     ],
     'max' => [
         'numeric' => 'فیلد :attribute باید حداکثر :max کاراکتر باشد',
-        'file' => 'The :attribute must not be greater than :max kilobytes.',
+        'file' => 'حجم :attribute نباید بیشتر از باشد :max کیلوبایت.',
         'string' => 'فیلد :attribute باید حداکثر :max کاراکتر باشد',
         'array' => 'The :attribute must not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => 'فرمت قابل قبول برای فیلد :attribute :values می باشد',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => 'فیلد :attribute باید حداقل :min کاراکتر باشد',
@@ -198,6 +198,8 @@ return [
         'reminder_title' => 'عنوان یادآوری',
         'reminder_date' => 'تاریخ یادآوری',
         'reason' => 'دلیل رد تایید',
+        'image' => 'عکس اصلی آگهی',
+        'slider' => 'تصاویر اسلایدر',
     ],
 
 ];

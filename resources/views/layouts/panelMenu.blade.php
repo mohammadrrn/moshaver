@@ -158,8 +158,9 @@
             @endpermission
         </ul>
     </li>
+    <hr>
     @permission('zoonkan')
-    <li class="panel-nav-ul-li-sub-ul">
+    <li class="panel-nav-ul-li">
         <a href="{{route('panel.zoonkan.createZoonkanForm')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/zoonkan.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/zoonkan-w.svg')}}" alt="">
@@ -169,7 +170,7 @@
     </li>
     @endpermission
     @permission('phonebook')
-    <li class="panel-nav-ul-li-sub-ul">
+    <li class="panel-nav-ul-li">
         <a href="{{route('panel.contact.contactList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/icons8_phone_contact.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/contact-w.svg')}}" alt="">
@@ -191,7 +192,7 @@
         <a href="{{route('panel.cession.reportsList')}}">
             <img class="panel-nav-img-gry" src="{{asset('icon/PanelAdmin/error.svg')}}" alt="">
             <img class="panel-nav-img-white" src="{{asset('icon/PanelAdmin/error-w.svg')}}" alt="">
-            <span>لیست گزارشات واگذاری</span>
+            <span>گزارشات واگذاری کاربران</span>
         </a>
     </li>
     <hr>

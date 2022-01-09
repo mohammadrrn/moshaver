@@ -6,36 +6,9 @@
     <main class="container-fluid">
         <div class="main-box-center">
             <div class="row  main-box-center-row">
-                <div class="col-3">
-                     
-                </div>
-                <div class="col-12 col-md-3 list-icon">
-                <!--                    <img class="list-svg" src="{{asset('icon/list.svg')}}" alt="">-->
-                    <img class="categorize-svg" src="{{asset('icon/categorize.svg')}}" alt="">
-                    <!--                    <select class="filter-form-control form-control form-control-list-icon">
-                                            <option selected disabled>ترتیب  </option>
-                                            <option>قیمت</option>
-                                            <option>قیمت</option>
-
-                                        </select>-->
-                </div>
-                <div class="col-3">
-                     
-                </div>
-                <div class="col-3">
-                     
-                </div>
                 <div class="col-12 col-md-3 filter-form">
                     <form action="{{route('searchResult')}}" method="post">
-                    @csrf
-                    <!--                    <select class="filter-form-control form-control">
-                                            <option selected>شهر</option>
-                                            <option>خراسان رضوی</option>
-                                            <option>رشتخوار</option>
-                                            <option>کلات</option>
-                                            <option>نیشابور</option>
-                                            <option>فیروزه</option>
-                                        </select>-->
+                        @csrf
                         <select class="filter-form-control form-control" name="area_id">
                             <option selected disabled>انتخاب منطقه</option>
                             @foreach($data['area'] as $area)
@@ -75,6 +48,31 @@
                             @endfor
                             <option value="more_floor">بیش تر از 9</option>
                         </select>
+                        <input type="text" name="buy_price_from"
+                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                               placeholder="buy_price_from">
+                        <input type="text" name="buy_price_to" style="border: 1px solid #ccc;width: 49%"
+                               placeholder="buy_price_to">
+                        <hr>
+
+                        <input type="text" name="rent_price_from"
+                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                               placeholder="rent_price_from">
+                        <input type="text" name="rent_price_to" style="border: 1px solid #ccc;width: 49%"
+                               placeholder="rent_price_to">
+
+                        <input type="text" name="mortgage_price_from"
+                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                               placeholder="mortgage_price_from">
+                        <input type="text" name="mortgage_price_to" style="border: 1px solid #ccc;width: 49%"
+                               placeholder="mortgage_price_to">
+                        <hr>
+                        <input type="text" name="participation_price_from"
+                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                               placeholder="participation_price_from">
+                        <input type="text" name="participation_price_to" style="border: 1px solid #ccc;width: 49%"
+                               placeholder="participation_price_to">
+                        <hr>
 
                         <input class="form-control" type="text" name="id" placeholder="کد ملک">
 
@@ -83,7 +81,7 @@
                                 <div class="card">
                                     <div class="card-header" id="headingThree">
                                         <h5 class="mb-0">
-                                            <div class="btn collapsed" data-toggle="collapse"
+                                            <div class="btn btn-block collapsed" data-toggle="collapse"
                                                  data-target="#collapseThree" aria-expanded="false"
                                                  aria-controls="collapseThree">
                                                 امکانات
@@ -92,12 +90,19 @@
                                     </div>
                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                          data-parent="#accordion">
-                                        @foreach($data['options'] as $option=>$value)
-                                            <div class="box-chekbox box-chekbox-firest">
-                                                {{$value}}
-                                                <input type="checkbox" name="{{"option[$option]"}}" value="1">
-                                            </div>
-                                        @endforeach
+                                        <div class="row" style="justify-content: center;">
+                                            @foreach($data['options'] as $option=>$value)
+                                                <div class="box-chekbox box-chekbox-firest col-10 col-md-5"
+                                                     style="align-items: center">
+
+                                                    <input type="checkbox" id="{{$option}}" name="{{"option[$option]"}}"
+                                                           value="1">
+                                                    <label for="{{$option}}" style="width:100%;margin: 0 5px">
+                                                        {{$value}}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -128,24 +133,29 @@
                                         </div>
                                         <div class="box-sell-bottom-bottom">
                                             <div class="box-sell-bottom-bottom-right">
-                                                @if($request->rent_price != 0 && $request->mortgage_price != 0)
+                                                @if($request->estate[0]->rent_price != 0 && $request->estate[0]->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>اجاره:</span>
-                                                        <span>{{number_format($request->rent_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->estate[0]->rent_price)}} هزار تومان </span>
                                                     </div>
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>رهن:</span>
-                                                        <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->estate[0]->mortgage_price)}} هزار تومان </span>
                                                     </div>
-                                                @elseif($request->rent_price == 0 && $request->mortgage_price != 0)
+                                                @elseif($request->estate[0]->rent_price == 0 && $request->estate[0]->mortgage_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>رهن کامل:</span>
-                                                        <span>{{number_format($request->mortgage_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->estate[0]->mortgage_price)}} هزار تومان </span>
                                                     </div>
-                                                @elseif($request->participation_price != 0)
+                                                @elseif($request->estate[0]->participation_price != 0)
                                                     <div class="box-sell-bottom-bottom-right-item">
                                                         <span>مشارکت به مبلغ:</span>
-                                                        <span>{{number_format($request->participation_price)}} هزار تومان </span>
+                                                        <span>{{number_format($request->estate[0]->participation_price)}} هزار تومان </span>
+                                                    </div>
+                                                @elseif($request->estate[0]->buy_price != 0)
+                                                    <div class="box-sell-bottom-bottom-right-item">
+                                                        <span>خرید به مبلغ:</span>
+                                                        <span>{{number_format($request->estate[0]->buy_price)}} هزار تومان </span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -167,7 +177,7 @@
                                         <span class="id-home">کد ملک : {{$request->id}}</span>
                                         <div class="box-sell-top">
                                             <a href="{{route('detail',$request->id)}}">
-                                                <img class="box-sell-top-img" src="{{asset('img/img-slider.png')}}">
+                                                <img class="box-sell-top-img" src="{{asset($request->thumbnail)}}">
                                             </a>
                                             <span class="box-sell-top-title">
                                         {{$request->address}}
@@ -206,6 +216,11 @@
                                                         <span>مشارکت به مبلغ:</span>
                                                         <span>{{number_format($request->participation_price)}} هزار تومان </span>
                                                     </div>
+                                                @elseif($request->buy_price != 0)
+                                                    <div class="box-sell-bottom-bottom-right-item">
+                                                        <span>خرید به مبلغ:</span>
+                                                        <span>{{number_format($request->buy_price)}} هزار تومان </span>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -225,20 +240,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                {{$data['estateRequests']->links()}}
-                <!--                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" tabindex="-1">قبل</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">بعد</a>
-                            </li>
-                        </ul>
-                    </nav>-->
+                    {{$data['estateRequests']->links()}}
                 </div>
             </div>
         </div>

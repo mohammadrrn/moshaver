@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-12 col-md-12 view-order">
                     <span>
-                        انتخاب عکس های بیشتر
+                        انتخاب عکس های اسلایدر
                     </span>
                     <input type="file" name="slider[]" multiple accept=".jpg,.jpeg,.png">
                 </div>
@@ -42,11 +42,17 @@
                     <span>
                         نوع واگذاری
                     </span>
+                    <input type="hidden" class="transfer_id"
+                           value="{{old('transfer_id')}}">
                     <select name="transfer_id" class="view-order-select ddlViewBy" id="transfer"
                             aria-label="Default select example">
                         <option disabled selected>انتخاب نوع واگذاری</option>
                         @foreach($data['transfer'] as $transfer)
-                            <option value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @if(old('transfer_id') == $transfer->id)
+                                <option selected value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @else
+                                <option value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -54,10 +60,15 @@
                     <span>
                         نوع ملک
                     </span>
+                    <input type="hidden" class="selected_estate" value="{{old('estate_id')}}">
                     <select name="estate_id" class="view-order-select" id="estate" aria-label="Default select example">
                         <option disabled selected>انتخاب نوع ملک</option>
                         @foreach($data['estate'] as $estate)
-                            <option value="{{$estate->id}}">{{$estate->text}}</option>
+                            @if(old('estate_id') == $estate->id)
+                                <option selected value="{{$estate->id}}">{{$estate->text}}</option>
+                            @else
+                                <option value="{{$estate->id}}">{{$estate->text}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -84,7 +95,11 @@
                         <select name="area_id" class="view-order-select" aria-label="Default select example">
                             <option selected disabled>انتخاب منطقه</option>
                             @foreach($data['area'] as $area)
-                                <option value="{{$area->id}}">{{$area->text}}</option>
+                                @if(old('area_id') == $area->id)
+                                    <option selected value="{{$area->id}}">{{$area->text}}</option>
+                                @else
+                                    <option value="{{$area->id}}">{{$area->text}}</option>
+                                @endif
                             @endforeach
                         </select>
                     @endisset
@@ -99,7 +114,8 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="owner_mobile_number" value="{{old('owner_mobile_number')}}">
+                        <input type="text" name="owner_mobile_number" maxlength="11"
+                               value="{{old('owner_mobile_number')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>شماره تماس</label>
@@ -162,7 +178,7 @@
                         <label>مبلغ مشارکت (تومان)</label>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 view-order" id="floor">
+                <div class="col-12 col-md-3 view-order" id="floor">
                     <div class="group">
                         <input type="text" name="floor" value="{{old('floor')}}">
                         <span class="highlight"></span>
@@ -170,9 +186,17 @@
                         <label>طبقه</label>
                     </div>
                 </div>
+                <div class="col-12 col-md-3 view-order" id="all_floor">
+                    <div class="send-request-user-group-option-box group-option-box">
+                        <input value="1" type="checkbox" name="all_floor">
+                        <label for="all_floor">
+                            کل طبقات
+                        </label>
+                    </div>
+                </div>
                 <div class="col-12 col-md-6 view-order" id="number_of_floor">
                     <div class="group">
-                        <input type="text" name="number_of_floor" value="{{old('number_of_floor')}}">
+                        <input type="text" name="number_of_floor" maxlength="2" value="{{old('number_of_floor')}}">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>تعداد طبقه</label>
@@ -196,7 +220,8 @@
                 </div>
                 <div class="col-12 col-md-6 view-order" id="year_of_construction">
                     <div class="group">
-                        <input type="text" name="year_of_construction" value="{{old('year_of_construction')}}">
+                        <input type="text" name="year_of_construction" value="{{old('year_of_construction')}}"
+                               placeholder="1400">
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label>سال ساخت</label>
@@ -209,7 +234,11 @@
                     <select name="direction_id" class="view-order-select" aria-label="Default select example">
                         <option disabled selected>انتخاب جهت ملک</option>
                         @foreach($data['direction'] as $direction)
-                            <option value="{{$direction->id}}">{{$direction->text}}</option>
+                            @if(old('direction_id') == $direction->id)
+                                <option selected value="{{$direction->id}}">{{$direction->text}}</option>
+                            @else
+                                <option value="{{$direction->id}}">{{$direction->text}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -235,7 +264,12 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب نوع کف پوش</option>
                                     @foreach($data['floorCovering'] as $floorCovering)
-                                        <option value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                        @if(old('floor_covering_id') == $floorCovering->id)
+                                            <option selected
+                                                    value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                        @else
+                                            <option value="{{$floorCovering->id}}">{{$floorCovering->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -246,7 +280,11 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب نوع کابینت</option>
                                     @foreach($data['cabinets'] as $cabinets)
-                                        <option value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                        @if(old('cabinets_id') == $cabinets->id)
+                                            <option selected value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                        @else
+                                            <option value="{{$cabinets->id}}">{{$cabinets->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -257,7 +295,11 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب نوع دیوارپوش</option>
                                     @foreach($data['wallPlugs'] as $wallPlugs)
-                                        <option value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                        @if(old('wall_plugs_id') == $wallPlugs->id)
+                                            <option selected value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                        @else
+                                            <option value="{{$wallPlugs->id}}">{{$wallPlugs->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -268,7 +310,12 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب نوع نما</option>
                                     @foreach($data['buildingFacades'] as $buildingFacades)
-                                        <option value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                        @if(old('building_facades_id') == $buildingFacades->id)
+                                            <option selected
+                                                    value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                        @else
+                                            <option value="{{$buildingFacades->id}}">{{$buildingFacades->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -279,7 +326,12 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب سیستم گرمایش</option>
                                     @foreach($data['heatingSystem'] as $heatingSystem)
-                                        <option value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                        @if(old('heating_system_id') == $heatingSystem->id)
+                                            <option selected
+                                                    value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                        @else
+                                            <option value="{{$heatingSystem->id}}">{{$heatingSystem->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -290,7 +342,12 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب سیستم سرمایش</option>
                                     @foreach($data['coolingSystem'] as $coolingSystem)
-                                        <option value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                        @if(old('cooling_system_id') == $coolingSystem->id)
+                                            <option selected
+                                                    value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                        @else
+                                            <option value="{{$coolingSystem->id}}">{{$coolingSystem->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -301,7 +358,12 @@
                                         aria-label="Default select example">
                                     <option disabled selected>انتخاب نوع سند</option>
                                     @foreach($data['documentType'] as $documentType)
-                                        <option value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                        @if(old('document_type_id') == $documentType->id)
+                                            <option selected
+                                                    value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                        @else
+                                            <option value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -309,10 +371,17 @@
                         @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item =>$value)
                             <div class="col-12 col-md-3 ">
                                 <div class="send-request-user-group-option-box group-option-box">
-                                    <input value="1" type="checkbox" id="option_{{$item}}" name="{{$item}}">
-                                    <label for="option_{{$item}}">
-                                        {{$value}}
-                                    </label>
+                                    @if(old($item) == 1)
+                                        <input value="1" type="checkbox" id="option_{{$item}}" name="{{$item}}" checked>
+                                        <label for="option_{{$item}}">
+                                            {{$value}}
+                                        </label>
+                                    @else
+                                        <input value="1" type="checkbox" id="option_{{$item}}" name="{{$item}}">
+                                        <label for="option_{{$item}}">
+                                            {{$value}}
+                                        </label>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

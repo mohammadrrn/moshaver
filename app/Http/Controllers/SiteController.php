@@ -34,7 +34,7 @@ class SiteController extends Controller
     public function detail($id)
     {
         $userZoonkan = Zoonkan::where('user_id', auth()->id())->get(); // TODO : if buy gold plan then fetch zoonkan for best performance
-        $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('status', 1)->orWhere('status', 2)->findOrFail($id);
+        $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('id', $id)->where('status', 1)->orWhere('status', 2)->first();
         $similar = EstateRequest::with('estateType')->with('direction')->where('area_id', $estateRequest->area_id)->where('status', 1)->orWhere('status', 2)->where('id', '!=', $estateRequest->id)->take(3)->get();
         $data = [
             'detail' => $estateRequest,
@@ -66,14 +66,16 @@ class SiteController extends Controller
         switch ($type) {
             case 'rentAndMortgage':
                 $where = [
+                    ['buy_price', '=', 0],
                     ['rent_price', '!=', 0],
+                    ['mortgage_price', '!=', 0],
                 ];
                 break;
             case 'buy':
                 $where = [
                     ['buy_price', '!=', 0],
-                    ['rent_price', '==', 0],
-                    ['mortgage_price', '==', 0],
+                    ['rent_price', '=', 0],
+                    ['mortgage_price', '=', 0],
                 ];
                 break;
         }
@@ -92,7 +94,7 @@ class SiteController extends Controller
             $data['estateRequests'] = Bookmarks::with('estate')->where('user_id', auth()->id())->paginate($this->searchPagination);
             $data['type'] = 'marked';
         } else {
-            $data['estateRequests'] = EstateRequest::where('status', 1)->orWhere('status', 2)->where($where)->paginate($this->searchPagination);
+            $data['estateRequests'] = EstateRequest::where($where)->where('status', 1)->orWhere('status', 2)->paginate($this->searchPagination);
         }
 
         return view('site.search', compact('data'));
@@ -108,7 +110,15 @@ class SiteController extends Controller
             'year_of_construction' => ['numeric'],
             'floor' => ['numeric'],
             'id' => ['numeric', 'nullable'],
-            'option' => ['array']
+            'option' => ['array'],
+            'buy_price_from' => ['nullable', 'numeric'],
+            'buy_price_to' => ['nullable', 'numeric'],
+            'rent_price_from' => ['nullable', 'numeric'],
+            'rent_price_to' => ['nullable', 'numeric'],
+            'mortgage_price_from' => ['nullable', 'numeric'],
+            'mortgage_price_to' => ['nullable', 'numeric'],
+            'participation_price_from' => ['nullable', 'numeric'],
+            'participation_price_to' => ['nullable', 'numeric'],
         ]);
 
         if ($filter['id'] == null || $filter['id'] == '') {
@@ -120,14 +130,39 @@ class SiteController extends Controller
             }
             unset($filter['option']);
         }
+
+        if (isset($filter['transfer_id'])) {
+            array_push($filter, ['transfer_id', '=', (int)$filter['transfer_id']]);
+            if (($filter['buy_price_from'] != '' && $filter['buy_price_from'] != null) && $filter['buy_price_to'] != '' && $filter['buy_price_to'] != null) {
+                array_push($filter, ['buy_price', '>=', (int)$filter['buy_price_from']], ['buy_price', '<=', (int)$filter['buy_price_to']]);
+                unset($filter['buy_price_from']);
+                unset($filter['buy_price_to']);
+            }
+            if (($filter['rent_price_from'] != '' && $filter['rent_price_from'] != null) && $filter['rent_price_to'] != '' && $filter['rent_price_to'] != null) {
+                array_push($filter, ['rent_price', '>=', (int)$filter['rent_price_from']], ['rent_price', '<=', (int)$filter['rent_price_to']]);
+                unset($filter['rent_price_from']);
+                unset($filter['rent_price_to']);
+            }
+            if (($filter['mortgage_price_from'] != '' && $filter['mortgage_price_from'] != null) && $filter['mortgage_price_to'] != '' && $filter['mortgage_price_to'] != null) {
+                array_push($filter, ['mortgage_price', '>=', (int)$filter['mortgage_price_from']], ['mortgage_price', '<=', (int)$filter['mortgage_price_to']]);
+                unset($filter['mortgage_price_from']);
+                unset($filter['mortgage_price_to']);
+            }
+            if (($filter['participation_price_from'] != '' && $filter['participation_price_from'] != null) && $filter['participation_price_to'] != '' && $filter['participation_price_to'] != null) {
+                array_push($filter, ['participation_price', '>=', (int)$filter['participation_price_from']], ['participation_price', '<=', (int)$filter['participation_price_to']]);
+                unset($filter['participation_price_from']);
+                unset($filter['participation_price_to']);
+            }
+            unset($filter['transfer_id']);
+        }
+
         $options = AssistantController::estateRequestOptions();
         $area = Area::get();
         $transfer = Transfer::get();
         $estateType = Estate::get();
         $direction = Direction::get();
-
-        $filter['status'] = 1; // verified estate request
-        $result = EstateRequest::where($filter)->paginate($this->searchPagination);
+        $filter = array_filter($filter);
+        $result = EstateRequest::where($filter)->where('status', 1)->orWhere('status', 2)->paginate($this->searchPagination);
 
         $data = [
             'area' => $area,
@@ -143,7 +178,7 @@ class SiteController extends Controller
 
     public function block()
     {
-        echo "You are a Blocked";
+        echo "حساب کاربری شما مسدود شده است"; // TODO : return view
     }
 
     public function bookmarked(Request $request)

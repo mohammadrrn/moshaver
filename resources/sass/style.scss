@@ -34,10 +34,17 @@ select {
     }
 }
 
+label:hover {
+    cursor: pointer;
+}
+
 body {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     background: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .support {
@@ -748,7 +755,6 @@ main {
 
                         &-right {
                             width: calc(100% - 4px);
-                            font-size: 14px;
                             padding: 10px 0 0 0;
                             // background: green;
                             border-bottom: 1px dashed rgb(235, 235, 235);
@@ -1520,6 +1526,12 @@ footer {
     display: flex;
     justify-content: space-between;
 
+    .box-sell-bottom-bottom-right-item {
+        color: red;
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
     p {
         margin-bottom: 10px;
         font-size: 15px;
@@ -1542,7 +1554,7 @@ footer {
     // background: red;
     display: flex;
     flex-wrap: wrap;
-    font-size: 13px;
+    font-size: 15px;
 
     &-item {
         width: 50%;
@@ -1569,11 +1581,19 @@ footer {
     line-height: 25px;
     font-weight: bold;
     border-top: 1px solid #e2e2e2;
+
+    h5 {
+        color: green;
+        font-size: 20px;
+        margin: 10px 0;
+    }
 }
-.detile-specifications-box-5-form{
+
+.detile-specifications-box-5-form {
     display: flex;
     //justify-content: space-between;
 }
+
 .detile-specifications-top-5 {
     border-top: 1px solid #e2e2e2;
     padding-top: 10px;
@@ -1585,10 +1605,12 @@ footer {
     &-button:last-child {
         background: #f64f59;
     }
-    .row{
+
+    .row {
         width: 100%;
     }
-    input{
+
+    input {
         width: 100%;
         color: #78909c;
         border: 1px solid #929292;
@@ -1597,7 +1619,8 @@ footer {
         padding: 8px;
         margin: 4px 5px 0 0;
     }
-    select{
+
+    select {
         margin: 0 5px;
         color: #78909c;
         border: 1px solid #929292;
@@ -1605,6 +1628,7 @@ footer {
         font-size: 13px;
         padding: 8px 0;
     }
+
     &-button {
         background: #12c2e9;
         color: #fff;
@@ -1625,7 +1649,8 @@ footer {
             outline: none;
         }
     }
-    &-left{
+
+    &-left {
         width: 50%;
         background: red;
     }

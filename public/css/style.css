@@ -30,10 +30,17 @@ select:focus {
   background: #e2e2e2;
 }
 
+label:hover {
+  cursor: pointer;
+}
+
 body {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .support {
@@ -650,7 +657,6 @@ main .main-box-center .box-sell-bottom-bottom {
 }
 main .main-box-center .box-sell-bottom-bottom-right {
   width: calc(100% - 4px);
-  font-size: 14px;
   padding: 10px 0 0 0;
   border-bottom: 1px dashed #ebebeb;
   padding-bottom: 10px;
@@ -1313,6 +1319,11 @@ footer .me {
   display: flex;
   justify-content: space-between;
 }
+.detile-specifications-top-2 .box-sell-bottom-bottom-right-item {
+  color: red;
+  font-size: 20px;
+  margin: 10px 0;
+}
 .detile-specifications-top-2 p {
   margin-bottom: 10px;
   font-size: 15px;
@@ -1329,7 +1340,7 @@ footer .me {
 .detile-specifications-top-3 {
   display: flex;
   flex-wrap: wrap;
-  font-size: 13px;
+  font-size: 15px;
 }
 .detile-specifications-top-3-item {
   width: 50%;
@@ -1351,6 +1362,11 @@ footer .me {
   line-height: 25px;
   font-weight: bold;
   border-top: 1px solid #e2e2e2;
+}
+.detile-specifications-top-4 h5 {
+  color: green;
+  font-size: 20px;
+  margin: 10px 0;
 }
 
 .detile-specifications-box-5-form {

@@ -26,7 +26,7 @@
             <form method="POST" action="{{ route('sendResetPasswordCode') }}">
                 <h1 class="title-page">فراموشی رمز عبور</h1>
                 <br>
-                <input type="text" name="mobile_number" placeholder="شماره همراه خود را وارد نمایید">
+                <input type="text" name="mobile_number" maxlength="11" placeholder="شماره همراه خود را وارد نمایید">
                 <br>
                 <button type="submit">ارسال کد تایید</button>
                 @csrf

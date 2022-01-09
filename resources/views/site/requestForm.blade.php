@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-12 col-md-6 view-order">
                     <div class="group">
-                        <input type="text" name="mobile_number" value="{{old('mobile_number')}}"
+                        <input type="text" name="mobile_number" maxlength="11" value="{{old('mobile_number')}}"
                         >
                         <span class="highlight"></span>
                         <span class="bar"></span>
@@ -49,7 +49,11 @@
                     <select name="area_id" class="view-order-select" aria-label="Default select example">
                         <option disabled selected>انتخاب منطقه</option>
                         @foreach($data['area'] as $area)
-                            <option value="{{$area->id}}">{{$area->text}}</option>
+                            @if(old('area_id') == $area->id)
+                                <option selected value="{{$area->id}}">{{$area->text}}</option>
+                            @else
+                                <option value="{{$area->id}}">{{$area->text}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -57,11 +61,17 @@
                     <span>
                         نوع واگذاری
                     </span>
+                    <input type="hidden" class="transfer_id"
+                           value="{{old('type_of_transfer')}}">
                     <select name="type_of_transfer" class="view-order-select ddlViewBy" id="transfer"
                             aria-label="Default select example">
                         <option disabled selected>انتخاب نوع واگذاری</option>
                         @foreach($data['transfer'] as $transfer)
-                            <option value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @if(old('type_of_transfer') == $transfer->id)
+                                <option selected value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @else
+                                <option value="{{$transfer->id}}">{{$transfer->text}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -74,7 +84,11 @@
                                 aria-label="Default select example">
                             <option disabled selected>انتخاب نوع ملک</option>
                             @foreach($data['estate'] as $estate)
-                                <option value="{{$estate->id}}">{{$estate->text}}</option>
+                                @if(old('type_of_estate') == $estate->id)
+                                    <option selected value="{{$estate->id}}">{{$estate->text}}</option>
+                                @else
+                                    <option value="{{$estate->id}}">{{$estate->text}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

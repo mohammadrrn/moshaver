@@ -93,7 +93,7 @@
                                 </div>
                             @elseif($data['detail']->buy_price != 0 && $data['detail']->mortgage_price == 0)
                                 <div class="box-sell-bottom-bottom-right-item">
-                                    <span>مبلغ خرید:</span>
+                                    <span>خرید:</span>
                                     <span>{{number_format($data['detail']->buy_price)}} هزار تومان </span>
                                 </div>
                             @endif
@@ -113,8 +113,16 @@
                         </div>
                         <div class="detile-specifications-top-3">
                             <div class="detile-specifications-top-3-item">
-                                <img src="{{asset('icon/apartment_icon.svg')}}">
-                                <span>{{$data['detail']->estateType[0]->text}}</span>
+                                <img src="{{asset('icon/male_user.svg')}}">
+                                <span>
+                                    @if($data['detail']->status == 2)
+                                        ------
+                                    @elseif(!auth()->user())
+                                        اشتراک ندارید
+                                    @else
+                                        نام مالک : {{$data['detail']->owner_name}}
+                                    @endif
+                                </span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/phone.svg')}}">
@@ -124,13 +132,17 @@
                                 @elseif(!auth()->user())
                                     اشتراک ندارید
                                 @else
-                                    {{$data['detail']->owner_mobile_number}}
+                                    شماره تماس : {{$data['detail']->owner_mobile_number}}
                                 @endif
                                 <span>
                             </div>
                             <div class="detile-specifications-top-3-item">
+                                <img src="{{asset('icon/apartment_icon.svg')}}">
+                                <span>نوع ملک : {{$data['detail']->estateType[0]->text}}</span>
+                            </div>
+                            <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/planner.svg')}}">
-                                <span>{{$data['detail']->year_of_construction}} سال </span>
+                                <span>سال ساخت : {{$data['detail']->year_of_construction}} سال </span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/address.svg')}}">
@@ -140,42 +152,41 @@
                                     @elseif(!auth()->user())
                                         اشتراک ندارید
                                     @else
-                                        {{$data['detail']->address.' - '. $data['detail']->street_name}}
+                                        آدرس : {{$data['detail']->address.' - '. $data['detail']->street_name}}
                                     @endif
                                 </span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/sleeping_in_bed.svg')}}">
-                                <span>{{$data['detail']->number_of_room}} اتاق </span>
+                                @if($data['detail']->floor == 100)
+                                    <span>طبقه فروش : کل</span>
+                                @else
+                                    <span>طبقه برای فروش  :{{$data['detail']->floor}}</span>
+                                @endif
+                            </div>
+                            <div class="detile-specifications-top-3-item">
+                                <img src="{{asset('icon/sleeping_in_bed.svg')}}">
+                                <span>تعداد طبقات : {{$data['detail']->floor}} </span>
+                            </div>
+                            <div class="detile-specifications-top-3-item">
+                                <img src="{{asset('icon/sleeping_in_bed.svg')}}">
+                                <span>تعداد واحد : {{$data['detail']->apartment_unit}}</span>
+                            </div>
+                            <div class="detile-specifications-top-3-item">
+                                <img src="{{asset('icon/sleeping_in_bed.svg')}}">
+                                <span>تعداد خواب : {{$data['detail']->number_of_room}}</span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/icons8_surface_1.svg')}}">
-                                <span>{{$data['detail']->area}} متر </span>
-                            </div>
-                            <div class="detile-specifications-top-3-item">
-                                <img src="{{asset('icon/male_user.svg')}}">
-                                <span>
-                                    @if($data['detail']->status == 2)
-                                        ------
-                                    @elseif(!auth()->user())
-                                        اشتراک ندارید
-                                    @else
-                                        {{$data['detail']->owner_name}}
-                                    @endif
-                                </span>
+                                <span>متراژ : {{$data['detail']->area}} متر </span>
                             </div>
                         </div>
 
                         <div class="detile-specifications-top-4">
                             <div class="row">
-                                @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item=>$value)
-                                    @if($data['detail']->$item == 1)
-                                        <span class="col-12 col-md-6">{{$value}}</span>
-                                    @endif
-                                @endforeach
-                            </div>
-                            <hr>
-                            <div class="row">
+                                <h5 class="col-12">
+                                    امکانات ملک
+                                </h5>
                                 @isset($data['detail']->floorCovering[0])
                                     <span
                                         class="col-12 col-md-6"> کف پوش : {{$data['detail']->floorCovering[0]->text}}</span>
@@ -204,6 +215,17 @@
                                     <span
                                         class="col-12 col-md-6">نوع سند : {{$data['detail']->documentType[0]->text}}</span>
                                 @endisset
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <h5 class="col-12">
+                                    تجهیزات ملک
+                                </h5>
+                                @foreach(\App\Http\Controllers\AssistantController::estateRequestOptions() as $item=>$value)
+                                    @if($data['detail']->$item == 1)
+                                        <span class="col-12 col-md-6">✓ {{$value}}</span>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
 

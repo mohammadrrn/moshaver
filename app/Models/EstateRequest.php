@@ -17,6 +17,7 @@ class EstateRequest extends Model
         'thumbnail',
         'sliders',
         'area_id',
+        'city_id',
         'user_id',
         'transfer_id',
         'estate_id',
