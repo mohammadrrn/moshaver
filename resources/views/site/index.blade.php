@@ -3,7 +3,6 @@
 @section('title','مشاور 007')
 
 @section('content')
-
     <main class="container-fluid">
         <div class="container main-box-top">
             <div class="row main-box-top-row">
@@ -74,7 +73,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container main-box-center">
             <div class="row  main-box-center-row">
                 @foreach($data['estateRequest'] as $request)

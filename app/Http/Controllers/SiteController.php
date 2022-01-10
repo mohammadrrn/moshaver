@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Direction;
 use App\Models\Estate;
 use App\Models\EstateRequest;
+use App\Models\EstateRequestDensityOption;
 use App\Models\Invoice;
 use App\Models\Bookmarks;
 use App\Models\ResetPassword;
@@ -60,6 +61,7 @@ class SiteController extends Controller
         $transfer = Transfer::get();
         $estateType = Estate::get();
         $direction = Direction::get();
+        $density = EstateRequestDensityOption::get();
         $options = AssistantController::estateRequestOptions();
         $where = [];
 
@@ -87,8 +89,10 @@ class SiteController extends Controller
             'direction' => $direction,
             'options' => $options,
             'type' => '',
-            'estateRequests' => ''
+            'estateRequests' => '',
+            'density' => $density
         ];
+
 
         if ($type == 'marked') {
             $data['estateRequests'] = Bookmarks::with('estate')->where('user_id', auth()->id())->paginate($this->searchPagination);
@@ -119,6 +123,7 @@ class SiteController extends Controller
             'mortgage_price_to' => ['nullable', 'numeric'],
             'participation_price_from' => ['nullable', 'numeric'],
             'participation_price_to' => ['nullable', 'numeric'],
+            'density_id' => ['nullable', 'numeric'],
         ]);
 
         if ($filter['id'] == null || $filter['id'] == '') {
@@ -153,6 +158,10 @@ class SiteController extends Controller
                 unset($filter['participation_price_from']);
                 unset($filter['participation_price_to']);
             }
+            if (isset($filter['density_id']) && $filter['density_id'] != null) {
+                array_push($filter, ['density_id', '=', (int)$filter['density_id']]);
+                unset($filter['density_id']);
+            }
             unset($filter['transfer_id']);
         }
 
@@ -161,6 +170,7 @@ class SiteController extends Controller
         $transfer = Transfer::get();
         $estateType = Estate::get();
         $direction = Direction::get();
+        $density = EstateRequestDensityOption::get();
         $filter = array_filter($filter);
         $result = EstateRequest::where($filter)->where('status', 1)->orWhere('status', 2)->paginate($this->searchPagination);
 
@@ -171,7 +181,8 @@ class SiteController extends Controller
             'direction' => $direction,
             'estateRequests' => $result,
             'options' => $options,
-            'type' => ''
+            'type' => '',
+            'density' => $density
         ];
         return view('site.search', compact('data'));
     }

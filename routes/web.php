@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/saeed', function () {
-    echo NoCaptcha::display();
     //auth()->user()->attachRole('writer');
     //return view('test');
     //auth()->user()->attachPermission('zoonkan');

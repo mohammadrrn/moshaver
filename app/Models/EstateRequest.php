@@ -72,6 +72,7 @@ class EstateRequest extends Model
         'heating_system_id',
         'cooling_system_id',
         'document_type_id',
+        'density_id'
     ];
 
     public function floorCovering()
@@ -107,6 +108,11 @@ class EstateRequest extends Model
     public function documentType()
     {
         return $this->hasMany(EstateRequestDocumentTypeOption::class, 'id', 'document_type_id');
+    }
+
+    public function density()
+    {
+        return $this->hasMany(EstateRequestDensityOption::class, 'id', 'density_id');
     }
 
     public function direction()

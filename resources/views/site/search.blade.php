@@ -33,6 +33,12 @@
                                 <option value="{{$direction->id}}">{{$direction->text}}</option>
                             @endforeach
                         </select>
+                        <select class="filter-form-control form-control" name="density_id">
+                            <option selected disabled>انتخاب تراکم</option>
+                            @foreach($data['density'] as $density)
+                                <option value="{{$density->id}}">{{$density->text}}</option>
+                            @endforeach
+                        </select>
 
                         <select class="filter-form-control form-control" name="year_of_construction">
                             <option selected disabled>انتخاب سال ساخت</option>

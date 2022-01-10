@@ -31,7 +31,7 @@
                             <span class="small">{{$error}}</span><br>
                         @endforeach
                     </div>
-            @endif
+                @endif
             <!-- <hr> -->
                 <!-- <div class="social-container">
                     <a href="#" class="social social-1"><img class="social-img" src="icon/icons8-google-24.png"></a>
@@ -54,6 +54,7 @@
                 </div>
                 <input type="password" name="password" placeholder="کلمه عبور">
                 <input type="password" name="password_confirmation" placeholder="تکرار کلمه عبور">
+                {!! NoCaptcha::display() !!}
 
                 <div class="box-button">
                     <button>ثبت نام</button>
@@ -83,6 +84,7 @@
                         {{ __('مرا به خاطر بسپار') }}
                     </label>
                 </div>
+                {!! NoCaptcha::display() !!}
                 <div class="box-button">
                     <button type="submit">ورود</button>
                     <button class="ghost-responsiv" id="signUp-responsiv">ثبت نام</button>
@@ -96,7 +98,7 @@
                     <h1>مشاور 007</h1>
                     <p>لطفااطلاعات شخصی خود را بادقت وارد کنید</p>
                     <button class="ghost" id="signIn">ورود</button>
-                    <a class="back-home" href="#">بازگشت به صفحه اصلی</a>
+                    <a class="back-home" href="{{route('index')}}">بازگشت به صفحه اصلی</a>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <!-- <img style="width:100%" src="../img/bg-img-item-result.png" alt=""> -->
@@ -105,7 +107,7 @@
                     <!-- <hr> -->
                     <!-- <hr> -->
                     <button class="ghost" id="signUp">ثبت نام</button>
-                    <a class="back-home" href="#">بازگشت به صفحه اصلی</a>
+                    <a class="back-home" href="{{route('index')}}">بازگشت به صفحه اصلی</a>
                 </div>
             </div>
         </div>
@@ -146,7 +148,7 @@
         });
     });
 </script>
-
+{!! NoCaptcha::renderJs() !!}
 </body>
 
 </html>

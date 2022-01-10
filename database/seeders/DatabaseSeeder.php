@@ -12,6 +12,7 @@ use App\Models\EstateRequest;
 use App\Models\EstateRequestBuildingFacadesOption;
 use App\Models\EstateRequestCabinetsOption;
 use App\Models\EstateRequestCoolingSystemOption;
+use App\Models\EstateRequestDensityOption;
 use App\Models\EstateRequestDocumentTypeOption;
 use App\Models\EstateRequestFloorCoveringOption;
 use App\Models\EstateRequestHeatingSystemOption;
@@ -243,7 +244,7 @@ class DatabaseSeeder extends Seeder
         $user_role->attachPermissions(AssistantController::userPermissions());
         /* --------------------------- Attach Permissions --------------------------- */
 
-        $admin_user->attachRole('writer');
+        $admin_user->attachRole('admin');
         $writer_user->attachRole('writer');
         $normal_user->attachRole('writer');
 
@@ -445,6 +446,15 @@ class DatabaseSeeder extends Seeder
         ]);
         EstateRequestDocumentTypeOption::create([
             'text' => 'قولنامه ای'
+        ]);
+        EstateRequestDensityOption::create([
+            'text' => 'کم'
+        ]);
+        EstateRequestDensityOption::create([
+            'text' => 'متوسط'
+        ]);
+        EstateRequestDensityOption::create([
+            'text' => 'زیاد'
         ]);
 
         SubscriptionPlans::create([

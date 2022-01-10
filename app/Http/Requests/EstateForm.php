@@ -26,6 +26,7 @@ class EstateForm extends FormRequest
     {
 
         return [
+            /*'g-recaptcha-response' => ['required', 'captcha'],*/
             'owner_name' => ['nullable', 'string', 'max:255', 'min:3'],
             'owner_mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
             'image' => ['nullable', 'mimes:jpeg,jpg,png', 'max:3000'], // max 3000kb
@@ -84,6 +85,7 @@ class EstateForm extends FormRequest
             'heating_system_id' => ['nullable'],
             'cooling_system_id' => ['nullable'],
             'document_type_id' => ['nullable'],
+            'density_id' => ['nullable'],
         ];
     }
 

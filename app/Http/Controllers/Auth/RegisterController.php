@@ -56,6 +56,7 @@ class RegisterController extends Controller
             'mobile_number' => ['required', 'numeric', 'min:11', 'unique:users', 'regex:/(09)[0-9]{9}/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'code' => ['required', 'numeric', 'min:4'],
+            'g-recaptcha-response' => 'required|captcha'
         ]);
     }
 

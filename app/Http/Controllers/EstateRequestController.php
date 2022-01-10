@@ -11,6 +11,7 @@ use App\Models\EstateRequest;
 use App\Models\EstateRequestBuildingFacadesOption;
 use App\Models\EstateRequestCabinetsOption;
 use App\Models\EstateRequestCoolingSystemOption;
+use App\Models\EstateRequestDensityOption;
 use App\Models\EstateRequestDocumentTypeOption;
 use App\Models\EstateRequestFloorCoveringOption;
 use App\Models\EstateRequestHeatingSystemOption;
@@ -93,6 +94,7 @@ class EstateRequestController extends Controller
         $heatingSystem = EstateRequestHeatingSystemOption::get();
         $coolingSystem = EstateRequestCoolingSystemOption::get();
         $documentType = EstateRequestDocumentTypeOption::get();
+        $density = EstateRequestDensityOption::get();
 
         $data = [
             'area' => $area,
@@ -106,7 +108,8 @@ class EstateRequestController extends Controller
             'heatingSystem' => $heatingSystem,
             'coolingSystem' => $coolingSystem,
             'documentType' => $documentType,
-            'estateRequest' => EstateRequest::with('floorCovering')->with('cabinets')->with('wallPlugs')->with('buildingFacades')->with('heatingSystem')->with('coolingSystem')->with('documentType')->findOrFail($id)
+            'density' => $density,
+            'estateRequest' => EstateRequest::with('floorCovering')->with('cabinets')->with('wallPlugs')->with('buildingFacades')->with('heatingSystem')->with('coolingSystem')->with('documentType')->with('density')->findOrFail($id)
         ];
         return view('panel.estateRequest.updateEstateRequestForm', compact('data'));
     }
@@ -145,7 +148,6 @@ class EstateRequestController extends Controller
         }*/
 
         $estateRequest->update($request->all());
-
 
         if ($request['image'] != '') {
             $imageName = 'estateRequestImg/' . time() . '-image.jpg';
@@ -221,6 +223,7 @@ class EstateRequestController extends Controller
         $heatingSystem = EstateRequestHeatingSystemOption::get();
         $coolingSystem = EstateRequestCoolingSystemOption::get();
         $documentType = EstateRequestDocumentTypeOption::get();
+        $density = EstateRequestDensityOption::get();
 
 
         $data = [
@@ -235,6 +238,7 @@ class EstateRequestController extends Controller
             'heatingSystem' => $heatingSystem,
             'coolingSystem' => $coolingSystem,
             'documentType' => $documentType,
+            'density' => $density,
         ];
         return view('site.estateForm', compact('data'));
     }
@@ -324,6 +328,7 @@ class EstateRequestController extends Controller
                 'heating_system_id' => $estate['heating_system_id'],
                 'cooling_system_id' => $estate['cooling_system_id'],
                 'document_type_id' => $estate['document_type_id'],
+                'density_id' => $estate['density_id'],
             ]);
             if ($status == 0) {
                 NotificationController::newEstateRequestNotification($estateRequest);

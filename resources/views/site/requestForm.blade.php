@@ -167,8 +167,14 @@
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d803.9581469254231!2d59.648435570803976!3d36.292111779697215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f6c919f28d0eef9%3A0xd77646c62e69afdc!2z2qnbjNmBINmIINqp2YHYtCDYotix2qnYpw!5e0!3m2!1sfa!2sus!4v1625319036294!5m2!1sfa!2sus">
                                     </iframe>
                                 </div>-->
+                {!! NoCaptcha::display() !!}
                 <button type="submit" class="btn insert-btn m-3">ثبت درخواست</button>
             </form>
         </div>
     </main>
+@endsection
+
+
+@section('js')
+    {!! NoCaptcha::renderJs() !!}
 @endsection

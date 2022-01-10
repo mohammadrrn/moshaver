@@ -200,6 +200,7 @@ return [
         'reason' => 'دلیل رد تایید',
         'image' => 'عکس اصلی آگهی',
         'slider' => 'تصاویر اسلایدر',
+        'g-recaptcha-response' => 'کپچای گوگل',
+        'density_id' => 'تراکم'
     ],
-
 ];

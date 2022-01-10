@@ -22,7 +22,7 @@ class CreateEstateRequestsTable extends Migration
             $table->string('thumbnail')->comment('تامبنیل عکس آگهی')->nullable();
             $table->text('sliders')->comment('عکس های اسلایدر')->nullable();
             $table->unsignedBigInteger('area_id')->comment('آیدی منطقه')->nullable();
-            $table->unsignedBigInteger('city_id')->comment('آیدی منطقه');
+            $table->unsignedBigInteger('city_id')->comment('آیدی شهر');
             $table->unsignedBigInteger('transfer_id')->comment('آیدی نوع واگذاری')->nullable();
             $table->unsignedBigInteger('estate_id')->comment('آیدی نوع ملک')->nullable();
             $table->string('address')->comment('آدرس')->nullable();
@@ -79,6 +79,7 @@ class CreateEstateRequestsTable extends Migration
             $table->unsignedBigInteger('heating_system_id')->comment('امکانات (نوع سیستم گرمایش)')->nullable();
             $table->unsignedBigInteger('cooling_system_id')->comment('امکانات (نوع سیستم سرمایش)')->nullable();
             $table->unsignedBigInteger('document_type_id')->comment('امکانات (نوع سند)')->nullable();
+            $table->unsignedBigInteger('density_id')->comment('امکانات (تراکم)')->nullable();
 
             $table->timestamps();
 
@@ -96,7 +97,7 @@ class CreateEstateRequestsTable extends Migration
             $table->foreign('heating_system_id')->references('id')->on('estate_request_heating_system_option');
             $table->foreign('cooling_system_id')->references('id')->on('estate_request_cooling_system_option');
             $table->foreign('document_type_id')->references('id')->on('estate_request_document_type_option');
-
+            $table->foreign('density_id')->references('id')->on('estate_request_density_option');
         });
     }
 

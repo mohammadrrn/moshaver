@@ -352,7 +352,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 view-order">
+                        <div class="col-12 col-md-6 view-order">
                             <div class="group">
                                 <select name="document_type_id" class="view-order-select ddlViewBy"
                                         aria-label="Default select example">
@@ -363,6 +363,22 @@
                                                     value="{{$documentType->id}}">{{$documentType->text}}</option>
                                         @else
                                             <option value="{{$documentType->id}}">{{$documentType->text}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 view-order">
+                            <div class="group">
+                                <select name="density_id" class="view-order-select ddlViewBy"
+                                        aria-label="Default select example">
+                                    <option disabled selected>انتخاب تراکم</option>
+                                    @foreach($data['density'] as $density)
+                                        @if(old('density_id') == $density->id)
+                                            <option selected
+                                                    value="{{$density->id}}">{{$density->text}}</option>
+                                        @else
+                                            <option value="{{$density->id}}">{{$density->text}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -388,9 +404,14 @@
                     </div>
                 </div>
                 @endrole
+                {!! NoCaptcha::display() !!}
                 <button class="btn insert-btn m-3" type="submit">ثبت آگهی</button>
             </form>
         </div>
 
     </main>
+@endsection
+
+@section('js')
+    {!! NoCaptcha::renderJs() !!}
 @endsection

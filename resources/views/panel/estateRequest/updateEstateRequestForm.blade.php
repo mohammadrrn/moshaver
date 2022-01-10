@@ -451,7 +451,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 view-order">
+                            <div class="col-12 col-md-6 view-order">
                                 <div class="group">
                                     <select name="document_type_id" class="form-select view-order-select ddlViewBy"
                                             aria-label="Default select example">
@@ -467,7 +467,22 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="col-12 col-md-6 view-order">
+                                <div class="group">
+                                    <select name="density_id" class="form-select view-order-select ddlViewBy"
+                                            aria-label="Default select example">
+                                        <option disabled selected>انتخاب تراکم</option>
+                                        @foreach($data['density'] as $density)
+                                            @if($density->id == $data['estateRequest']->density_id)
+                                                <option selected
+                                                        value="{{$density->id}}">{{$density->text}}</option>
+                                            @else
+                                                <option value="{{$density->id}}">{{$density->text}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row send-request-group-option">

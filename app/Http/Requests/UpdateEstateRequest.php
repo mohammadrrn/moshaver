@@ -78,6 +78,7 @@ class UpdateEstateRequest extends FormRequest
             'heating_system_id' => ['nullable'],
             'cooling_system_id' => ['nullable'],
             'document_type_id' => ['nullable'],
+            'density_id' => ['nullable'],
         ];
     }
 }
