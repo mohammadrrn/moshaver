@@ -1,8 +1,9 @@
 <?php
 
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Models\EstateRequest;
-use App\Models\Permission;
-use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use App\Models\WriterQueue;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/saeed', function () {
-    //auth()->user()->attachPermission('phonebook');
+    echo NoCaptcha::display();
+    //auth()->user()->attachRole('writer');
     //return view('test');
     //auth()->user()->attachPermission('zoonkan');
 });

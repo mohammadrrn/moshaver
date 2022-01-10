@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\AssistantController;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddToZoonkanRequest extends FormRequest
@@ -28,5 +29,12 @@ class AddToZoonkanRequest extends FormRequest
             'file_id' => ['required', 'numeric'],
             'evacuation_day' => ['required', 'numeric']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'evacuation_day' => AssistantController::filterNumber($this->get('evacuation_day')),
+        ]);
     }
 }

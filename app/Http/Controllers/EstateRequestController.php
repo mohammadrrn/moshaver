@@ -326,7 +326,7 @@ class EstateRequestController extends Controller
                 'document_type_id' => $estate['document_type_id'],
             ]);
             if ($status == 0) {
-                NotificationController::newEstateRequestNotification($estateRequest->id);
+                NotificationController::newEstateRequestNotification($estateRequest);
             }
             ActionController::actionRegister($estateRequest, 'insert');
             return redirect()->back()->with(['success' => 'عملیات با موفقیت انجام شد']);

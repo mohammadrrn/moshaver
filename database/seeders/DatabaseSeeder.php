@@ -22,6 +22,7 @@ use App\Models\SubscriptionPlans;
 use App\Models\SubscriptionPlansItem;
 use App\Models\Transfer;
 use App\Models\User;
+use App\Models\WriterQueue;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -242,9 +243,9 @@ class DatabaseSeeder extends Seeder
         $user_role->attachPermissions(AssistantController::userPermissions());
         /* --------------------------- Attach Permissions --------------------------- */
 
-        $admin_user->attachRole('admin');
+        $admin_user->attachRole('writer');
         $writer_user->attachRole('writer');
-        $normal_user->attachRole('user');
+        $normal_user->attachRole('writer');
 
 
         Area::create([
@@ -295,6 +296,13 @@ class DatabaseSeeder extends Seeder
             'text' => 'منطقه 12 : الهیه-مجیدیه-اقدسیه-امیریه-میثاق-سجادیه-رحمانیه-مشایخی-عصمتیه-نقویه-بوستان-جاهد شهر-تقویه-هاشمی رفسنجانی فرد(میثاق)-صادقیه',
             'status' => 1
         ]);
+
+        foreach (Area::get() as $area) {
+            WriterQueue::create([
+                'area_id' => $area->id,
+                'last_writer_id' => 1
+            ]);
+        }
         Transfer::create([
             'text' => 'خرید'
         ]);
