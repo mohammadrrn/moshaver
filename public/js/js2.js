@@ -5,7 +5,9 @@ $(".box-job").click(function () {
     $(".box-job-select").slideToggle();
 });
 $(".panel-nav-icon-menu").click(function () {
-    $(".panel-nav-ul").slideToggle();
+    // $(".panel-nav-ul").slideToggle();
+    $(".panel-nav").slideToggle();
+
 });
 $(".header-right-icon-moshaver").click(function () {
     $(".menu-responsive").slideToggle();

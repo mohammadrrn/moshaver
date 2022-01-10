@@ -19,7 +19,6 @@
 
 <body>
 <div class="box-body-login">
-
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form method="POST" action="{{ route('register') }}">
@@ -42,7 +41,8 @@
 
                 <input type="text" name="full_name" placeholder="نام و نام خانوادگی" value="{{old('full_name')}}">
 
-                <input type="text" name="mobile_number" maxlength="11" placeholder="شماره همراه" value="{{old('mobile_number')}}">
+                <input type="text" name="mobile_number" maxlength="11" placeholder="شماره همراه"
+                       value="{{old('mobile_number')}}">
 
                 <div class="box-send-number">
                     <span class="login-send-code" id="send_code"
@@ -96,6 +96,7 @@
                     <h1>مشاور 007</h1>
                     <p>لطفااطلاعات شخصی خود را بادقت وارد کنید</p>
                     <button class="ghost" id="signIn">ورود</button>
+                    <a class="back-home" href="#">بازگشت به صفحه اصلی</a>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <!-- <img style="width:100%" src="../img/bg-img-item-result.png" alt=""> -->
@@ -104,6 +105,7 @@
                     <!-- <hr> -->
                     <!-- <hr> -->
                     <button class="ghost" id="signUp">ثبت نام</button>
+                    <a class="back-home" href="#">بازگشت به صفحه اصلی</a>
                 </div>
             </div>
         </div>

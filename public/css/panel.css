@@ -47,6 +47,19 @@ body {
   background: #fcfcfc;
 }
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+  color: #78909c;
+}
+.nav-tabs .nav-item.show .nav-link:hover, .nav-tabs .nav-link:hover {
+  border: none;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background: #03a9f4;
+  color: white;
+  border-radius: 100px;
+}
+
 header {
   width: calc(100% - 20px);
   align-items: center;
@@ -58,11 +71,25 @@ header .header-right {
   display: flex;
   align-items: center;
 }
+header .header-right .panel-nav-icon-menu {
+  padding: 8px 10px 8px 0;
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  header .header-right .panel-nav-icon-menu {
+    display: block;
+  }
+}
 header .header-right .header-box-img-1 {
   margin-right: 25px;
 }
 header .header-right .header-img-logo {
   padding: 0 10px;
+}
+@media only screen and (max-width: 767px) {
+  header .header-right .header-img-logo {
+    display: none;
+  }
 }
 header .header-right .header-box-img {
   position: relative;
@@ -196,9 +223,9 @@ header .header-left-new-ad {
   background: #e53935;
 }
 header .header-left .box-lang {
+  min-width: 107px;
   display: flex;
   align-items: center;
-  justify-content: center;
   font-weight: normal;
   font-size: 13px;
   background: #fff;
@@ -211,12 +238,13 @@ header .header-left .box-lang {
 header .header-left .box-lang-select {
   background: white;
   position: absolute;
-  top: 32px;
+  top: 34px;
   right: 0;
   z-index: 999;
   color: #333333;
   display: none;
   border-radius: 5px;
+  box-shadow: 0 2px 5px #ccc;
 }
 header .header-left .box-lang-select-box {
   display: flex;
@@ -273,7 +301,16 @@ main .panel-nav {
   min-height: 95vh;
   background: #78909c;
   padding: 0;
-  transition: all 0.5s;
+}
+@media only screen and (min-width: 767px) {
+  main .panel-nav {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  main .panel-nav {
+    display: none;
+  }
 }
 main .panel-nav-icon-menu {
   padding: 8px 10px 8px 0;
@@ -286,11 +323,6 @@ main .panel-nav-icon-menu {
 }
 main .panel-nav ul {
   padding: 0;
-}
-@media only screen and (max-width: 767px) {
-  main .panel-nav ul {
-    display: none;
-  }
 }
 main .panel-nav ul .panel-nav-ul-li {
   display: flex;
@@ -1627,4 +1659,16 @@ fieldset .comment-user-star:hover {
   position: absolute;
   top: 0;
   left: 25%;
+}
+
+.phone-book-box-ul {
+  min-height: 60px;
+  margin: 7px 0;
+}
+@media only screen and (max-width: 767px) {
+  .phone-book-box-ul {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+  }
 }

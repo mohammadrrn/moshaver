@@ -56,6 +56,20 @@ body {
     background: #fcfcfc;
 }
 
+//edit bootstrap active style
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+    color: $color-gray;
+
+    &:hover {
+        border: none;
+    }
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background: #03a9f4;
+    color: white;
+    border-radius: 100px;
+}
 
 header {
     width: calc(100% - 20px);
@@ -68,13 +82,23 @@ header {
         display: flex;
         align-items: center;
 
+        .panel-nav-icon-menu {
+            padding: 8px 10px 8px 0;
+            display: none;
+            @media only screen and (max-width: 767px) {
+                display: block;
+            }
+        }
+
         .header-box-img-1 {
             margin-right: 25px;
         }
 
         .header-img-logo {
             padding: 0 10px;
-
+            @media only screen and (max-width: 767px) {
+                display: none;
+            }
         }
 
         .header-box-img {
@@ -218,9 +242,10 @@ header {
         }
 
         .box-lang {
+            min-width: 107px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            //justify-content: center;
             font-weight: normal;
             font-size: 13px;
             background: #fff;
@@ -237,12 +262,13 @@ header {
                 //   width: 93px;
                 background: rgb(255, 255, 255);
                 position: absolute;
-                top: 32px;
+                top: 34px;
                 right: 0;
                 z-index: 999;
                 color: #333333;
                 display: none;
                 border-radius: 5px;
+                box-shadow: 0 2px 5px #ccc;
                 //   padding: 0 8px;
                 &-box {
                     display: flex;
@@ -316,7 +342,13 @@ main {
         background: $color-gray;
         padding: 0;
         // min-height: 88vh;
-        transition: all 0.5s;
+        //transition: all 0.5s;
+        @media only screen and (min-width: 767px) {
+            display: block !important;
+        }
+        @media only screen and (max-width: 767px) {
+            display: none;
+        }
 
         &-icon-menu {
             padding: 8px 10px 8px 0;
@@ -330,7 +362,7 @@ main {
             padding: 0;
             // min-height: 86vh;
             @media only screen and (max-width: 767px) {
-                display: none;
+                //display: none;
             }
 
             .panel-nav-ul-li {
@@ -436,10 +468,12 @@ main {
                 display: none;
                 background: $color-gray;
             }
+
             list-style-type: none;
             color: #fff;
             font-size: 13px;
             transition: all 0.5s;
+
             li {
                 padding: 8px;
             }
@@ -2139,4 +2173,17 @@ fieldset {
     position: absolute;
     top: 0;
     left: 25%;
+}
+
+//phone-book
+.phone-book-box {
+    &-ul {
+        min-height: 60px;
+        margin: 7px 0;
+        @media only screen and (max-width: 767px) {
+            overflow-y: hidden;
+            overflow-x: scroll;
+            flex-wrap: nowrap
+        }
+    }
 }

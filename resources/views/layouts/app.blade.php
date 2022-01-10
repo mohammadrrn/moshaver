@@ -19,7 +19,9 @@
 <header class="container-fluid">
     <div class="row">
         <div class="col-6 header-right">
-            <img class="header-img-logo" src="{{asset('icon/PanelAdmin/header-logo.png')}}" alt="">
+            <img class="header-img-logo" src="{{asset('icon/panelAdmin/header-logo.png')}}" alt="">
+            <img class="panel-nav-icon-menu" src="{{asset('icon/PanelAdmin/icons8_menu.png')}}" alt="">
+
             <div class="header-box-img header-box-img-1">
                 <a href="{{route('panel.notification.notificationList')}}">
                     <img class="header-img-logo" src="{{asset('icon/PanelAdmin/icons8_notification.png')}}" alt="">
@@ -60,7 +62,9 @@
                     </div>
                 </div>
             </div>
-            <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/profile-w.svg')}}">
+            <a href="{{route('panel.profile')}}">
+                <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/profile-w.svg')}}">
+            </a>
         </div>
     </div>
 </header>
@@ -69,7 +73,6 @@
 <main class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-2 panel-nav">
-            <img class="panel-nav-icon-menu" src="{{asset('icon/PanelAdmin/icons8_menu.png')}}" alt="">
             @include('layouts.panelMenu')
         </div>
         @if(session('success'))

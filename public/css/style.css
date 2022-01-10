@@ -1487,6 +1487,13 @@ footer .me {
 .filter-form .filter-form-control:active {
   box-shadow: none !important;
 }
+.filter-form .filter-form-control-input-two {
+  width: 49%;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 5px 4px;
+  border-radius: 5px;
+}
 .filter-form-box-option {
   margin-top: 5px;
 }

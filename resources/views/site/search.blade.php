@@ -15,7 +15,7 @@
                                 <option value="{{$area->id}}">{{$area->text}}</option>
                             @endforeach
                         </select>
-                        <select class="filter-form-control form-control" name="transfer_id">
+                        <select class="filter-form-control form-control" name="transfer_id" id="transfer">
                             <option selected disabled>انتخاب نوع واگذاری</option>
                             @foreach($data['transfer'] as $transfer)
                                 <option value="{{$transfer->id}}">{{$transfer->text}}</option>
@@ -48,32 +48,39 @@
                             @endfor
                             <option value="more_floor">بیش تر از 9</option>
                         </select>
-                        <input type="text" name="buy_price_from"
-                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
-                               placeholder="buy_price_from">
-                        <input type="text" name="buy_price_to" style="border: 1px solid #ccc;width: 49%"
-                               placeholder="buy_price_to">
-                        <hr>
+                        <div id="buy_price" class="price">
+                            <input class="filter-form-control-input-two" type="text" name="buy_price_from"
+                                   style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                                   placeholder="حداقل مبلغ خرید">
+                            <input class="filter-form-control-input-two" type="text" name="buy_price_to"
+                                   style="border: 1px solid #ccc;width: 49%"
+                                   placeholder="حداکثر مبلغ خرید">
+                        </div>
+                        <div id="rent_price" class="price">
+                            <input class="filter-form-control-input-two" type="text" name="rent_price_from"
+                                   style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                                   placeholder="حداقل مبلغ اجاره">
+                            <input class="filter-form-control-input-two" type="text" name="rent_price_to"
+                                   style="border: 1px solid #ccc;width: 49%"
+                                   placeholder="حداکثر مبلغ اجاره">
+                        </div>
 
-                        <input type="text" name="rent_price_from"
-                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
-                               placeholder="rent_price_from">
-                        <input type="text" name="rent_price_to" style="border: 1px solid #ccc;width: 49%"
-                               placeholder="rent_price_to">
-
-                        <input type="text" name="mortgage_price_from"
-                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
-                               placeholder="mortgage_price_from">
-                        <input type="text" name="mortgage_price_to" style="border: 1px solid #ccc;width: 49%"
-                               placeholder="mortgage_price_to">
-                        <hr>
-                        <input type="text" name="participation_price_from"
-                               style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
-                               placeholder="participation_price_from">
-                        <input type="text" name="participation_price_to" style="border: 1px solid #ccc;width: 49%"
-                               placeholder="participation_price_to">
-                        <hr>
-
+                        <div id="mortgage_price" class="price">
+                            <input class="filter-form-control-input-two" type="text" name="mortgage_price_from"
+                                   style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                                   placeholder="حداقل مبلغ رهن">
+                            <input class="filter-form-control-input-two" type="text" name="mortgage_price_to"
+                                   style="border: 1px solid #ccc;width: 49%"
+                                   placeholder="حداکثر مبلغ رهن">
+                        </div>
+                        <div id="participation_price" class="price">
+                            <input class="filter-form-control-input-two" type="text" name="participation_price_from"
+                                   style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
+                                   placeholder="حداقل مبلغ مشارکت">
+                            <input class="filter-form-control-input-two" type="text" name="participation_price_to"
+                                   style="border: 1px solid #ccc;width: 49%"
+                                   placeholder="حداکثر مبلغ مشارکت">
+                        </div>
                         <input class="form-control" type="text" name="id" placeholder="کد ملک">
 
                         <div class="filter-form-box-option">

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/saeed', function () {
-    auth()->user()->attachPermission('reject-confirmation-estate-request');
+    //auth()->user()->attachPermission('phonebook');
     //return view('test');
     //auth()->user()->attachPermission('zoonkan');
 });

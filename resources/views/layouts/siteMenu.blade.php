@@ -1,5 +1,5 @@
 <header class="container-fluid">
-    <div class="header container">
+    <div class="header">
         <div class="header-right">
             <img class="header-right-icon-moshaver" src="{{asset('icon/moshaver-007.png')}}">
             <ul>
