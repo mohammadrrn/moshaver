@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\AssistantController;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EstateForm extends FormRequest
@@ -27,14 +28,14 @@ class EstateForm extends FormRequest
         return [
             'owner_name' => ['nullable', 'string', 'max:255', 'min:3'],
             'owner_mobile_number' => ['required', 'numeric', 'min:11', 'regex:/(09)[0-9]{9}/'],
-            'image' => ['nullable', 'mimes:jpeg,jpg,png', 'max:200'], // max 1000kb
-            'slider.*' => ['nullable', 'mimes:jpeg,jpg,png', 'max:200'], // max 1000kb
-            'estate_id' => ['required', 'numeric'],
+            'image' => ['nullable', 'mimes:jpeg,jpg,png', 'max:3000'], // max 3000kb
+            'slider.*' => ['nullable', 'mimes:jpeg,jpg,png', 'max:3000'], // max 3000kb
+            /*'street_name' => ['nullable', 'string'],*/
             'address' => ['required', 'string'],
+            'estate_id' => ['required', 'numeric'],
             'area_id' => ['required', 'numeric'],
             'transfer_id' => ['required', 'numeric'],
             'area' => ['nullable', 'numeric'],
-            'street_name' => ['nullable', 'string'],
             'plaque' => ['nullable', 'numeric'],
             'floor' => ['numeric', 'nullable'],
             'all_floor' => ['nullable', 'boolean'],
@@ -93,5 +94,33 @@ class EstateForm extends FormRequest
             'slider.*.mimes' => 'فرمت قابل قبول برای عکس های اسلایدر jpeg, jpg, png می باشد',
             'slider.*.max' => 'حجم عکس ها نباید بیشتر از باشد 200 کیلوبایت.',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'owner_mobile_number' => AssistantController::filterNumber($this->get('owner_mobile_number')),
+        ]);
+        $this->merge([
+            'area' => AssistantController::filterNumber($this->get('area')),
+        ]);
+        $this->merge([
+            'plaque' => AssistantController::filterNumber($this->get('plaque')),
+        ]);
+        $this->merge([
+            'floor' => AssistantController::filterNumber($this->get('floor')),
+        ]);
+        $this->merge([
+            'number_of_floor' => AssistantController::filterNumber($this->get('number_of_floor')),
+        ]);
+        $this->merge([
+            'number_of_room' => AssistantController::filterNumber($this->get('number_of_room')),
+        ]);
+        $this->merge([
+            'apartment_unit' => AssistantController::filterNumber($this->get('apartment_unit')),
+        ]);
+        $this->merge([
+            'year_of_construction' => AssistantController::filterNumber($this->get('year_of_construction')),
+        ]);
     }
 }

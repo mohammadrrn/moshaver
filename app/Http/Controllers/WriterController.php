@@ -58,16 +58,34 @@ class WriterController extends Controller
 
     public function writerActions($id)
     {
+        $countAction = ['insert' => 0, 'update' => 0, 'confirmed' => 0, 'delete' => 0];
         $actions = Action::where('user_id', $id)->paginate($this->pagination);
+        foreach ($actions as $action) {
+            switch ($action->action_type) {
+                case 'insert':
+                    $countAction['insert'] += 1;
+                    break;
+                case 'update':
+                    $countAction['update'] += 1;
+                    break;
+                case 'confirmed':
+                    $countAction['confirmed'] += 1;
+                    break;
+                case 'delete':
+                    $countAction['delete'] += 1;
+                    break;
+            }
+        }
         $data = [
-            'actions' => $actions
+            'actions' => $actions,
+            'countActions' => $countAction
         ];
         return view('panel.writer.writerActions', compact('data'));
     }
 
     public function searchAction(Request $request)
     {
-        $actions = Action::where('request_id', $request->input('code'))->with('writer')->orderBy('id', 'desc')->paginate($this->pagination);
+        $actions = Action::where('request_id', $request->input('code'))->with('writer')->paginate($this->pagination);
         $data = [
             'actions' => $actions
         ];

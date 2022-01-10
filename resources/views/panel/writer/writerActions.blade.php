@@ -10,6 +10,22 @@
                            عملکرد نویسنده
                         </span>
             </div>
+            <br>
+            <br>
+            <div class="col-12">
+                <p>
+                    تعداد آگهی های ثبت شده : {{$data['countActions']['insert']}}
+                </p>
+                <p>
+                    تعداد آگهی های ویرایش شده : {{$data['countActions']['update']}}
+                </p>
+                <p>
+                    تعداد آگهی های حذف شده : {{$data['countActions']['delete']}}
+                </p>
+                <p>
+                    تعداد آگهی های تایید شده : {{$data['countActions']['confirmed']}}
+                </p>
+            </div>
             <div class="col-12 table list-customer-table">
                 <table>
                     <tr>
@@ -31,7 +47,7 @@
                             <td>
                                 @switch($action->action_type)
                                     @case('insert')
-                                    <span class="bg-primary btn-sm text-white">افزودن آگهی جدید</span>
+                                    <span class="bg-primary btn-sm text-white">ثبت آگهی جدید</span>
                                     @break
                                     @case('confirmed')
                                     <span class="bg-success btn-sm text-white">تایید آگهی</span>

@@ -48,6 +48,14 @@
                             @endfor
                             <option value="more_floor">بیش تر از 9</option>
                         </select>
+                        <div class="col-12 view-order send-request-user-group-option-box group-option-box">
+
+                            <input value="1" id="all_floor" type="checkbox" name="all_floor">
+                            <label for="all_floor">
+                                کل طبقات ساختمان
+                            </label>
+
+                        </div>
                         <div id="buy_price" class="price">
                             <input class="filter-form-control-input-two" type="text" name="buy_price_from"
                                    style="border: 1px solid #ccc;margin: 10px 0;width: 49%"
@@ -95,9 +103,11 @@
                                             </div>
                                         </h5>
                                     </div>
+
                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                          data-parent="#accordion">
                                         <div class="row" style="justify-content: center;">
+
                                             @foreach($data['options'] as $option=>$value)
                                                 <div class="box-chekbox box-chekbox-firest col-10 col-md-5"
                                                      style="align-items: center">

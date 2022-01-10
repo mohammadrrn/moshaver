@@ -23,9 +23,19 @@
                     @foreach($data['actions'] as $action)
                         <tr>
                             <td>{{$action->id}}</td>
-                            <td>{{$action->user_id}}</td>
                             <td>
-                                {{$action->writer[0]->full_name . ' • ' . $action->writer[0]->roles[0]->display_name}}
+                                @if($action->user_id != null)
+                                    {{$action->user_id}} / {{$action->writer[0]->area_id}}
+                                @else
+                                    ***
+                                @endif
+                            </td>
+                            <td>
+                                @if($action->user_id != null)
+                                    {{$action->writer[0]->full_name . ' • ' . $action->writer[0]->roles[0]->display_name}}
+                                @else
+                                    بازدیدکننده
+                                @endif
                             </td>
                             <td>
                                 @if($action->request_model == 'estate_requests')
@@ -35,7 +45,7 @@
                             <td>
                                 @switch($action->action_type)
                                     @case('insert')
-                                    <span class="bg-primary btn-sm text-white">افزودن آگهی جدید</span>
+                                    <span class="bg-primary btn-sm text-white">ثبت آگهی جدید</span>
                                     @break
                                     @case('confirmed')
                                     <span class="bg-success btn-sm text-white">تایید آگهی</span>
