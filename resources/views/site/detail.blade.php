@@ -117,8 +117,13 @@
                                 <span>
                                     @if($data['detail']->status == 2)
                                         ------
-                                    @elseif(!auth()->user())
-                                        اشتراک ندارید
+                                    @elseif(!auth()->user() || !auth()->user()->isAbleTo('show-detail-info'))
+                                        @isset($data['custom-info'])
+                                            نام مشاور : {{$data['custom-info']->full_name}}
+                                        @else
+                                            اشتراک ندارید
+                                        @endisset
+
                                     @else
                                         نام مالک : {{$data['detail']->owner_name}}
                                     @endif
@@ -129,8 +134,12 @@
                                 </span>
                                 @if($data['detail']->status == 2)
                                     ------
-                                @elseif(!auth()->user())
-                                    اشتراک ندارید
+                                @elseif(!auth()->user() || !auth()->user()->isAbleTo('show-detail-info'))
+                                    @isset($data['custom-info'])
+                                        شماره تماس مشاور : {{$data['custom-info']->mobile_number}}
+                                    @else
+                                        اشتراک ندارید
+                                    @endisset
                                 @else
                                     شماره تماس : {{$data['detail']->owner_mobile_number}}
                                 @endif
@@ -142,14 +151,14 @@
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/planner.svg')}}">
-                                <span>سال ساخت : {{$data['detail']->year_of_construction}} سال </span>
+                                <span>سال ساخت : {{$data['detail']->year_of_construction}} </span>
                             </div>
                             <div class="detile-specifications-top-3-item">
                                 <img src="{{asset('icon/address.svg')}}">
                                 <span>
                                     @if($data['detail']->status == 2)
                                         ------
-                                    @elseif(!auth()->user())
+                                    @elseif(!auth()->user() || !auth()->user()->isAbleTo('show-detail-info'))
                                         اشتراک ندارید
                                     @else
                                         آدرس : {{$data['detail']->address.' - '. $data['detail']->street_name}}

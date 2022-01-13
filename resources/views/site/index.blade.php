@@ -148,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="box-sell-bottom-bottom-left time">
-                                <span>{{$request->owner_name}}</span>
+                                <span></span>
                                 <span>{{$request->created_at->diffForHumans()}}</span>
                             </div>
                         </div>

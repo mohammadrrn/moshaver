@@ -28,6 +28,7 @@ class Profile extends FormRequest
             'national_code' => ['required', 'string', 'min:10'],
             'email' => ['nullable', 'email', 'max:255'],
             'address' => ['nullable', 'max:255'],
+            'profile_image' => ['nullable', 'mimes:jpeg,jpg,png', 'max:2000']
         ];
     }
 }

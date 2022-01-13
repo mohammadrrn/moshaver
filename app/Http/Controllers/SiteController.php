@@ -32,7 +32,7 @@ class SiteController extends Controller
     private $searchPagination = 10;
     private $trustedOfficePagination = 10;
 
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
         $userZoonkan = Zoonkan::where('user_id', auth()->id())->get(); // TODO : if buy gold plan then fetch zoonkan for best performance
         $estateRequest = EstateRequest::with('bookmark')->with('estateType')->with('direction')->where('id', $id)->where('status', 1)->orWhere('status', 2)->first();
@@ -40,8 +40,14 @@ class SiteController extends Controller
         $data = [
             'detail' => $estateRequest,
             'zoonkan' => $userZoonkan,
-            'similar' => $similar
+            'similar' => $similar,
         ];
+
+
+        if ($request->cookie('custom-info') != null) {
+            $custom_info = json_decode($request->cookie('custom-info'));
+            $data['custom-info'] = $custom_info;
+        }
         return view('site.detail', compact('data'));
     }
 
@@ -351,5 +357,15 @@ class SiteController extends Controller
         } else {
             echo 'Are You Developer or Programmer ?';
         }
+    }
+
+    public function specialLink($userId)
+    {
+        $user = User::findOrFail($userId);
+        if ($user->isAbleTo('special-link')) {
+            $info = json_encode(['mobile_number' => $user->mobile_number, 'full_name' => $user->full_name]);
+            return redirect(\route('index'))->withCookie(cookie('custom-info', $info)); // create cookie special link and return custom info for show in detail page
+        }
+        return abort(403);
     }
 }

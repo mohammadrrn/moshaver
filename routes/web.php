@@ -1,9 +1,8 @@
 <?php
 
-use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Models\EstateRequest;
 use App\Models\User;
-use App\Models\WriterQueue;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,13 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/saeed', function () {
-    //auth()->user()->attachRole('writer');
-    //return view('test');
-    //auth()->user()->attachPermission('zoonkan');
-});
-
 
 /*Route::get('/send', [App\Http\Controllers\SiteController::class, 'send'])->name('send');
 Route::get('/received', [App\Http\Controllers\SiteController::class, 'received'])->name('received');*/
@@ -46,6 +38,7 @@ Route::get('/search/{type?}', [App\Http\Controllers\SiteController::class, 'sear
 Route::post('/search/result', [App\Http\Controllers\SiteController::class, 'searchResult'])->name('searchResult');
 
 Route::post('/bookmarked', [App\Http\Controllers\SiteController::class, 'bookmarked'])->name('bookmarked');
+Route::get('/specialLink/{userId}', [App\Http\Controllers\SiteController::class, 'specialLink'])->name('specialLink');
 
 Route::get('/block', [App\Http\Controllers\SiteController::class, 'block'])->name('block');
 Route::post('/sendVerificationCode', [\App\Http\Controllers\VerificationController::class, 'sendVerificationCode']); // send verification sms for client

@@ -16,13 +16,21 @@
                         </span>
             </div>
             <div class="col-12">
-                <form action="{{route('panel.updateProfile')}}" method="post">
+                <form action="{{route('panel.updateProfile')}}" method="post" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
                     <div class="row user-top">
+                        <div class="col-12 user-view-order">
+                            <div class="group">
+                                <input type="file" name="profile_image" accept=".jpg,.jpeg,.png">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>تصویر پروفایل</label>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="full_name" required value="{{auth()->user()->full_name}}"/>
+                                <input type="text" name="full_name" value="{{auth()->user()->full_name}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>نام</label>
@@ -30,7 +38,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" maxlength="10" name="national_code" required
+                                <input type="text" maxlength="10" name="national_code"
                                        value="{{auth()->user()->national_code}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
@@ -47,7 +55,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="email" required value="{{auth()->user()->email}}"/>
+                                <input type="text" name="email" value="{{auth()->user()->email}}"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>ایمیل</label>
@@ -81,7 +89,7 @@
                     <div class="row user-top">
                         <div class="col-12  user-view-order">
                             <div class="group">
-                                <input type="password" name="old_password" required/>
+                                <input type="password" name="old_password"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>رمز عبور فعلی</label>
@@ -89,7 +97,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" name="new_password" required/>
+                                <input type="text" name="new_password"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>رمز عبور جدید</label>
@@ -97,7 +105,7 @@
                         </div>
                         <div class="col-12 col-md-6 user-view-order">
                             <div class="group">
-                                <input type="text" required name="password_confirmation"/>
+                                <input type="text" name="password_confirmation"/>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>تکرار رمز عبور جدید</label>

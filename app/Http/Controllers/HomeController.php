@@ -12,6 +12,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 use Morilog\Jalali\Jalalian;
 
 class HomeController extends Controller
@@ -68,11 +69,19 @@ class HomeController extends Controller
     public function updateProfile(Profile $profile)
     {
         $user = User::find(auth()->id());
+        if ($profile['profile_image']) {
+            if (file_exists($user->profileImage)) {
+                unlink($user->profileImage);
+            }
+            $profileImage = 'profile/' . time() . '.' . $profile['profile_image']->getClientOriginalExtension();
+            Image::make($_FILES['profile_image']['tmp_name'])->fit(200)->save($profileImage);
+            $user->profileImage = $profileImage;
+        }
         $user->update([
             'full_name' => $profile['full_name'],
             'national_code' => $profile['national_code'],
             'email' => $profile['email'],
-            'address' => $profile['address']
+            'address' => $profile['address'],
         ]);
 
         $columns = [

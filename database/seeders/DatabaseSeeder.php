@@ -219,14 +219,14 @@ class DatabaseSeeder extends Seeder
 
         /* Gold Sub Permission */
         Permission::create([
-            'name' => 'show-detail-info',
-            'display_name' => 'نمایش اطلاعات در جزئیات',
-            'description' => 'نمایش اطلاعات در جزئیات آگهی هنگامی که واگذار شده است ',
-        ]);
-        Permission::create([
             'name' => 'educational-video',
             'display_name' => 'ویدئو آموزشی',
             'description' => 'قسمت ویدئو های آموزشی',
+        ]);
+        Permission::create([
+            'name' => 'special-link',
+            'display_name' => 'لینک ویژه',
+            'description' => 'لینک مخصوص ارائه به کاربران',
         ]);
         Permission::create([
             'name' => 'user-requests-list',
@@ -234,6 +234,14 @@ class DatabaseSeeder extends Seeder
             'description' => 'لیست درخواست های کاربران',
         ]);
         /* Gold Sub Permission */
+
+        /* Silver Sub Permission */
+        Permission::create([
+            'name' => 'show-detail-info',
+            'display_name' => 'نمایش اطلاعات در جزئیات',
+            'description' => 'نمایش اطلاعات در جزئیات آگهی هنگامی که واگذار شده است ',
+        ]);
+        /* Silver Sub Permission */
 
         /* --------------------------- Permissions --------------------------- */
 

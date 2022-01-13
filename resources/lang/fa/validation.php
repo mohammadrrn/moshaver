@@ -201,6 +201,7 @@ return [
         'image' => 'عکس اصلی آگهی',
         'slider' => 'تصاویر اسلایدر',
         'g-recaptcha-response' => 'کپچای گوگل',
-        'density_id' => 'تراکم'
+        'density_id' => 'تراکم',
+        'profile_image' => 'تصویر پروفایل'
     ],
 ];

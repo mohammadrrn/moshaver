@@ -151,14 +151,15 @@ class AssistantController extends Controller
         return [
             'zoonkan', // زونکن
             'add-reminder', // افزودن یادآوری
-            'phonebook' // دفترچه تلفن
+            'phonebook', // دفترچه تلفن
+            'special-link', // لینک ویژه مخصوص ارائه به کاربران
         ];
     }
 
     public static function silverPermissions()
     {
         return [
-            'phonebook' // دفترچه تلفن
+            'show-detail-info'
         ];
     }
 }

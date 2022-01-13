@@ -63,7 +63,11 @@
                 </div>
             </div>
             <a href="{{route('panel.profile')}}">
-                <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/profile-w.svg')}}">
+                @if(auth()->user()->profileImage != null)
+                    <img class="header-left-male-user" src="{{asset(auth()->user()->profileImage)}}">
+                @else
+                    <img class="header-left-male-user" src="{{asset('icon/PanelAdmin/profile-w.svg')}}">
+                @endif
             </a>
         </div>
     </div>

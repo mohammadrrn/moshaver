@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('status')->comment('وضعیت کاربر')->default(0);
             $table->string('reason_for_blocking')->comment('علت مسدودی')->nullable();
             $table->boolean('profileStatus')->comment('وضعیت پروفایل کاربر')->default(0);
+            $table->string('profileImage')->comment('تصویر پروفایل')->nullable();
             $table->string('mac_address')->comment('مک آدرس');
             $table->rememberToken();
             $table->timestamps();

@@ -8,6 +8,8 @@ use App\Models\Verification;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,6 +70,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (Request()->cookie('custom-info')) {
+            Cookie::queue(Cookie::forget('custom-info'));
+        }
         $checkVerifyCode = Verification::where('mobile_number', $data['mobile_number'])->where('code', $data['code'])->first();
         if ($checkVerifyCode) {
             //$checkVerifyCode->delete();

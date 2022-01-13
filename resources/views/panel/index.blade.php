@@ -66,6 +66,13 @@
                 </div>
             </div>
         </div>
+        @permission('special-link')
+        <h4 class="title-services">لینک ویژه شما</h4>
+        <div>
+            {{route('specialLink',auth()->user()->id)}}
+            <button class="btn btn-success btn-sm">کپی کردن</button>
+        </div>
+        @endpermission
         <h4 class="title-services">خدمات ما</h4>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-3">
